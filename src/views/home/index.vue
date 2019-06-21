@@ -1,27 +1,27 @@
-import React from 'react';
-import { Carousel } from 'antd';
+<template>
+  <div :class="$style.example">{{ msg }}
+  
+    <div :id="$style.aa"></div>
+  </div>
+</template>
 
-console.log(_);
-export default class extends React.Component {
-  render() {
-    return (
-
-      <div>
-        <Carousel autoplay>
-          <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-        </Carousel>
-      </div>
-    );
+<script>
+export default {
+  data () {
+    return {
+      msg: 'Hello w2222orld!'
+    }
   }
 }
+</script>
+
+<style module>
+.example {
+  color: red;
+}
+#aa{
+  width:100px;
+  height:100px;
+  background:url('./images/time.jpg')
+}
+</style>

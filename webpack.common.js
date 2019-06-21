@@ -86,7 +86,18 @@ module.exports = {
   module: {
     rules: [{
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // 开启 CSS Modules
+              // modules: true,
+              // // 自定义生成的类名
+              // localIdentName: '[local]_[hash:base64:8]'
+            }
+          }
+        ],
       },
       {
         test: /\.ejs$/,
@@ -103,13 +114,17 @@ module.exports = {
           loader: 'style-loader', // creates style nodes from JS strings
         }, {
           loader: 'css-loader', // translates CSS into CommonJS
+          options: {
+            // 对less 启用css_module
+            // 同时可用于.vue的style内
+            // modules: true,
+            // localIdentName: '[local]_[hash:base64:8]'
+          }
         }, {
           loader: 'less-loader', // compiles Less to CSS
         }],
 
       },
-      // 编译为es5
-      // cacheDirectory 可以提升babel编译
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,

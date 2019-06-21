@@ -1,7 +1,7 @@
 <template>
   <div class="example">{{ msg }}
   
-    <div id="aa"></div>
+    <div class="aa"></div>
   </div>
 </template>
 
@@ -15,14 +15,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 .example {
   color: red;
+  .aa{
+    width:100px;
+    height:100px;
+    background:url('./images/time.jpg')
+  }
 }
-#aa{
-  width:100px;
-  height:100px;
-  
-  background:url('./images/time.jpg')
-}
+ 
 </style>
