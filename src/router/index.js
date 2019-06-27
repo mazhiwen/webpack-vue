@@ -1,15 +1,13 @@
-
 import Home from 'views/home';
 // import Blacklist from 'views/blacklist';
 // import BlacklistList from 'views/blacklist/list';
 // import BlacklistAdd from 'views/blacklist/add';
 
 
-const routes = [
-  {
-    path: '/',
-    exact: true,
-    component: Home,
+const routes = [{
+    path: '/home',
+    // exact: true,
+    component: resolve => require(['views/home'], resolve),
   },
   // {
   //   path: '/home',
@@ -44,6 +42,7 @@ const routes = [
 
 
 const routesUrlMap = {};
+
 function getRoutesUrlMap(routes) {
   routes.map((value, index) => {
     //

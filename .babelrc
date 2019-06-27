@@ -1,6 +1,5 @@
 {
     "presets": ["@babel/preset-env"],
-    // react-app 编译react以及jsx配置
     // preset-env es6以上编译为es5
     "plugins": []
 }

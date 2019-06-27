@@ -1,11 +1,22 @@
 <template>
   <div class="example">{{ msg }}
   
-    <div class="aa"></div>
+    <div class="aa">
+    
+    
+        <router-view></router-view>
+
+    </div>
   </div>
 </template>
 
 <script>
+
+import {testObj} from "configs";
+console.log("app第一次",testObj);
+testObj.a="contextPath";
+console.log(testObj);
+
 export default {
   data () {
     return {

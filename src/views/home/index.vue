@@ -1,27 +1,23 @@
 <template>
-  <div :class="$style.example">{{ msg }}
+  <div >{{ msg }}
   
-    <div :id="$style.aa"></div>
+    <div>22</div>
   </div>
 </template>
 
 <script>
+
+import {testObj} from "configs";
+console.log("home页面取到的obj:",testObj);
 export default {
   data () {
     return {
-      msg: 'Hello w2222orld!'
+      msg: 'home页面 !'
     }
   }
 }
 </script>
 
-<style module>
-.example {
-  color: red;
-}
-#aa{
-  width:100px;
-  height:100px;
-  background:url('./images/time.jpg')
-}
+<style >
+
 </style>

@@ -81,7 +81,7 @@ module.exports = {
       components: path.resolve(__dirname, './src/components'),
     },
     // 配置默认import index的文件扩展名
-    extensions: ['.js', '.json', '.jsx', '.less'],
+    extensions: ['.js', '.json', '.vue', '.less'],
   },
   module: {
     rules: [{
