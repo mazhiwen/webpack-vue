@@ -16,5 +16,6 @@ module.exports = {
         "vue"
     ],
     "rules": {
+        "import/prefer-default-export": 1
     }
 };

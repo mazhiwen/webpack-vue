@@ -6,9 +6,12 @@
 </template>
 
 <script>
+// import { dataStructure} from "utility-mar";
+// import  dataStructure from "utils/dataStructure";
 
 import {testObj} from "configs";
-console.log("home页面取到的obj:",testObj);
+
+
 export default {
   data () {
     return {
