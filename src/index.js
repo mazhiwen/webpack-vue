@@ -4,20 +4,20 @@ import {
 } from 'utility-mar';
 import 'styles';
 import Vue from 'vue';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import {
-  routes
-} from 'router'
+  routes,
+} from 'router';
 
-import App from "./App.vue";
+import App from './App.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 const router = new VueRouter({
   // mode: 'history',
-  routes // (缩写) 相当于 routes: routes
-})
+  routes, // (缩写) 相当于 routes: routes
+});
 
 new Vue({
   router,
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
