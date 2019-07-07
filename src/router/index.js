@@ -5,10 +5,10 @@ import Home from 'views/home';
 
 
 const routes = [{
-    path: '/home',
-    // exact: true,
-    component: resolve => require(['views/home'], resolve),
-  },
+  path: '/home',
+  // exact: true,
+  component: resolve => require(['views/home'], resolve),
+},
   // {
   //   path: '/home',
   //   component: Home,
@@ -43,7 +43,7 @@ const routes = [{
 
 const routesUrlMap = {};
 
-function getRoutesUrlMap(routes) {
+function getRoutesUrlMap() {
   routes.map((value, index) => {
     //
     if (value.routes) {
@@ -53,7 +53,7 @@ function getRoutesUrlMap(routes) {
     }
   });
 }
-getRoutesUrlMap(routes);
+getRoutesUrlMap();
 
 
 export {

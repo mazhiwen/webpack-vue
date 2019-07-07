@@ -65,7 +65,7 @@ function response(responseObj) {
   NProgress.done();
   if (responseObj.data.code && responseObj.data.code !== 0) {
     showResponseError(`统一权限系统:${responseObj.data.message}`);
-    if (responseObj.data.code == '10042') {
+    if (responseObj.data.code === '10042') {
       logOut();
     }
     return false;
