@@ -12,11 +12,12 @@ const axiosInstance = axios.create({
   // },
 
 });
+console.log(process.env.NODE_ENV);
+
 const {
   prefix,
   iamPrefix,
-} = configs.API[process.env.API_ENV || 'master'];
-console.log(prefix);
+} = configs.API[process.env.NODE_ENV || 'master'];
 
 function isHttpUrl(input) {
   return /^https?:\/\//.test(input);

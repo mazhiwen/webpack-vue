@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+console.log(path.resolve(__dirname));
 module.exports = {
 
   entry: {
@@ -15,7 +16,9 @@ module.exports = {
     // 相关options选项:
     // https://vue-loader.vuejs.org/zh/options.html#transformasseturls
     new VueLoaderPlugin(),
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
+      root: path.resolve(__dirname, '../'),
+    }),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主
       // title: 'marjovenprogram',
@@ -23,12 +26,12 @@ module.exports = {
       // 可以使用ejs jade 等template,需要配置对应loader
       //  详情查看HtmlWebpackPlugin官方
       // template: './index.html',
-      template: './index.ejs',
+      template: path.resolve(__dirname, './index.ejs'),
       // ejs template参数
       // 参数可以在ejs文件中以es template字符 :${title}
       // 或者其他查看lodash template相关配置
       templateParameters: {
-        title: 'fk',
+        title: '系统',
       },
     }),
     new webpack.optimize.SplitChunksPlugin({
@@ -38,7 +41,7 @@ module.exports = {
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
-      name: 'marjoven',
+      name: 'vendors',
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -69,19 +72,18 @@ module.exports = {
   ],
   output: {
     // filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
   },
   resolve: {
     alias: {
-      utils: path.resolve(__dirname, './src/utils'),
-      configs: path.resolve(__dirname, './src/configs'),
-      router: path.resolve(__dirname, './src/router'),
-      views: path.resolve(__dirname, './src/views'),
-      styles: path.resolve(__dirname, './src/styles'),
-      images: path.resolve(__dirname, './src/images'),
-      components: path.resolve(__dirname, './src/components'),
-      request: path.resolve(__dirname, './src/request'),
-
+      utils: path.resolve(__dirname, '../src/utils'),
+      configs: path.resolve(__dirname, '../src/configs'),
+      router: path.resolve(__dirname, '../src/router'),
+      views: path.resolve(__dirname, '../src/views'),
+      styles: path.resolve(__dirname, '../src/styles'),
+      images: path.resolve(__dirname, '../src/images'),
+      components: path.resolve(__dirname, '../src/components'),
+      request: path.resolve(__dirname, '../src/request'),
     },
     // 配置默认import index的文件扩展名
     extensions: ['.js', '.json', '.vue', '.less'],

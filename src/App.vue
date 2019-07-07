@@ -13,7 +13,7 @@
 <script>
 
 import request from "request";
-console.log(request.login.login());
+// console.log(request.login.login());
 
 export default {
   data () {

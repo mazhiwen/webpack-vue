@@ -5,7 +5,7 @@ const configs = {
 
   },
   API: {
-    master: {
+    development: {
       iamPrefix: 'https://saas-dev.company.com/',
       prefix: 'https://japi-dev.company.com/company-anti-fraud/api/',
     },

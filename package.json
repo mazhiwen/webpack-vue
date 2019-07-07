@@ -1,5 +1,5 @@
 {
-  "name": "webpack-demo",
+  "name": "webpack-vue",
   "version": "1.0.0",
   "description": "webpack vue",
   "main": "index.js",
@@ -7,8 +7,8 @@
     "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "start": "webpack-dev-server --open --config webpackConfig/dev.js",
+    "build": "webpack --config webpackConfig/prod.js",
     "lint": "eslint --ext .js,.jsx src",
     "lint-fix": "eslint --fix --ext .js,jsx src"
   },
