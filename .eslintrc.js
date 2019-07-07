@@ -16,6 +16,11 @@ module.exports = {
         "vue"
     ],
     "rules": {
-        "import/prefer-default-export": 1
+        "import/prefer-default-export": "warn",
+        "import/no-unresolved": "warn",
+        "import/no-extraneous-dependencies": ["error", {
+            "devDependencies": true
+        }],
+        "no-unused-vars": "warn"
     }
 };

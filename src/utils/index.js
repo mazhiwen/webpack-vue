@@ -1,5 +1,5 @@
-import history from './history';
+import localForage from './localForageConfig';
 
 export {
-  history,
+  localForage,
 };

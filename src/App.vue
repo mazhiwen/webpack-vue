@@ -12,10 +12,9 @@
 
 <script>
 
-import {testObj} from "configs";
-console.log("app第一次",testObj);
-testObj.a="contextPath";
-console.log(testObj);
+import axios from 'request/axiosConfig';
+
+
 
 export default {
   data () {

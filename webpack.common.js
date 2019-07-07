@@ -2,11 +2,12 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
 
   entry: {
+    '@babel/polyfill': '@babel/polyfill',
     app: './src/index.js',
   },
   plugins: [
@@ -79,78 +80,80 @@ module.exports = {
       styles: path.resolve(__dirname, './src/styles'),
       images: path.resolve(__dirname, './src/images'),
       components: path.resolve(__dirname, './src/components'),
+      request: path.resolve(__dirname, './src/request'),
+
     },
     // 配置默认import index的文件扩展名
     extensions: ['.js', '.json', '.vue', '.less'],
   },
   module: {
     rules: [{
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              // 开启 CSS Modules
-              // modules: true,
-              // // 自定义生成的类名
-              // localIdentName: '[local]_[hash:base64:8]'
-            }
-          }
-        ],
-      },
-      {
-        test: /\.ejs$/,
-        loader: 'ejs-loader',
-        // query是 loader 也就是lodash.template对应的编译选项
-        query: {
-
-        },
-      },
-      // 编译less为css以下都需要配置
-      {
-        test: /\.less$/,
-        use: [{
-          loader: 'style-loader', // creates style nodes from JS strings
-        }, {
-          loader: 'css-loader', // translates CSS into CommonJS
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
           options: {
-            // 对less 启用css_module
-            // 同时可用于.vue的style内
+            // 开启 CSS Modules
             // modules: true,
+            // // 自定义生成的类名
             // localIdentName: '[local]_[hash:base64:8]'
-          }
-        }, {
-          loader: 'less-loader', // compiles Less to CSS
-        }],
+          },
+        },
+      ],
+    },
+    {
+      test: /\.ejs$/,
+      loader: 'ejs-loader',
+      // query是 loader 也就是lodash.template对应的编译选项
+      query: {
 
       },
-      {
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {},
+    },
+    // 编译less为css以下都需要配置
+    {
+      test: /\.less$/,
+      use: [{
+        loader: 'style-loader', // creates style nodes from JS strings
+      }, {
+        loader: 'css-loader', // translates CSS into CommonJS
+        options: {
+          // 对less 启用css_module
+          // 同时可用于.vue的style内
+          // modules: true,
+          // localIdentName: '[local]_[hash:base64:8]'
         },
+      }, {
+        loader: 'less-loader', // compiles Less to CSS
+      }],
+
+    },
+    {
+      test: /\.js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {},
       },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      // 处理资源路径
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        // use: ['file-loader']
-        // 可以用fileloader 和 urlloader 
-        // urlloader 将limit大小的文件转为dataurl
-        // 超过则配置默认file-loader
-        use: [{
-          loader: 'url-loader',
-          options: {
-            fallback: 'file-loader',
-          },
-        }],
-      }
+    },
+    {
+      test: /\.vue$/,
+      loader: 'vue-loader',
+    },
+    // 处理资源路径
+    {
+      test: /\.(png|svg|jpg|gif)$/,
+      // use: ['file-loader']
+      // 可以用fileloader 和 urlloader
+      // urlloader 将limit大小的文件转为dataurl
+      // 超过则配置默认file-loader
+      use: [{
+        loader: 'url-loader',
+        options: {
+          fallback: 'file-loader',
+        },
+      }],
+    },
 
     ],
 

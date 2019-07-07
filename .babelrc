@@ -1,5 +1,7 @@
 {
     "presets": ["@babel/preset-env"],
     // preset-env es6以上编译为es5
-    "plugins": []
+    "plugins": [
+        ["@babel/plugin-transform-runtime"]
+    ]
 }

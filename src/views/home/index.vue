@@ -9,9 +9,6 @@
 // import { dataStructure} from "utility-mar";
 // import  dataStructure from "utils/dataStructure";
 
-import {testObj} from "configs";
-
-
 export default {
   data () {
     return {
