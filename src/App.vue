@@ -12,9 +12,8 @@
 
 <script>
 
-import axios from 'request/axiosConfig';
-
-
+import request from "request";
+console.log(request.login.login());
 
 export default {
   data () {

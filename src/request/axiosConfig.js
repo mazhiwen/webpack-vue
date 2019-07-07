@@ -111,8 +111,5 @@ function responseError(error) {
 axiosInstance.defaults.timeout = 60 * 1000;
 axiosInstance.interceptors.request.use(request, requestError);
 axiosInstance.interceptors.response.use(response, responseError);
-console.log(axiosInstance);
-axiosInstance.get('v1/dict/apply-products').then(() => {
 
-});
 export default axiosInstance;

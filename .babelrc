@@ -2,6 +2,7 @@
     "presets": ["@babel/preset-env"],
     // preset-env es6以上编译为es5
     "plugins": [
+        // 需要pollyfill @babel/runtime 编译asyc await等
         ["@babel/plugin-transform-runtime"]
     ]
 }
