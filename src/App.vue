@@ -14,7 +14,10 @@
 
 import request from "request";
 // console.log(request.login.login());
-
+// request.login.loginpost({
+//   da:2,
+//   ddddd:3
+// })
 export default {
   data () {
     return {
