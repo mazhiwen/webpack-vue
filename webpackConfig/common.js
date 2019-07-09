@@ -96,6 +96,8 @@ module.exports = {
         {
           loader: 'css-loader',
           options: {
+            // soucemap作用需要去研究一下
+            sourceMap: true,
             // 开启 CSS Modules
             // modules: true,
             // // 自定义生成的类名
@@ -120,6 +122,7 @@ module.exports = {
       }, {
         loader: 'css-loader', // translates CSS into CommonJS
         options: {
+          sourceMap: true,
           // 对less 启用css_module
           // 同时可用于.vue的style内
           // modules: true,
@@ -127,6 +130,17 @@ module.exports = {
         },
       }, {
         loader: 'less-loader', // compiles Less to CSS
+        options: {
+          sourceMap: true,
+        },
+      }, {
+        loader: 'sass-resources-loader',
+        options: {
+          sourceMap: true,
+          resources: [
+            path.resolve(__dirname, '../src/styles/variables.less'),
+          ],
+        },
       }],
 
     },

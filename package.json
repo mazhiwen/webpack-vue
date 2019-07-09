@@ -60,6 +60,7 @@
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
     "nprogress": "^0.2.0",
+    "sass-resources-loader": "^2.0.1",
     "utility-mar": "^1.0.19",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",

@@ -29,7 +29,7 @@ export default {
 
 <style lang="less">
 .example {
-  color: red;
+  color: @aa;
   .aa{
     width:100px;
     height:100px;
