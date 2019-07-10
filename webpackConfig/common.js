@@ -3,8 +3,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-console.log(path.resolve(__dirname));
+const devMode = process.env.NODE_ENV !== 'production';
+
+
 module.exports = {
 
   entry: {
@@ -69,6 +72,13 @@ module.exports = {
     new webpack.ProvidePlugin({
       _: 'lodash',
     }),
+    // 提取css到单独文件的插件
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
   ],
   output: {
     // filename: '[name].bundle.js',
@@ -86,63 +96,16 @@ module.exports = {
       request: path.resolve(__dirname, '../src/request'),
     },
     // 配置默认import index的文件扩展名
-    extensions: ['.js', '.json', '.vue', '.less'],
+    extensions: ['.js', '.json', '.vue', '.less', '.css'],
   },
   module: {
     rules: [{
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            // soucemap作用需要去研究一下
-            sourceMap: true,
-            // 开启 CSS Modules
-            // modules: true,
-            // // 自定义生成的类名
-            // localIdentName: '[local]_[hash:base64:8]'
-          },
-        },
-      ],
-    },
-    {
       test: /\.ejs$/,
       loader: 'ejs-loader',
       // query是 loader 也就是lodash.template对应的编译选项
       query: {
 
       },
-    },
-    // 编译less为css以下都需要配置
-    {
-      test: /\.less$/,
-      use: [{
-        loader: 'style-loader', // creates style nodes from JS strings
-      }, {
-        loader: 'css-loader', // translates CSS into CommonJS
-        options: {
-          sourceMap: true,
-          // 对less 启用css_module
-          // 同时可用于.vue的style内
-          // modules: true,
-          // localIdentName: '[local]_[hash:base64:8]'
-        },
-      }, {
-        loader: 'less-loader', // compiles Less to CSS
-        options: {
-          sourceMap: true,
-        },
-      }, {
-        loader: 'sass-resources-loader',
-        options: {
-          sourceMap: true,
-          resources: [
-            path.resolve(__dirname, '../src/styles/variables.less'),
-          ],
-        },
-      }],
-
     },
     {
       test: /\.js$/,

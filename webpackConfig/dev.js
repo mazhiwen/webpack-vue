@@ -25,5 +25,43 @@ module.exports = merge(common, {
   output: {
     filename: '[name].bundle.js',
   },
+  module: {
+    rules: [
+      // 编译less为css以下都需要配置
+      {
+        test: /\.(le|c)ss$/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+            options: {
+              sourceMap: true,
+              // 对less 启用css_module
+              // 同时可用于.vue的style内
+              // 开启 CSS Modules
+              // modules: true,
+              // 自定义生成的类名
+              // localIdentName: '[local]_[hash:base64:8]'
+            },
+          }, {
+            loader: 'less-loader', // compiles Less to CSS
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            // vue单页面组件less变量全局loader
+            loader: 'sass-resources-loader',
+            options: {
+              sourceMap: true,
+              resources: [
+                path.resolve(__dirname, '../src/styles/variables.less'),
+              ],
+            },
+          },
+        ],
 
+      },
+    ],
+  },
 });

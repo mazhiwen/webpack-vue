@@ -68,3 +68,12 @@ options: {
     // 自定义生成的类名
     localIdentName: '[local]_[hash:base64:8]'
 }
+
+
+
+
+
+,
+  // "sideEffects": [
+  //   "*.css"
+  // ]
