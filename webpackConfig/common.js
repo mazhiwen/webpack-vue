@@ -72,13 +72,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       _: 'lodash',
     }),
-    // 提取css到单独文件的插件
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
+
   ],
   output: {
     // filename: '[name].bundle.js',

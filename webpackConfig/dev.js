@@ -1,6 +1,7 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./common.js');
 
 // babel-presets-react-app需要配置node babel env
@@ -21,6 +22,13 @@ module.exports = merge(common, {
   plugins: [
     new webpack.NamedModulesPlugin(), // 热更新相关
     new webpack.HotModuleReplacementPlugin(), // 热更新相关
+    // 提取css到单独文件的插件
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
   ],
   output: {
     filename: '[name].bundle.js',
