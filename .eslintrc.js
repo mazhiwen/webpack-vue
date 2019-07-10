@@ -21,6 +21,11 @@ module.exports = {
         "import/no-extraneous-dependencies": ["error", {
             "devDependencies": true
         }],
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "linebreak-style": "off",
+        "no-param-reassign": ["warn", {
+            "props": false
+        }],
+        "global-require": "warn"
     }
 };
