@@ -1,5 +1,11 @@
 module.exports = {
-  plugins: [
-    require('autoprefixer'),
-  ],
+  plugins: {
+    autoprefixer: {
+
+    },
+    'postcss-px-to-viewport': {
+      // options
+    },
+
+  },
 };
