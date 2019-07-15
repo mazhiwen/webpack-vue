@@ -11,9 +11,9 @@ https://vue-loader.vuejs.org/zh/guide/asset-url.html#%E8%BD%AC%E6%8D%A2%E8%A7%84
 
 Vue Loader 还提供了很多酷炫的特性：
 
-- 允许为 Vue 组件的每个部分使用其它的 webpack loader，例如在 \<style> 的部分使用 Sass 和在 \<template> 的部分使用 Pug；  
+- 允许为 Vue 组件的每个部分使用其它的 webpack loader，例如在 &lt;style&gt; 的部分使用 Sass 和在 &lt;template&gt; 的部分使用 Pug；  
 - 允许在一个 .vue 文件中使用自定义块，并对其运用自定义的 loader 链；
-- 使用 webpack loader 将 \<style> 和 \<template> 中引用的资源当作模块依赖来处理；
+- 使用 webpack loader 将 &lt;style&gt; 和 &lt;template&gt; 中引用的资源当作模块依赖来处理；
 - 为每个组件模拟出 scoped CSS；
 - 在开发过程中使用热重载来保持状态。
 
