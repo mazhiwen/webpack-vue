@@ -1,0 +1,23 @@
+{
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "Default Light+",
+    "git.autofetch": true,
+    "files.autoSave": "off",
+    "eslint.autoFixOnSave": true,
+    "[javascript]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "beautify.tabSize": 1,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {
+            "language": "vue",
+            "autoFix": true
+        }
+    ]
+
+}
