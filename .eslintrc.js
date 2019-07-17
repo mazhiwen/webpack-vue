@@ -3,12 +3,16 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "extends": "airbnb-base",
+    "extends": [
+        "airbnb-base",
+        'plugin:vue/recommended'
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
+        "parser": "babel-eslint",
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
@@ -18,7 +22,7 @@ module.exports = {
     "rules": {
         "import/prefer-default-export": "warn",
         "import/no-unresolved": "warn",
-        "import/no-extraneous-dependencies": ["error", {
+        "import/no-extraneous-dependencies": ["warn", {
             "devDependencies": true
         }],
         "no-unused-vars": "warn",

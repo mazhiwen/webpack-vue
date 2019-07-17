@@ -17,7 +17,7 @@ console.log(process.env.NODE_ENV);
 const {
   prefix,
   iamPrefix,
-} = configs.API[process.env.NODE_ENV || 'master'];
+} = configs.API[process.env.NODE_ENV || 'development'];
 
 function isHttpUrl(input) {
   return /^https?:\/\//.test(input);
