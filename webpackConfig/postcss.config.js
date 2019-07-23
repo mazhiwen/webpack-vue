@@ -3,9 +3,7 @@ module.exports = {
     autoprefixer: {
 
     },
-    'postcss-px-to-viewport': {
-      // options
-    },
+    
 
   },
 };
