@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import request from "request";
+import request from 'request';
 // console.log(request.login.login());
 // request.login.loginpost({
 //   da:2,
@@ -17,9 +17,9 @@ import request from "request";
 export default {
   data() {
     return {
-      msg: "Hello w2222orld!"
+      msg: 'Hello w2222orld!',
     };
-  }
+  },
 };
 </script>
 

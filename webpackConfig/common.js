@@ -7,7 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-
+const API_ENV = process.argv[process.argv.findIndex(value => value.includes('--API_ENV'))].split('=')[1];
+console.log(API_ENV);
 module.exports = {
 
   entry: {
@@ -15,6 +16,9 @@ module.exports = {
     app: './src/index.js',
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'webpack.API_ENV': JSON.stringify(API_ENV),
+    }),
     // vueloader需要的plugin
     // 相关options选项:
     // https://vue-loader.vuejs.org/zh/options.html#transformasseturls

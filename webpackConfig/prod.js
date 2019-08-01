@@ -15,9 +15,7 @@ module.exports = merge(common, {
   // 生产环境 跟踪bug  source-map浪费资源，可以适当去掉,设置为none
   devtool: 'source-map',
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
+
     // 提取css到单独文件的插件
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
