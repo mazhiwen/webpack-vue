@@ -6,8 +6,11 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
-
-const API_ENV = process.argv[process.argv.findIndex(value => value.includes('--API_ENV'))].split('=')[1];
+let API_ENV = '';
+const APIENVIndex = process.argv.findIndex(value => value.includes('--API_ENV'));
+if (APIENVIndex > 0) {
+  [, API_ENV] = process.argv[APIENVIndex].split('=');
+}
 console.log(API_ENV);
 module.exports = {
 

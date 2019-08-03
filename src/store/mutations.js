@@ -12,5 +12,4 @@ export const SetMenus = 'SetMenus';
 
 
 // configdata
-export const SetConfigData = 'SetConfigData'
-;
+export const SetConfigData = 'SetConfigData';

@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --open --config webpackConfig/dev.js",
     "build": "webpack --config webpackConfig/prod.js",
     "lint": "eslint --ext .js,.jsx src",
-    "lint-fix": "eslint --fix --ext .js,jsx src"
+    "lint-fix": "eslint --fix --ext .js,jsx src webpackConfig"
   },
   "repository": {
     "type": "git",
