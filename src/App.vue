@@ -14,6 +14,10 @@ import request from 'request';
 //   da:2,
 //   ddddd:3
 // })
+
+import SYSOUTCONFIG from 'SYSOUTCONFIG';
+
+console.log(SYSOUTCONFIG);
 export default {
   data() {
     return {

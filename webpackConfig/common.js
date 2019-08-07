@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 let API_ENV = '';
@@ -29,6 +31,12 @@ module.exports = {
     new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
       root: path.resolve(__dirname, '../'),
     }),
+    new CopyWebpackPlugin([
+      {
+        from: './src/configs/SYSOUTCONFIG.js',
+        to: path.resolve(__dirname, '../dist'),
+      },
+    ]),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主
       // title: 'marjovenprogram',
@@ -43,6 +51,14 @@ module.exports = {
       templateParameters: {
         title: '系统',
       },
+    }),
+    new HtmlWebpackTagsPlugin({
+      tags: [
+        {
+          path: 'SYSOUTCONFIG.js',
+        },
+      ],
+      append: false,
     }),
     new webpack.optimize.SplitChunksPlugin({
       // ************************默认
@@ -98,6 +114,9 @@ module.exports = {
     },
     // 配置默认import index的文件扩展名
     extensions: ['.js', '.json', '.vue', '.less', '.css'],
+  },
+  externals: {
+    SYSOUTCONFIG: 'SYSOUTCONFIG',
   },
   module: {
     rules: [{
