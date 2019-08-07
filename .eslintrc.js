@@ -30,6 +30,7 @@ module.exports = {
         "no-param-reassign": ["warn", {
             "props": false
         }],
-        "global-require": "warn"
+        "global-require": "warn",
+        "no-var": "warn"
     }
 };
