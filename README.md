@@ -6,6 +6,13 @@ webpack基础配置
 
 https://vue-loader.vuejs.org/zh/guide/asset-url.html#%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99
 
+## 
+```sh
+yarn start --API_ENV=dev
+yarn build --API_ENV=dev
+```
+
+
 
 ## vue-loader
 
