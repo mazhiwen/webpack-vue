@@ -24,6 +24,7 @@ export default {
       msg: 'Hello w2222orld!',
     };
   },
+  
 };
 </script>
 

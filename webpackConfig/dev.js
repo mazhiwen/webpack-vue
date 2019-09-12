@@ -19,6 +19,7 @@ module.exports = merge(common, {
     contentBase: path.resolve(__dirname, '../dist'),
     // webpack-dev-server热更新
     hot: true,
+    historyApiFallback: true,
   },
   plugins: [
     new webpack.NamedModulesPlugin(), // 热更新相关
@@ -32,6 +33,7 @@ module.exports = merge(common, {
     }),
   ],
   output: {
+    // publicPath: '/',
     filename: '[name].bundle.js',
   },
   module: {
