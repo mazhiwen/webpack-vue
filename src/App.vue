@@ -15,9 +15,11 @@ import request from 'request';
 //   ddddd:3
 // })
 
-import SYSOUTCONFIG from 'SYSOUTCONFIG';
+import SYSOUTCONFIGS from 'SYSOUTCONFIG';
 
-console.log(SYSOUTCONFIG);
+console.log(SYSOUTCONFIGS);
+console.log(window.SYSOUTCONFIG);
+
 export default {
   data() {
     return {

@@ -25,6 +25,7 @@ module.exports = {
         "import/no-extraneous-dependencies": ["warn", {
             "devDependencies": true
         }],
+        "no-nested-ternary": "warn",
         "no-unused-vars": "warn",
         "linebreak-style": "off",
         "no-param-reassign": ["warn", {
