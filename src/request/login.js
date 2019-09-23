@@ -15,5 +15,5 @@ export default {
     axios.post('v1/login', data)
   ,
   testMock:(data)=>
-    axios.get('posts', data)
+    axios.get('', data)
 };

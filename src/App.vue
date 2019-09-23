@@ -23,7 +23,7 @@
 
 <script>
 import request from 'request';
-request.login.testMock({
+request.login.loginpost({
   da:2,
   ddddd:3
 }).then((res)=>{
