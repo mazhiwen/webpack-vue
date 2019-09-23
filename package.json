@@ -6,11 +6,11 @@
   "scripts": {
     "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server.js",
     "start": "webpack-dev-server --open --config webpackConfig/dev.js",
     "build": "webpack --config webpackConfig/prod.js",
     "lint": "eslint --ext .js,.jsx src",
-    "lint-fix": "eslint --fix --ext .js,jsx src webpackConfig"
+    "lint-fix": "eslint --fix --ext .js,jsx src webpackConfig",
+    "mock": "node mock"
   },
   "repository": {
     "type": "git",
@@ -45,6 +45,8 @@
     "file-loader": "^4.0.0",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-tags-plugin": "^2.0.13",
+    "koa": "^2.8.1",
+    "koa-router": "^7.4.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.7.0",

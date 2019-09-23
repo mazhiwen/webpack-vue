@@ -1,7 +1,7 @@
 import axios from './axiosConfig';
 
 export default {
-  login: () => {
+  login: () => 
     axios.get('v1/login', {
       params: {
         ID: 12345,
@@ -9,9 +9,11 @@ export default {
       data: {
         aaa: 2,
       },
-    });
-  },
-  loginpost: (data) => {
-    axios.post('v1/login', data);
-  },
+    })
+  ,
+  loginpost: (data) => 
+    axios.post('v1/login', data)
+  ,
+  testMock:(data)=>
+    axios.get('posts', data)
 };

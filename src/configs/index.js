@@ -7,7 +7,7 @@ const configs = {
   API: {
     development: {
       iamPrefix: 'https://saas-dev.company.com/',
-      prefix: 'https://japi-dev.company.com/company-anti-fraud/api/',
+      prefix: 'http://localhost:3000/',
     },
     integration: {
       iamPrefix: 'https://saas-fat.company.com/',
