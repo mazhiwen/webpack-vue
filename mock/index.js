@@ -2,9 +2,17 @@ const Koa = require('koa');
 // 注意require('koa-router')返回的是函数:
 const router = require('koa-router')();
 const bodyParser = require('koa-bodyparser');
+const cors = require('@koa/cors');
+const controller = require('./middleware/controller');
 
 
 const app = new Koa();
+
+// cors默认
+// https://github.com/koajs/cors
+app.use(cors());
+
+app.use(bodyParser());
 
 
 // logger
@@ -19,32 +27,18 @@ app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
-  ctx.set('Access-Control-Allow-Origin', '*');
-  ctx.set('Access-Control-Allow-Headers', 'Content-Type');
-  ctx.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  ctx.set('Access-Control-Allow-Credentials', true);
+  // ctx.set('Content-Type', 'application/json');
+  // ctx.set('Access-Control-Allow-Origin', '*');
+  // ctx.set('Access-Control-Allow-Headers', 'Content-Type,Access-Control-Allow-Headers,Content-Length,Accept,Authorization,X-Requested-With');
+  // ctx.set('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
+  // ctx.set('Access-Control-Allow-Credentials', true);
   ctx.set('X-Response-Time', `${ms}ms`);
 });
 
 
-// add url-route:
-router.get('/hello/:name', async (ctx, next) => {
-  var name = ctx.params.name;
-  ctx.response.body = `<h1>Hello, ${name}!</h1>`;
-});
-router.get('/', async (ctx, next) => {
-  ctx.response.body = '<h1>Index</h1>';
-});
-router.post('/v1/login', async (ctx, next) => {
-  console.log(ctx);
-  
-  ctx.response.body = `<h1>Welcome!</h1>`;
-});
-
-app.use(bodyParser());
 
 // add router middleware:
-app.use(router.routes());
+app.use(controller());
 
 app.listen(3000);
 app.on('error', err => {

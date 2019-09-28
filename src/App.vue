@@ -5,16 +5,13 @@
       <router-view />
     </div>
 
-    <div class="test">
-      <div>zhe是腹肌1111111111111111111111单独的的的的</div>
-      <div>哈哈的</div>
-    </div>
-    <div class="wrapper">
-    <div class="p1"></div>
-    <div class="p2">
-            <div class="p3">256</div>
-    </div>
-</div>
+      <button v-on:click="show = !show">
+    Toggle
+  </button>
+  <transition name="fade">
+    <p v-if="show">hello</p>
+  </transition>
+
 
 
 
@@ -38,6 +35,7 @@ export default {
   data() {
     return {
       msg: 'Hello w2222orld!',
+      show:true
     };
   },
   
@@ -45,6 +43,16 @@ export default {
 </script>
 
 <style lang="less">
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+
 .example {
   color: @aa;
   .aa {
