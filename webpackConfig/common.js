@@ -36,6 +36,11 @@ module.exports = {
         from: './src/configs/SYSOUTCONFIG.js',
         to: path.resolve(__dirname, '../dist'),
       },
+      {
+        from: './webpackConfig/public/*',
+        to: path.resolve(__dirname, '../dist'),
+        flatten: true,
+      },
     ]),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主
@@ -56,6 +61,12 @@ module.exports = {
       tags: [
         {
           path: 'SYSOUTCONFIG.js',
+        },
+        {
+          path: 'echarts.min.js',
+        },
+        {
+          path: 'bmap.js',
         },
       ],
       append: false,

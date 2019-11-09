@@ -4,9 +4,10 @@
     <div>22</div>
 
 
-    <iframe id="iframe" src="http://localhost:8081/#/home" 
+    <iframe id="iframe" src="http://localhost:8080" 
       style="width:800px;height:300px;"
     >
+      
     </iframe>
   </div>
 </template>

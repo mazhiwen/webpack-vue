@@ -32,6 +32,10 @@ module.exports = {
             "props": false
         }],
         "global-require": "warn",
-        "no-var": "warn"
+        "no-var": "warn",
+        "object-shorthand": "off",
+        "func-names": "off",
+        "vue/attribute-hyphenation": "off",
+        "no-lonely-if": "off"
     }
 };
