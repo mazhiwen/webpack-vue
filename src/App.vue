@@ -21,6 +21,9 @@
 
 <script>
 import usaJson from './shenzhen.json';
+
+import hangzhou from './hangzhou-track.json';
+
 // const echarts = require('echarts');
 // import request from 'request';
 // request.login.loginpost({
@@ -45,139 +48,242 @@ export default {
     var myChart = echarts.init(document.getElementById('main'));
     myChart.hideLoading();
 
-    echarts.registerMap('USA', usaJson, {
-        Alaska: {              // 把阿拉斯加移到美国主大陆左下方
-            left: -131,
-            top: 25,
-            width: 15
-        },
-        Hawaii: {
-            left: -110,        // 夏威夷
-            top: 28,
-            width: 5
-        },
-        'Puerto Rico': {       // 波多黎各
-            left: -76,
-            top: 26,
-            width: 2
-        }
+    var lines = hangzhou.map(function (track) {
+        return {
+            coords: track.map(function (seg, idx) {
+                return seg.coord;
+            })
+        };
     });
-    const option = {
-        title: {
-            text: 'USA Population Estimates (2012)',
-            subtext: 'Data from www.census.gov',
-            sublink: 'http://www.census.gov/popest/data/datasets.html',
-            left: 'right'
-        },
-        tooltip: {
-            trigger: 'item',
-            showDelay: 0,
-            transitionDuration: 0.2,
-            formatter: function (params) {
-                var value = (params.value + '').split('.');
-                value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
-                return params.seriesName + '<br/>' + params.name + ': ' + value;
-            }
-        },
-        visualMap: {
-            left: 'right',
-            min: 500000,
-            max: 38000000,
-            inRange: {
-                color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+    // function getBoundary(){       
+    //   var bdary = new BMap.Boundary();
+    //   bdary.get("深圳市福田区", function(rs){       //获取行政区域
+    //     map.clearOverlays();        //清除地图覆盖物       
+    //     var count = rs.boundaries.length; //行政区域的点有多少个
+    //     if (count === 0) {
+    //       alert('未能获取当前输入行政区域');
+    //       return ;
+    //     }
+    //           var pointArray = [];
+    //     for (var i = 0; i < count; i++) {
+    //       var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
+    //       map.addOverlay(ply);  //添加覆盖物
+    //       pointArray = pointArray.concat(ply.getPath());
+    //     }    
+    //     map.setViewport(pointArray);    //调整视野  
+    //     // addlabel();               
+    //   });   
+    // }
+
+    // setTimeout(function(){
+    //   getBoundary();
+    // }, 2000);
+    
+    
+    // var bdary = new BMap.Boundary();
+		// bdary.get("深圳市福田区", (rs) => {
+    //   console.log(rs);
+    // });
+    function renderItem(params, api) {
+      
+        var coords = [
+          [114.11147554353012, 22.53825968738186],
+          [114.11067254823502, 22.573654257697456],
+          [114.0991198003972, 22.57012569325919],
+          [114.09415244042033, 22.57518844931236],
+          [114.08622480446684, 22.57498771806207],
+          [114.07358268153745, 22.59308529613654],
+          [114.0659341491058, 22.593152865041706],
+          [114.05922766966219, 22.587632374925118],
+          [114.03171311088394, 22.588218411552564],
+          [114.01188229811332, 22.581938053129434],
+          [114.0118090862143, 22.562512766899125],
+          [114.00382755193021, 22.561041762076634],
+          [114.00618704118195, 22.555780891754818],
+          [114.00250309028675, 22.552934263261946],
+          [114.00414438428349, 22.53855068413567],
+          [113.99956122957309, 22.533797270013967],
+          [114.00657582780654, 22.513944454892783],
+          [114.00390229094863, 22.51095806210724],
+          [114.01161100984942, 22.51220232385333],
+          [114.02808350747209, 22.505867463751304],
+          [114.04268249912377, 22.50970168596567],
+          [114.0625552627617, 22.50540035489983],
+          [114.0739365240777, 22.519475440190888],
+          [114.08272824010096, 22.521543732625286],
+          [114.08719012356754, 22.519014888022326],
+          [114.09197189362612, 22.522371591677732],
+          [114.09505757305188, 22.526859920914887],
+          [114.08953353315066, 22.534372939396807],
+          [114.10170674060399, 22.541269016155926],
+          [114.11147554353012, 22.53825968738186]
+        ];
+        var points = [];
+        for (var i = 0; i < coords.length; i++) {
+            points.push(api.coord(coords[i]));
+        }
+        var color = api.visual('color');
+        console.log();
+        return {
+            type: 'polygon',
+            name: 'aaa',
+            info: 'aa',
+            shape: {
+                points: echarts.graphic.clipPointsByRect(points, {
+                    x: params.coordSys.x,
+                    y: params.coordSys.y,
+                    width: params.coordSys.width,
+                    height: params.coordSys.height
+                }),
+                // name: 'aaa',
             },
-            text:['High','Low'],           // 文本，默认为数值文本
-            calculable: true
-        },
-        toolbox: {
-            show: true,
-            //orient: 'vertical',
-            left: 'left',
-            top: 'top',
-            feature: {
-                dataView: {readOnly: false},
-                restore: {},
-                saveAsImage: {}
+            style: api.style({
+                fill: color,
+                stroke: echarts.color.lift(color)
+            })
+        };
+    }
+    const option = {
+        bmap: {
+            center: [114.05096,22.541009],
+            zoom: 14,
+            roam: true,
+            mapStyle: {
+                styleJson: [{
+                    'featureType': 'water',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'land',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#f3f3f3'
+                    }
+                }, {
+                    'featureType': 'railway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'highway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#fdfdfd'
+                    }
+                }, {
+                    'featureType': 'highway',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'geometry',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'geometry.fill',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'poi',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'green',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'subway',
+                    'elementType': 'all',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'manmade',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'local',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'arterial',
+                    'elementType': 'labels',
+                    'stylers': {
+                        'visibility': 'off'
+                    }
+                }, {
+                    'featureType': 'boundary',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#fefefe'
+                    }
+                }, {
+                    'featureType': 'building',
+                    'elementType': 'all',
+                    'stylers': {
+                        'color': '#d1d1d1'
+                    }
+                }, {
+                    'featureType': 'label',
+                    'elementType': 'labels.text.fill',
+                    'stylers': {
+                        'color': '#999999'
+                    }
+                }]
             }
         },
         series: [
-            {
-                name: 'USA PopEstimates',
-                type: 'map',
-                roam: true,
-                map: 'USA',
-                itemStyle:{
-                    emphasis:{label:{show:true}}
-                },
-                // 文本位置修正
-                textFixed: {
-                    Alaska: [20, -20]
-                },
-                data:[
-                    {name: 'Alabama', value: 4822023},
-                    {name: 'Alaska', value: 731449},
-                    {name: 'Arizona', value: 6553255},
-                    {name: 'Arkansas', value: 2949131},
-                    {name: 'California', value: 38041430},
-                    {name: 'Colorado', value: 5187582},
-                    {name: 'Connecticut', value: 3590347},
-                    {name: 'Delaware', value: 917092},
-                    {name: 'District of Columbia', value: 632323},
-                    {name: 'Florida', value: 19317568},
-                    {name: 'Georgia', value: 9919945},
-                    {name: 'Hawaii', value: 1392313},
-                    {name: 'Idaho', value: 1595728},
-                    {name: 'Illinois', value: 12875255},
-                    {name: 'Indiana', value: 6537334},
-                    {name: 'Iowa', value: 3074186},
-                    {name: 'Kansas', value: 2885905},
-                    {name: 'Kentucky', value: 4380415},
-                    {name: 'Louisiana', value: 4601893},
-                    {name: 'Maine', value: 1329192},
-                    {name: 'Maryland', value: 5884563},
-                    {name: 'Massachusetts', value: 6646144},
-                    {name: 'Michigan', value: 9883360},
-                    {name: 'Minnesota', value: 5379139},
-                    {name: 'Mississippi', value: 2984926},
-                    {name: 'Missouri', value: 6021988},
-                    {name: 'Montana', value: 1005141},
-                    {name: 'Nebraska', value: 1855525},
-                    {name: 'Nevada', value: 2758931},
-                    {name: 'New Hampshire', value: 1320718},
-                    {name: 'New Jersey', value: 8864590},
-                    {name: 'New Mexico', value: 2085538},
-                    {name: 'New York', value: 19570261},
-                    {name: 'North Carolina', value: 9752073},
-                    {name: 'North Dakota', value: 699628},
-                    {name: 'Ohio', value: 11544225},
-                    {name: 'Oklahoma', value: 3814820},
-                    {name: 'Oregon', value: 3899353},
-                    {name: 'Pennsylvania', value: 12763536},
-                    {name: 'Rhode Island', value: 1050292},
-                    {name: 'South Carolina', value: 4723723},
-                    {name: 'South Dakota', value: 833354},
-                    {name: 'Tennessee', value: 6456243},
-                    {name: 'Texas', value: 26059203},
-                    {name: 'Utah', value: 2855287},
-                    {name: 'Vermont', value: 626011},
-                    {name: 'Virginia', value: 8185867},
-                    {name: 'Washington', value: 6897012},
-                    {name: 'West Virginia', value: 1855413},
-                    {name: 'Wisconsin', value: 5726398},
-                    {name: 'Wyoming', value: 576412},
-                    {name: 'Puerto Rico', value: 3667084}
-                ]
+          {
+            type: 'lines',
+            coordinateSystem: 'bmap',
+            data: lines,
+            polyline: true,
+            lineStyle: {
+                normal: {
+                    color: 'purple',
+                    opacity: 0.6,
+                    width: 1
+                }
             }
+          },
+          {
+              type: 'custom',
+              coordinateSystem: 'bmap',
+              renderItem: renderItem,
+              itemStyle: {
+                  normal: {
+                      opacity: 0.5
+                  }
+              },
+              // animation: false,
+              // silent: true,
+              data: [0],
+              z: -10
+          }
         ]
     };
-
-
-
-
-
-
-
     myChart.setOption(option);
+    myChart.on('click', {element: 'aaa'},function (params) {
+        // 控制台打印数据的名称
+        console.log(params);
+    });
+
   },
   
 };
@@ -185,8 +291,8 @@ export default {
 
 <style lang="less">
 #main{
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 600px;
 }
 
 .fade-enter-active, .fade-leave-active {
