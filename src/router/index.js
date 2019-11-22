@@ -4,11 +4,16 @@ import Home from 'views/home';
 // import BlacklistAdd from 'views/blacklist/add';
 
 
-const routes = [{
-  path: '/home',
-  // exact: true,
-  component: resolve => require(['views/home'], resolve),
-},
+const routes = [
+  {
+    path: '/home',
+    // exact: true,
+    component: resolve => require(['views/home'], resolve),
+  },
+  {
+    path: '/echartrelation',
+    component: resolve => require(['views/echartrelation'], resolve),
+  },
   // {
   //   path: '/home',
   //   component: Home,
