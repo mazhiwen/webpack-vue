@@ -2630,7 +2630,8 @@ export default {
     "lineStyle": {
       "normal": {}
     }
-  }, {
+  }, 
+  {
     "id": "186",
     "name": null,
     "source": "65",
