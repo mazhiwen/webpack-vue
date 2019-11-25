@@ -6,6 +6,7 @@ export default {
       // y: 10,
       value: 70,
       text:'同学',
+      category: 1,
     },
     {
       name: '1_1',

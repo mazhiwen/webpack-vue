@@ -24,9 +24,13 @@ export default {
     var categories = [];
     for (var i = 0; i < 9; i++) {
         categories[i] = {
-            name: '类目' + i
+            name: '类目' + i,
+            // itemStyle: {
+            //   color: 'rgba(128, 128, 128, 0.5)',
+            // }
         };
     }
+    console.log(categories);
     const richLabel = {
       name: {
         fontSize: 12,
@@ -61,7 +65,7 @@ export default {
           }
         }
     });
-    console.log(richLabel);
+    console.log(graph.nodes);
     const option = {
         title: {
             text: 'Les Miserables',
