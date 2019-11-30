@@ -14,6 +14,10 @@ const routes = [
     path: '/echartrelation',
     component: resolve => require(['views/echartrelation'], resolve),
   },
+  {
+    path: '/echartline',
+    component: resolve => require(['views/echartline'], resolve),
+  },
   // {
   //   path: '/home',
   //   component: Home,
