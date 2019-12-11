@@ -121,6 +121,7 @@ module.exports = {
       styles: path.resolve(__dirname, '../src/styles'),
       images: path.resolve(__dirname, '../src/images'),
       components: path.resolve(__dirname, '../src/components'),
+      filters: path.resolve(__dirname, '../src/filters'),
       request: path.resolve(__dirname, '../src/request'),
     },
     // 配置默认import index的文件扩展名

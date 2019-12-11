@@ -1,5 +1,6 @@
 <template>
-  <div >{{ msg }}
+  <div >
+    <AppHeader/>
   
     <div>22</div>
 
