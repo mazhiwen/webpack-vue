@@ -12,6 +12,18 @@ yarn start --API_ENV=dev
 yarn build --API_ENV=dev
 ```
 
+## 工具库引用
+
+
+```js
+import  { cookie} from "utils";
+```
+
+
+## 全局组件自动注册
+
+src/components/index.js 会自动注册目录内的组件。  
+注册后的组件可以全局直接引用 无需import
 
 
 ## vue-loader
