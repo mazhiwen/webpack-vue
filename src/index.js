@@ -1,7 +1,5 @@
 import _ from 'lodash';
-import {
-  utiDate,
-} from 'utility-mar';
+
 import 'styles';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
