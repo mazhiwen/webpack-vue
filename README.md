@@ -1,62 +1,186 @@
 
+## 启动编译
 
-# vue
-
-webpack基础配置
-
-https://vue-loader.vuejs.org/zh/guide/asset-url.html#%E8%BD%AC%E6%8D%A2%E8%A7%84%E5%88%99
-
-## 
 ```sh
-yarn start --API_ENV=dev
-yarn build --API_ENV=dev
+yarn start --API_ENV=环境标识Str
+yarn build --API_ENV=环境标识Str
+```
+
+## API host配置
+
+src/configs/index.js
+
+```js
+API: {
+  proxy: {
+    prefix: '/proxyAPI/',
+  },
+  development: {
+    prefix: 'http://localhost:3000/',
+  },
+  integration: {
+    prefix: 'https://japi-fat.company.com/company-anti-fraud/api/',
+  },
+  production: {
+    prefix: 'https://channels.company.com/judex/api/',
+  },
+},
+```
+```sh
+yarn build --API_ENV=development
+```
+
+## 本地跨域host
+
+修改  webpackConfig/dev.js -> proxy['/proxyAPI'].target 为需要跨域的host
+```js
+proxy: {
+  '/proxyAPI': {
+    target: 'http://localhost:3000',
+  }
+}
+```
+```sh
+yarn start --API_ENV=proxy
 ```
 
 ## 工具库引用
 
-
 ```js
-import  { cookie} from "utils";
+import {
+  localForage,//localStorage
+  utiDate,//日期操作
+  cookie, //cookie相关操作
+  copy,//深拷贝
+  dataFormat,//数据格式化
+  validator,//正则校验器
+} from "utils";
 ```
 
+## axios XHR请求
+
+```js
+import request from 'request';
+request.login.loginpost({
+  da:2,
+  ddddd:3
+}).then((res)=>{
+  console.log(res);
+})
+```
+
+## filters全局注册
+
+src/filters/index.js
 
 ## 全局组件自动注册
 
 src/components/index.js 会自动注册目录内的组件。  
 注册后的组件可以全局直接引用 无需import
 
+## 图片引用
 
-## vue-loader
+```html
 
-Vue Loader 还提供了很多酷炫的特性：
+<!-- 作为DataURI引用 -->
+<template>
+  <div>
+    <img :src="logo">
+  </div>
+</template>
 
-- 允许为 Vue 组件的每个部分使用其它的 webpack loader，例如在 &lt;style&gt; 的部分使用 Sass 和在 &lt;template&gt; 的部分使用 Pug；  
-- 允许在一个 .vue 文件中使用自定义块，并对其运用自定义的 loader 链；
-- 使用 webpack loader 将 &lt;style&gt; 和 &lt;template&gt; 中引用的资源当作模块依赖来处理；
-- 为每个组件模拟出 scoped CSS；
-- 在开发过程中使用热重载来保持状态。
+<script>
+import logo from 'images/logo.png'
+// vue注册
+data() {
+  return {
+    logo
+  };
+}
+</script>
 
-
-## vue-template-compiler
-
-每个 vue 包的新版本发布时，一个相应版本的 vue-template-compiler 也会随之发布。编译器的版本必须和基本的 vue 包保持同步，这样 vue-loader 就会生成兼容运行时的代码。这意味着你每次升级项目中的 vue 包时，也应该匹配升级 vue-template-compiler。
-
-
-
+```
 ## style scoped
 
 深度组件样式影响
+
+```html
 <style scoped>
 .a >>> .b { /* ... */ }
 </style>
+```
 
 编译为
 
+```css
 .a[data-v-f3f3eg9] .b { /* ... */ }
+```
 
 有些像 Sass 之类的预处理器无法正确解析 >>>。这种情况下你可以使用 /deep/ 或 ::v-deep 操作符取而代之——两者都是 >>> 的别名，同样可以正常工作。
 
+## vuex
 
+```js
+//////////// 使用 /////////////
+import { mapState,mapGetters,mapMutations,mapActions} from 'vuex'
+export default {
+  // ...
+  computed: {
+
+    //////////////////////////////mapState
+    ...mapState({
+      // 箭头函数可使代码更简练
+      count: state => state.count,
+
+      // 传字符串参数 'count' 等同于 `state => state.count`
+      countAlias: 'count',
+
+      // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+      countPlusLocalState (state) {
+        return state.count + this.localCount
+      }
+    }),
+    // mapState 或者当计算属性名称 = 子节点名称时 如下操作
+    mapState([
+      // 映射 this.count 为 store.state.count
+      'count','countA'
+    ]),
+
+    //////////////////////////////mapGetters
+    // 使用对象展开运算符将 getter 混入 computed 对象中
+    ...mapGetters([
+      'doneTodosCount',
+      'anotherGetter',
+      // 把 `this.doneCount` 映射为 `this.$store.getters.doneTodosCount`
+      doneCount: 'doneTodosCount'
+    ]),
+
+  },
+  methods:{
+
+    //////////////////////////////mapMutations
+    ...mapMutations([
+      'increment', // 将 `this.increment()` 映射为 `this.$store.commit('increment')`
+
+      // `mapMutations` 也支持载荷：
+      'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.commit('incrementBy', amount)`
+    ]),
+    ...mapMutations({
+      add: 'increment' // 将 `this.add()` 映射为 `this.$store.commit('increment')`
+    })
+
+    //////////////////////////////mapActions
+    ...mapActions([
+      'increment', // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+      // `mapActions` 也支持载荷：
+      'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.dispatch('incrementBy', amount)`
+    ]),
+    ...mapActions({
+      add: 'increment' // 将 `this.add()` 映射为 `this.$store.dispatch('increment')`
+    })
+  }
+}
+```
 
 ## CSS Modules
 
@@ -81,18 +205,18 @@ https://vue-loader.vuejs.org/zh/guide/css-modules.html#%E5%92%8C%E9%A2%84%E5%A4%
 
 开启cssmodule需要在webpack css-loader
 配置:
+```js
 options: {
   //开启 CSS Modules
     modules: true,
     // 自定义生成的类名
     localIdentName: '[local]_[hash:base64:8]'
 }
+```
 
-
-
-
-
+```js
 ,
   // "sideEffects": [
   //   "*.css"
   // ]
+```

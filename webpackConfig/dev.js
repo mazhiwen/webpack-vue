@@ -20,6 +20,14 @@ module.exports = merge(common, {
     // webpack-dev-server热更新
     hot: true,
     historyApiFallback: true,
+    proxy: {
+      '/proxyAPI': {
+        target: 'http://localhost:3000',
+        pathRewrite: {'^/proxyAPI' : ''},
+        // changeOrigin: true, // target是域名的话，需要这个参数，
+        // secure: false, // 设置支持https协议的代理
+      }
+    }
   },
   plugins: [
     new webpack.NamedModulesPlugin(), // 热更新相关

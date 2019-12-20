@@ -8,9 +8,10 @@ const controller = require('./middleware/controller');
 
 const app = new Koa();
 
+// 跨域
 // cors默认
 // https://github.com/koajs/cors
-app.use(cors());
+// app.use(cors());
 
 app.use(bodyParser());
 

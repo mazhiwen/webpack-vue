@@ -6,7 +6,7 @@ import logOut from 'utils/logout';
 
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  // baseURL: 'http://localhost:3000',
   // withCredentials:true
   // validateStatus: function (status) {
   //   return status > 666;
@@ -16,8 +16,7 @@ const axiosInstance = axios.create({
 
 const {
   prefix,
-  iamPrefix,
-} = configs.API[webpack.API_ENV || 'development'];
+} = configs.API[webpack.API_ENV || 'proxy'];
 
 function isHttpUrl(input) {
   return /^https?:\/\//.test(input);
@@ -38,6 +37,7 @@ async function request(config) {
   else if (isIamUrl(input)) config.url = `${iamPrefix}${input}`;
 
   else config.url = `${prefix}${input}`;
+  console.log(config);
   return config;
 }
 

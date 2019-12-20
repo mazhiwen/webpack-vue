@@ -1,15 +1,11 @@
-import Home from 'views/home';
+import home from './home';
 // import Blacklist from 'views/blacklist';
 // import BlacklistList from 'views/blacklist/list';
 // import BlacklistAdd from 'views/blacklist/add';
 
 
 const routes = [
-  {
-    path: '/home',
-    // exact: true,
-    component: resolve => require(['views/home'], resolve),
-  },
+  ...home,
   {
     path: '/echartrelation',
     component: resolve => require(['views/echartrelation'], resolve),
@@ -18,35 +14,6 @@ const routes = [
     path: '/echartline',
     component: resolve => require(['views/echartline'], resolve),
   },
-  // {
-  //   path: '/home',
-  //   component: Home,
-  // },
-  // {
-  //   path: '/blacklist',
-  //   component: Blacklist,
-  //   auth:false,
-  //   routes: [
-  //     {
-  //       path: '/blacklist/list',
-  //       auth:true,
-  //       exact:true,
-  //       component:BlacklistList
-  //     },
-  //     {
-  //       path: '/blacklist/add/:id',
-  //       exact:true,
-  //       component:BlacklistAdd
-  //     },
-  //     {
-  //       path: '/blacklist/add',
-  //       exact:true,
-  //       component:BlacklistAdd
-  //     }
-  //   ]
-  // }
-
-
 ];
 
 
