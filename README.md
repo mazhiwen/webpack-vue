@@ -2,6 +2,7 @@
 ## 启动编译
 
 ```sh
+yarn
 yarn start --API_ENV=环境标识Str
 yarn build --API_ENV=环境标识Str
 ```
