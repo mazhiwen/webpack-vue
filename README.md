@@ -81,6 +81,8 @@ src/components/index.js 会自动注册目录内的组件。
 
 ## 图片引用
 
+
+### 作为DataURI引用
 ```html
 
 <!-- 作为DataURI引用 -->
@@ -101,6 +103,12 @@ data() {
 </script>
 
 ```
+
+### 作为url静态文件引用
+
+图片放到webpackConfig/public/images  
+引用 src="./images/xx.svg"
+
 ## style scoped
 
 深度组件样式影响

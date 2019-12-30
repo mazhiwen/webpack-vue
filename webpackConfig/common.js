@@ -41,6 +41,11 @@ module.exports = {
         to: path.resolve(__dirname, '../dist'),
         flatten: true,
       },
+      {
+        from: './webpackConfig/public/images/*',
+        to: path.resolve(__dirname, '../dist/images'),
+        flatten: true,
+      }
     ]),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主

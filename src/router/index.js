@@ -14,6 +14,10 @@ const routes = [
     path: '/echartline',
     component: resolve => require(['views/echartline'], resolve),
   },
+  {
+    path: '/svg',
+    component: () => import('views/svg'),
+  },
 ];
 
 

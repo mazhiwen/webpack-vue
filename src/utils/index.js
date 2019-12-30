@@ -10,7 +10,7 @@ import {
 
 
 
-
+console.log(copy);
 export {
   localForage,
   utiDate,
