@@ -36,6 +36,8 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-dynamic-import-webpack": "^1.1.0",
     "clean-webpack-plugin": "^0.1.16",
+    "colors": "^1.4.0",
+    "commander": "^4.0.1",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^1.0.0",
     "ejs-loader": "^0.3.3",

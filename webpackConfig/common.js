@@ -3,17 +3,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const colors = require('colors');
 
-const devMode = process.env.NODE_ENV !== 'production';
+
 let API_ENV = '';
-const APIENVIndex = process.argv.findIndex(value => value.includes('--API_ENV'));
+
+const argv = JSON.parse(process.env.npm_config_argv).original;
+const APIENVIndex = argv.findIndex(value => value.includes('--API_ENV'));
 if (APIENVIndex > 0) {
-  [, API_ENV] = process.argv[APIENVIndex].split('=');
+  [, API_ENV] = argv[APIENVIndex].split('=');
 }
-console.log(API_ENV);
+console.log(colors.rainbow('> API_ENV为:' + API_ENV));
 module.exports = {
 
   entry: {
