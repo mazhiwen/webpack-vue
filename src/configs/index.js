@@ -9,7 +9,7 @@ const configs = {
       prefix: '/proxyAPI/',
     },
     development: {
-      prefix: 'http://localhost:3000/',
+      prefix: 'http://localhost:3001/',
     },
     integration: {
       prefix: 'https://japi-fat.company.com/company-anti-fraud/api/',

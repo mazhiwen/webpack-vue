@@ -5,18 +5,18 @@
     <div>22</div>
 
 
-    <iframe id="iframe" src="http://localhost:8080" 
+    <!-- <iframe id="iframe" src="http://localhost:8080" 
       style="width:800px;height:300px;"
     >
       
-    </iframe>
+    </iframe> -->
   </div>
 </template>
 
 <script>
-// import { dataStructure} from "utility-mar";
-// import  dataStructure from "utils/dataStructure";
 
+import request from 'request';
+request.login.loginpost();
 export default {
   data() {
     return {
