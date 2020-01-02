@@ -5,7 +5,7 @@
 
 # testing
 /coverage
-
+.git.sh
 # production
 /build
 /dist
