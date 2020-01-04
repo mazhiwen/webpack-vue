@@ -1,9 +1,10 @@
 import AppHeader from './AppHeader';
+import Layout from './Layout';
 
 
 const components = {
   AppHeader,
-
+  Layout,
 }
 
 const install = function (Vue, opts = {}) {

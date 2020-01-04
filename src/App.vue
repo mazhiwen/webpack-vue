@@ -1,26 +1,30 @@
 <template>
-  <div class="example">
-    {{ msg }}
-    <div class="aa">
+  <div class="app">
+    <Login v-if="$route.name=='login'"/>  
+    <Layout v-else-if="$route.name">
       <router-view />
-    </div>
-
-
+    </Layout>
   </div>
 </template>
 
 <script>
 import SYSOUTCONFIGS from 'SYSOUTCONFIG';
-
+import Login from 'views/login';
 export default {
+  components:{
+    Login
+  },
   data() {
     return {
-      msg: 'Hello w2222orld!',
     };
   },
   mounted(){
+    // console.log(this.$route);
+  },
+  methods: {
 
   }
+ 
   
 };
 </script>

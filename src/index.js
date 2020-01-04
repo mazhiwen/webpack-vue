@@ -9,6 +9,8 @@ import {
 import store from './store';
 import components from 'components';
 import filters from 'filters';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 
 import App from './App.vue';
@@ -16,6 +18,7 @@ import App from './App.vue';
 Vue.use(VueRouter);
 Vue.use(components);
 Vue.use(filters);
+Vue.use(ElementUI);
 
 
 const router = new VueRouter({

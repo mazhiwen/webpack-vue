@@ -1,11 +1,14 @@
 import home from './home';
-// import Blacklist from 'views/blacklist';
-// import BlacklistList from 'views/blacklist/list';
-// import BlacklistAdd from 'views/blacklist/add';
+import single from './single';
 
 
 const routes = [
+  {
+    path: '*',
+    redirect: '/home'
+  },
   ...home,
+  ...single,
   {
     path: '/echartrelation',
     component: resolve => require(['views/echartrelation'], resolve),
