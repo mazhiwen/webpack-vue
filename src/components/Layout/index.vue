@@ -37,7 +37,11 @@
         </el-submenu>
         <el-menu-item index="2">
           <i class="el-icon-menu"></i>
-          <span slot="title">导航二</span>
+            <router-link
+              :to="{name: 'carousel'}"
+            >
+              轮播
+            </router-link>
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-document"></i>

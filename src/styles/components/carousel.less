@@ -1,0 +1,37 @@
+.carousel_wrap {
+
+    // display: flex;
+    >div {
+        display: inline-block;
+    }
+
+    .carousel_con_wrap {
+        // flex-grow: 1;
+        overflow: hidden;
+        height: 100px;
+        width: 80%;
+        position: relative;
+
+        .carousel_con_wrap_inner {
+            display: flex;
+            position: absolute;
+            width: 100%;
+
+        }
+
+        .carousel_transiton {
+            transition: all 3s;
+        }
+
+        .carousel_item {
+            // position: absolute;
+            // transition: all 3s;
+            border: 1px solid black;
+            width: 33.3%;
+            background: red;
+            // display: inline-block;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+    }
+}
