@@ -1,13 +1,29 @@
 
+## 目录
+
+- [启动编译](#启动编译)
+- [API配置](#API配置)
+- [本地跨域host](#本地跨域host)
+- [工具库引用](#工具库引用)
+- [axiosXHR请求](#axiosXHR请求)
+- [filters](#filters)
+- [全局组件](#全局组件)
+- [图片](#图片)
+- [样式](#样式)
+- [vuex](#vuex)
+
 ## 启动编译
 
 ```sh
+# 安装依赖
 yarn
+# 启动
 yarn start --API_ENV=环境标识Str
+# 编译打包
 yarn build --API_ENV=环境标识Str
 ```
 
-## API host配置
+## API配置
 
 src/configs/index.js
 
@@ -58,7 +74,7 @@ import {
 } from "utils";
 ```
 
-## axios XHR请求
+## axiosXHR请求
 
 ```js
 import request from 'request';
@@ -70,16 +86,25 @@ request.login.loginpost({
 })
 ```
 
-## filters全局注册
+## filters
 
 src/filters/index.js
 
-## 全局组件自动注册
+## 全局组件
 
 src/components/index.js 会自动注册目录内的组件。  
 注册后的组件可以全局直接引用 无需import
 
-## 图片引用
+### Icon
+
+```html
+<Icon
+  id="left-arrow"
+  style="cursor:pointer;color:red;font-size: 30px;"
+/>
+```
+
+## 图片
 
 
 ### 作为DataURI引用
@@ -109,7 +134,22 @@ data() {
 图片放到webpackConfig/public/images  
 引用 src="./images/xx.svg"
 
-## style scoped
+## 样式
+
+### 基本样式库
+
+./src/styles/lib.less 
+
+文件内的样式class 可以直接全局引用
+
+```css
+.box{
+
+}
+/*...其他样式*/
+```
+
+### style scoped
 
 深度组件样式影响
 
@@ -126,6 +166,45 @@ data() {
 ```
 
 有些像 Sass 之类的预处理器无法正确解析 >>>。这种情况下你可以使用 /deep/ 或 ::v-deep 操作符取而代之——两者都是 >>> 的别名，同样可以正常工作。
+
+### CSS Modules
+
+作为style scoped的替代方案
+
+https://vue-loader.vuejs.org/zh/guide/css-modules.html#%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8
+
+<style module>
+.red {
+  color: red;
+}
+.bold {
+  font-weight: bold;
+}
+</style>
+
+<template>
+  <p :class="$style.red">
+    This should be red
+  </p>
+</template>
+
+开启cssmodule需要在webpack css-loader
+配置:
+```js
+options: {
+  //开启 CSS Modules
+    modules: true,
+    // 自定义生成的类名
+    localIdentName: '[local]_[hash:base64:8]'
+}
+```
+
+```js
+,
+  // "sideEffects": [
+  //   "*.css"
+  // ]
+```
 
 ## vuex
 
@@ -191,41 +270,3 @@ export default {
 }
 ```
 
-## CSS Modules
-
-作为style scoped的替代方案
-
-https://vue-loader.vuejs.org/zh/guide/css-modules.html#%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8
-
-<style module>
-.red {
-  color: red;
-}
-.bold {
-  font-weight: bold;
-}
-</style>
-
-<template>
-  <p :class="$style.red">
-    This should be red
-  </p>
-</template>
-
-开启cssmodule需要在webpack css-loader
-配置:
-```js
-options: {
-  //开启 CSS Modules
-    modules: true,
-    // 自定义生成的类名
-    localIdentName: '[local]_[hash:base64:8]'
-}
-```
-
-```js
-,
-  // "sideEffects": [
-  //   "*.css"
-  // ]
-```

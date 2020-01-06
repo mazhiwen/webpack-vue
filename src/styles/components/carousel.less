@@ -1,36 +1,28 @@
 .carousel_wrap {
-
-    // display: flex;
+    align-items: center;
+    justify-content: space-around;
+    display: flex;
+    // .box;
     >div {
         display: inline-block;
     }
-
     .carousel_con_wrap {
-        // flex-grow: 1;
         overflow: hidden;
-        height: 100px;
+        height: 250px;
         width: 80%;
         position: relative;
-
         .carousel_con_wrap_inner {
             display: flex;
             position: absolute;
             width: 100%;
-
+            height: 100%;
         }
-
         .carousel_transiton {
             transition: all 3s;
         }
-
         .carousel_item {
-            // position: absolute;
-            // transition: all 3s;
             box-sizing: border-box;
-            border: 1px solid black;
             width: 33.3%;
-            background: red;
-            // display: inline-block;
             flex-grow: 0;
             flex-shrink: 0;
         }

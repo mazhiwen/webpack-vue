@@ -1,10 +1,14 @@
 import AppHeader from './AppHeader';
 import Layout from './Layout';
+import Carousel from './Carousel';
+import Icon from './Icon';
 
 
 const components = {
   AppHeader,
   Layout,
+  Carousel,
+  Icon
 }
 
 const install = function (Vue, opts = {}) {

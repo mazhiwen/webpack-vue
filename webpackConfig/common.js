@@ -75,6 +75,9 @@ module.exports = {
         {
           path: 'bmap.js',
         },
+        {
+          path: 'svgicon.js',
+        }
       ],
       append: false,
     }),
