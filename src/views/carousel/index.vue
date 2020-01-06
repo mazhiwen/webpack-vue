@@ -2,27 +2,36 @@
 <div >
   <div
     class="carousel_wrap"
+    ref="carousel_wrap"
   >
     <el-button
       @click="onLeftClick"
     >
       左
     </el-button>
-    <div class="carousel_con_wrap">
+    <div
+      ref="carousel_con_wrap"
+      class="carousel_con_wrap"
+      :style="{
+        width:boxWidth
+      }"
+    >
       <div
         :class="[
           'carousel_con_wrap_inner',
           isTransition?'carousel_transiton':''
         ]"
         :style="{
-          left:`${left}px`
+          left:`${boxLeft}px`
         }"
       >
         <div
-          v-for="(value, index) in endList"
+          v-for="(value, index) in renderDataList"
           :key="index"
           class="carousel_item"
-          
+          :style="{
+            width:`${stepWidth}px`
+          }"
         >
           {{value.text}}
         </div>
@@ -53,94 +62,105 @@ import {
 export default {
   data() {
     return {
+      boxWidth: '80%',
+      lengthGap: 2,
+      // lengthGap 需要小于等于 data总长度
       isTransition: true,
-      left: -380 * 3,
-      endList: [
-        {
-          text: 2
-        },
-        {
-          text: 3
-        },
-        {
-          text: 4
-        },
-
-
-
+      boxLeft: null,
+      data: [
         {
           text: 1
         },
         {
           text: 2
         },
-        {
-          text: 3
-        },
-        {
-          text: 4
-        },
-
-
-        {
-          text: 1
-        },
-        {
-          text: 2
-        },
-        {
-          text: 3
-        },
-          
+        // {
+        //   text: 3
+        // },
+        // {
+        //   text: 4
+        // },
+        // {
+        //   text: 5
+        // },
       ],
-      visualItemIndex: 3,
-      dataOriginLength: 4, 
+      renderDataList: [
+      ],
+      visualItemIndex: null,
+      dataOriginLength: null, 
+      stepWidth: null,
     };
   },
   created() {
     
   },
   mounted() {
-    let startLeft = 0;
-    const endList = copy.deepCopy(this.endList);
-    endList.forEach((value,index)=>{
-      value.left = startLeft;
-      startLeft += 380;
+
+    this.stepWidth = Math.floor((this.$refs['carousel_con_wrap'].offsetWidth) / this.lengthGap);
+    this.visualItemIndex = this.lengthGap;
+    this.boxLeft = - this.stepWidth * this.lengthGap;
+    console.log(this.stepWidth,this.boxLeft);
+    this.$nextTick(()=>{
+      this.boxWidth = `${-this.boxLeft}px`;
     });
-    this.endList = endList;
+    
+
+
+    const renderDataList = copy.deepCopy(this.data);
+    this.dataOriginLength = this.data.length;
+    renderDataList.forEach((value,index)=>{
+      
+    });
+    const tail = renderDataList.slice(0,this.lengthGap);
+    const head = renderDataList.slice(-this.lengthGap, this.dataOriginLength);
+    
+    this.renderDataList = head.concat(renderDataList).concat(tail);;
   },
   methods: {
     onLeftClick() {
-      // if(!this.isTransition){
-      //   this.isTransition = true;
-      // }
-      // this.visualItemIndex += 1;
-      console.log(this.visualItemIndex);
-      this.left += 380;
+      if(!this.isTransition){
+        this.isTransition = true;
+      }
       
-      // if(this.visualItemIndex === this.dataOriginLength) {
-        
-      //   setTimeout(()=>{
-      //     this.isTransition = false;
-      //     this.left = 0;
-      //   },3000);
-      // }
+      console.log(this.visualItemIndex);
+      
+      
+      if(this.visualItemIndex === 1) {
+        this.boxLeft += this.stepWidth;
+        this.visualItemIndex -= 1;
+        setTimeout(()=>{
+          this.isTransition = false;
+          this.boxLeft = -(this.stepWidth) * (this.dataOriginLength);
+          this.visualItemIndex = (this.dataOriginLength);
+        },3000);
+      } else if (this.visualItemIndex === 0) {
+
+      } else {
+        this.boxLeft += this.stepWidth;
+        this.visualItemIndex -= 1;
+      }
     },
     onRightClick() {
       if(!this.isTransition){
         this.isTransition = true;
       }
-      this.visualItemIndex += 1;
       console.log(this.visualItemIndex);
-      this.left -= 380;
-      
-      if(this.visualItemIndex === (this.dataOriginLength + 3)) {
-        
+      if(this.visualItemIndex === ((this.dataOriginLength + this.lengthGap) - 1)) {
+        this.boxLeft -= this.stepWidth;
+        this.visualItemIndex += 1;
         setTimeout(()=>{
           this.isTransition = false;
-          this.left = -380 * 3;
+          this.boxLeft = -(this.stepWidth) * this.lengthGap;
+          this.visualItemIndex = this.lengthGap;
         },3000);
+      } else if(this.visualItemIndex === (this.dataOriginLength + this.lengthGap)) {
+
+      } else {
+        this.visualItemIndex += 1;
+        this.boxLeft -= this.stepWidth;
       } 
+      
+
       
     }
   }
