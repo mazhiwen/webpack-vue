@@ -108,6 +108,9 @@ src/components/index.js 会自动注册目录内的组件。
 
 
 ### 作为DataURI引用
+
+图片放到src/images/logo.png
+
 ```html
 
 <!-- 作为DataURI引用 -->
@@ -129,11 +132,27 @@ data() {
 
 ```
 
-### 作为url静态文件引用
+### 作为HASH - url静态文件引用
 
-图片放到webpackConfig/public/images  
-引用 src="./images/xx.svg"
+图片放到src/static/time.jpg
 
+```html
+<template>
+  <div>
+    <img :src="logo">
+  </div>
+</template>
+
+<script>
+import logo from 'static/time.jpg'
+// vue注册
+data() {
+  return {
+    logo
+  };
+}
+</script>
+```
 ## 样式
 
 ### 基本样式库

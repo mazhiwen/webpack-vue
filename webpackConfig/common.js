@@ -16,6 +16,12 @@ if (APIENVIndex > 0) {
   [, API_ENV] = argv[APIENVIndex].split('=');
 }
 console.log(colors.rainbow('> API_ENV为:' + API_ENV));
+
+
+__webpack_public_path__ = `'https://dasd.com/web/'`;
+// const aa = `https://dasd.com/web`;
+
+
 module.exports = {
 
   entry: {
@@ -43,11 +49,11 @@ module.exports = {
         to: path.resolve(__dirname, '../dist'),
         flatten: true,
       },
-      {
-        from: './webpackConfig/public/images/*',
-        to: path.resolve(__dirname, '../dist/images'),
-        flatten: true,
-      }
+      // {
+      //   from: './webpackConfig/public/images/*',
+      //   to: path.resolve(__dirname, '../dist/images'),
+      //   flatten: true,
+      // }
     ]),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主
@@ -133,6 +139,7 @@ module.exports = {
       components: path.resolve(__dirname, '../src/components'),
       filters: path.resolve(__dirname, '../src/filters'),
       request: path.resolve(__dirname, '../src/request'),
+      static: path.resolve(__dirname, '../src/static'),
     },
     // 配置默认import index的文件扩展名
     extensions: ['.js', '.json', '.vue', '.less', '.css'],
@@ -141,40 +148,63 @@ module.exports = {
     SYSOUTCONFIG: 'SYSOUTCONFIG',
   },
   module: {
-    rules: [{
-      test: /\.ejs$/,
-      loader: 'ejs-loader',
-      // query是 loader 也就是lodash.template对应的编译选项
-      query: {
+    rules: [
+      {
+        test: /\.ejs$/,
+        loader: 'ejs-loader',
+        // query是 loader 也就是lodash.template对应的编译选项
+        query: {
 
-      },
-    },
-    {
-      test: /\.js$/,
-      exclude: /(node_modules|bower_components)/,
-      use: {
-        loader: 'babel-loader',
-        options: {},
-      },
-    },
-    {
-      test: /\.vue$/,
-      loader: 'vue-loader',
-    },
-    // 处理资源路径
-    {
-      test: /\.(png|svg|jpg|gif|woff|ttf)$/,
-      // use: ['file-loader']
-      // 可以用fileloader 和 urlloader
-      // urlloader 将limit大小的文件转为dataurl
-      // 超过则配置默认file-loader
-      use: [{
-        loader: 'url-loader',
-        options: {
-          fallback: 'file-loader',
         },
-      }],
-    },
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {},
+        },
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
+      // 处理资源路径
+      {
+        test: /\.(png|svg|jpg|gif|woff|ttf)$/,
+        // use: ['file-loader']
+        // 可以用fileloader 和 urlloader
+        // urlloader 将limit大小的文件转为dataurl
+        // 超过则配置默认file-loader
+        oneOf: [
+          {
+            // resourceQuery: /external/, // foo.css?external
+            include: [
+              path.resolve(__dirname, '../src/static'),
+            ],
+            use: {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[contenthash].[ext]',
+                outputPath: 'static/',
+                publicPath: 'static/',
+                postTransformPublicPath: (p) => {
+                  return `__webpack_public_path__ + ${p}`;
+                },
+              },
+            },
+          },
+          {
+            use: [{
+              loader: 'url-loader',
+              options: {
+                fallback: 'file-loader',
+              },
+            }],
+          },
+          
+        ]
+      },
 
     ],
 

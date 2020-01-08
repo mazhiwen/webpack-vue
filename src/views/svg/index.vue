@@ -26,14 +26,14 @@
           stop-opacity:1"/>
         </linearGradient>
         <!-- 主图阴影 -->
-        <filter x="-1.6%" y="-2.1%" width="103.1%" height="104.2%" filterUnits="objectBoundingBox" id="filter-2">
+        <!-- <filter x="-1.6%" y="-2.1%" width="103.1%" height="104.2%" filterUnits="objectBoundingBox" id="filter-2">
             <feOffset dx="3" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 0.792156863   0 0 0 0 0.545098039   0 0 0 0 0.545098039  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1" result="shadowMatrixOuter1"></feColorMatrix>
             <feMerge>
                 <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
                 <feMergeNode in="SourceGraphic"></feMergeNode>
             </feMerge>
-        </filter>
+        </filter> -->
         <!-- 南沙群岛样式 -->
         <rect id="path-3" x="0" y="0" width="83" height="111" rx="2"></rect>
         <filter x="-11.4%" y="-7.7%" width="122.9%" height="117.1%" filterUnits="objectBoundingBox" id="filter-4">

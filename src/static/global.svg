@@ -1,0 +1,17 @@
+<svg
+    aria-hidden="true" 
+    style="position: absolute; width: 0px; height: 0px; overflow: hidden;"
+>
+    <defs>
+        <!-- 主图阴影 -->
+        <filter x="-1.6%" y="-2.1%" width="103.1%" height="104.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="3" dy="6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.792156863   0 0 0 0 0.545098039   0 0 0 0 0.545098039  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    
+</svg>
