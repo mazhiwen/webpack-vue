@@ -18,4 +18,13 @@ export default [
     name: 'svg',
     component: () => import('views/svg'),
   },
+  {
+    path: '/echartrelation',
+    name: 'echartrelation',
+    component: () => import('views/echartrelation'),
+  }, {
+    path: '/echartline',
+    name: 'echartline',
+    component: () => import('views/echartline'),
+  },
 ]
