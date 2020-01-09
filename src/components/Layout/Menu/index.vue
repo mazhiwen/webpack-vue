@@ -6,37 +6,56 @@
   @open="handleOpen"
   @close="handleClose"
 >
-  <!-- <el-submenu index="1">
-    <template slot="title">
-      <i class="el-icon-location"></i>
-      <span>导航一</span>
-    </template>
-    <el-menu-item-group>
-      <el-menu-item index="1-1">选项1</el-menu-item>
-      <el-menu-item index="1-2">选项2</el-menu-item>
-      <el-menu-item index="1-3">选项3</el-menu-item>
-    </el-menu-item-group>
-    <el-submenu index="1-4">
-      <template slot="title">选项4</template>
-      <el-menu-item index="1-4-1">选项1</el-menu-item>
-    </el-submenu>
-  </el-submenu> -->
-  <el-menu-item 
+  
+  <div
     v-for="(value,index) in menu"
     :key="index"
-    :index="index.toString()"
   >
-    <i
-      v-if="value.icon"
-      :class="[value.icon]"
+    <el-submenu
+      v-if="value.children" 
+      :index="index.toString()"
     >
-    </i>
-    <router-link
-      :to="{name: value.name}"
+      <template slot="title">
+        <i
+          v-if="value.icon"
+          :class="[value.icon]"
+        />
+        <span>{{value.text}}</span>
+      </template>
+      <el-menu-item-group>
+        <el-menu-item
+          v-for="(valuec,indexc) in value.children"
+          :key="`${index}-${indexc}`"
+          :index="`${index}-${indexc}`"
+        >
+          <router-link
+            :to="{name: valuec.name}"
+          >
+            {{valuec.text}}
+          </router-link>
+        </el-menu-item>
+      </el-menu-item-group>
+      <!-- <el-submenu index="1-4">
+        <template slot="title">选项4</template>
+        <el-menu-item index="1-4-1">选项1</el-menu-item>
+      </el-submenu> -->
+    </el-submenu>
+    <el-menu-item 
+      v-else
+      :index="index.toString()"
     >
-      {{value.text}}
-    </router-link>
-  </el-menu-item>
+      <i
+        v-if="value.icon"
+        :class="[value.icon]"
+      />
+      <router-link
+        :to="{name: value.name}"
+      >
+        {{value.text}}
+      </router-link>
+    </el-menu-item>
+  </diV>
+  
 
 </el-menu>
 </template>
@@ -47,30 +66,49 @@ export default {
     return {
       menu: [
         {
-          name: 'carousel',
+          name: 'echart',
           icon: 'el-icon-menu',
-          text: '无缝轮播'
+          text: '图表',
+          children: [
+            {
+              name: 'echart.relation',
+              icon: 'el-icon-menu',
+              text: '关系图'
+            },
+            {
+              name: 'echart.line',
+              icon: 'el-icon-menu',
+              text: '折线图'
+            }
+          ]
         },
         {
-          name: 'svg',
-          icon: 'el-icon-document',
-          text: 'svg Map'
-        },
-        {
-          name: 'table',
+          name: 'demo',
           icon: 'el-icon-menu',
-          text: '表单 列表'
+          text: 'demo',
+          children: [
+            {
+              name: 'demo.demoa',
+              icon: 'el-icon-menu',
+              text: '可以复制demo页面开发'
+            },
+            {
+              name: 'demo.carousel',
+              icon: 'el-icon-menu',
+              text: '无缝轮播'
+            },
+            {
+              name: 'demo.svg',
+              icon: 'el-icon-document',
+              text: 'svg Map'
+            },
+            {
+              name: 'demo.table',
+              icon: 'el-icon-menu',
+              text: '表单 列表'
+            },
+          ]
         },
-        {
-          name: 'echartrelation',
-          icon: 'el-icon-menu',
-          text: '关系图'
-        },
-        {
-          name: 'echartline',
-          icon: 'el-icon-menu',
-          text: '折线图'
-        }
       ]
     };
   },

@@ -39,18 +39,9 @@ import usaJson from './shenzhen.json';
 
 import hangzhou from './hangzhou-track.json';
 
-// const echarts = require('echarts');
-// import request from 'request';
-// request.login.loginpost({
-//   da:2,
-//   ddddd:3
-// }).then((res)=>{
-//   console.log(res);
-// })
 
 import SYSOUTCONFIGS from 'SYSOUTCONFIG';
 
-console.log(echarts);
 
 export default {
   data() {
@@ -561,13 +552,11 @@ export default {
         // ];
         var coords = futianSTRCoords[api.value(0)];
         var points = [];
-        console.log(api.value(0));
         for (var i = 0; i < coords.length; i++) {
             points.push(api.coord(coords[i]));
         }
         var color = api.visual('color');
         
-        console.log(color);
         return {
             type: 'polygon',
             name: 'aaa',
@@ -872,7 +861,6 @@ export default {
     myChart.setOption(option);
     myChart.on('click', {element: 'aaa'}, (params) => {
       // 控制台打印数据的名称
-      console.log('aa');
       const event = params.event.event;
       this.popUpWin.left = event.clientX - 100;
       this.popUpWin.top = event.clientY - 330;

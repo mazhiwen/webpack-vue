@@ -205,7 +205,6 @@
 
 <script>
 import { copy } from "utils";
-// import  dataStructure from "utils/dataStructure";
 import timeJPG from 'images/time.jpg';
 import {
   getGradientColorsByValues,

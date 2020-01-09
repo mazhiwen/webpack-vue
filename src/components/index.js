@@ -1,11 +1,11 @@
-import AppHeader from './AppHeader';
+// import AppHeader from './AppHeader';
 import Layout from './Layout';
 import Carousel from './Carousel';
 import Icon from './Icon';
 
 
 const components = {
-  AppHeader,
+  // AppHeader,
   Layout,
   Carousel,
   Icon

@@ -1,5 +1,6 @@
-import home from './home';
-import single from './single';
+import echart from './echart';
+import demo from './demo';
+import extra from './extra';
 
 
 const routes = [
@@ -7,10 +8,9 @@ const routes = [
     path: '*',
     redirect: '/home'
   },
-  ...home,
-  ...single,
-  
-  
+  ...echart,
+  ...demo,
+  ...extra,
 ];
 
 

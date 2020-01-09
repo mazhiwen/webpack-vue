@@ -9,7 +9,6 @@
 
 <script>
 
-import graph from './data2';
 export default {
   data() {
     return {

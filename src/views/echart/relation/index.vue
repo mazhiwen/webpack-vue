@@ -20,7 +20,6 @@ export default {
   mounted() {
     var myChart = echarts.init(document.getElementById('main'));
     myChart.hideLoading();
-    console.log(graph);
     var categories = [];
     for (var i = 0; i < 9; i++) {
         categories[i] = {
@@ -30,7 +29,6 @@ export default {
             // }
         };
     }
-    console.log(categories);
     const richLabel = {
       name: {
         fontSize: 12,
@@ -65,7 +63,6 @@ export default {
           }
         }
     });
-    console.log(graph.nodes);
     const option = {
         title: {
             text: 'Les Miserables',
@@ -98,7 +95,6 @@ export default {
                 label: {
                   show:true,
                   formatter:(params)=>{
-                    console.log(params);
                     var arr;
                     if(params.data.headImg){
                       arr = [
