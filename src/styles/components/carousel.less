@@ -1,28 +1,54 @@
 .carousel_wrap {
+
     align-items: center;
     justify-content: space-around;
     display: flex;
-    // .box;
+    height: 100%;
+
     >div {
         display: inline-block;
     }
+
+    .arrow {
+        border: 3px solid @themeColor;
+        border-radius: 50%;
+        color: @themeColor;
+        padding: 3px;
+
+        &.icon {
+            width: 1.3em;
+            height: 1.3em;
+        }
+
+        &:hover {}
+    }
+
     .carousel_con_wrap {
+        // flex-grow: 1;
         overflow: hidden;
-        height: 250px;
+        height: 100%;
         width: 80%;
         position: relative;
+
         .carousel_con_wrap_inner {
             display: flex;
             position: absolute;
             width: 100%;
             height: 100%;
         }
+
         .carousel_transiton {
-            transition: all 3s;
+            transition: all 1s;
         }
+
         .carousel_item {
+            // position: absolute;
+            height: 100%;
             box-sizing: border-box;
+            // border: 1px solid black;
             width: 33.3%;
+            // background: red;
+            // display: inline-block;
             flex-grow: 0;
             flex-shrink: 0;
         }

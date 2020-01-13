@@ -1,5 +1,14 @@
 <template>
-  <div class="demo">
+  <div class="card">
+    <div class="card_head">
+      <div class="card_title">
+        标题
+      </div>
+    </div>
+    <div class="card_body">
+      dsa
+      <slot/>
+    </div>
   </div>
 </template>
 

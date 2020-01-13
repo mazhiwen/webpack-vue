@@ -100,7 +100,9 @@ src/filters/index.js
 src/components/index.js 会自动注册目录内的组件。  
 注册后的组件可以全局直接引用 无需import
 
-### Icon
+常用组件：
+
+### 1.Icon
 
 ```html
 <Icon
@@ -108,6 +110,8 @@ src/components/index.js 会自动注册目录内的组件。
   style="cursor:pointer;color:red;font-size: 30px;"
 />
 ```
+
+
 
 ## 图片
 
@@ -158,14 +162,16 @@ data() {
 }
 </script>
 ```
+
 ## 样式
 
-### 基本样式库
+> 原则上禁止使用组件内的scoped样式。该用class page_a less嵌套页面的形式，新建页面样式文件写在styles目录内
 
-./src/styles/lib.less 
+### 常用样式库
 
-文件内的样式class 可以直接全局引用
+> 文件./src/styles/lib.less 以及 ./src/styles/components文件夹内 有常用的一些样式封装，可以自行修改。文件内的样式class 可以直接全局引用
 
+如：
 ```css
 .box{
 

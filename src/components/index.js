@@ -2,24 +2,26 @@
 import Layout from './Layout';
 import Carousel from './Carousel';
 import Icon from './Icon';
+import Card from './Card';
 
 
 const components = {
   // AppHeader,
   Layout,
   Carousel,
-  Icon
-}
+  Icon,
+  Card,
+};
 
 const install = function (Vue, opts = {}) {
   if (install.installed) return;
   Object.keys(components).forEach(component => Vue.component(component, components[component]))
-}
+};
 
 const API = {
   install,
-  ...components
-}
+  ...components,
+};
 
 // auto install
 if (typeof window !== 'undefined' && window.Vue) {
@@ -27,4 +29,4 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 
-export default API
+export default API;

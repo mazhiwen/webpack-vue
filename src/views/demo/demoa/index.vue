@@ -1,7 +1,10 @@
 <template>
-<div class="page_demoa">
-    page_demoa
-</div>
+  <div class="page_demoa">
+    <Card>
+      page_demoa
+    </Card>
+      
+  </div>
 </template>
 
 <script>
@@ -37,5 +40,4 @@ export default {
 
 <style lang="less">
 
-</style>>
-
+</style>
