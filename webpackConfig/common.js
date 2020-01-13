@@ -96,6 +96,10 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
         },
+        // static: {
+        //   test: /[\\/]static[\\/]/,
+        //   filename: '[name].bundle.js',
+        // },
         default: {
           minChunks: 2,
           priority: -20,

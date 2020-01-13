@@ -1,7 +1,7 @@
 <template>
   <div class="page_demoa">
     <Card>
-      page_demoa
+      
     </Card>
       
   </div>

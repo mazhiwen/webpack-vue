@@ -15,6 +15,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import App from './App.vue';
 
+
+// dsa
+import 'static/js/test.js';
+
 Vue.use(VueRouter);
 Vue.use(components);
 Vue.use(filters);
@@ -22,8 +26,7 @@ Vue.use(ElementUI);
 
 
 const router = new VueRouter({
-  // mode: 'history',
-  routes, // (缩写) 相当于 routes: routes
+  routes,
 });
 
 new Vue({
