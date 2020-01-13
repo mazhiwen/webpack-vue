@@ -24,9 +24,11 @@ yarn start --API_ENV=环境标识Str
 yarn build --API_ENV=环境标识Str
 ```
 
-## window注意
+## 注意
 
-新建文件夹commit以后，不要修改文件夹名称大小写
+1. 新建文件夹commit以后，不要修改文件夹名称大小写
+2. router必需全部配置 name
+
 
 ## API配置
 

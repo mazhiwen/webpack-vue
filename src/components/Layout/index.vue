@@ -1,5 +1,5 @@
 <template>
-  <el-container class="layout">
+  <el-container class="main_layout">
     <el-aside 
       width="256px"
     >

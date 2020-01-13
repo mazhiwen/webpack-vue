@@ -18,8 +18,7 @@ if (APIENVIndex > 0) {
 console.log(colors.rainbow('> API_ENV为:' + API_ENV));
 
 
-__webpack_public_path__ = `'https://dasd.com/web/'`;
-// const aa = `https://dasd.com/web`;
+// __webpack_public_path__ = `'https://dasd.com/web/'`;
 
 
 module.exports = {
@@ -79,11 +78,8 @@ module.exports = {
           path: 'echarts.min.js',
         },
         {
-          path: 'bmap.js',
-        },
-        {
           path: 'svgicon.js',
-        }
+        },
       ],
       append: false,
     }),
@@ -188,9 +184,9 @@ module.exports = {
                 name: '[name].[contenthash].[ext]',
                 outputPath: 'static/',
                 publicPath: 'static/',
-                postTransformPublicPath: (p) => {
-                  return `__webpack_public_path__ + ${p}`;
-                },
+                // postTransformPublicPath: (p) => {
+                //   return `__webpack_public_path__ + ${p}`;
+                // },
               },
             },
           },
@@ -202,8 +198,7 @@ module.exports = {
               },
             }],
           },
-          
-        ]
+        ],
       },
 
     ],

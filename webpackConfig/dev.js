@@ -23,11 +23,13 @@ module.exports = merge(common, {
     proxy: {
       '/proxyAPI': {
         target: 'http://localhost:3000',
-        pathRewrite: {'^/proxyAPI' : ''},
+        pathRewrite: {
+          '^/proxyAPI': '',
+        },
         // changeOrigin: true, // target是域名的话，需要这个参数，
         // secure: false, // 设置支持https协议的代理
-      }
-    }
+      },
+    },
   },
   plugins: [
     new webpack.NamedModulesPlugin(), // 热更新相关
