@@ -1,0 +1,2 @@
+import './svgicon';
+import './test';

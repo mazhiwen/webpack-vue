@@ -12,6 +12,7 @@
 - [样式](#样式)
 - [props](#props)
 - [vuex](#vuex)
+- [静态js资源](#静态js资源)
 
 ## 启动编译
 
@@ -118,7 +119,7 @@ src/components/index.js 会自动注册目录内的组件。
 ## 图片
 
 
-### 作为DataURI引用
+- 作为DataURI引用
 
 图片放到src/images/logo.png
 
@@ -143,7 +144,7 @@ data() {
 
 ```
 
-### 作为HASH - url静态文件引用
+- 作为HASH - url静态文件引用
 
 图片放到src/static/time.jpg
 
@@ -338,3 +339,31 @@ export default {
 }
 ```
 
+## 静态js资源
+
+### 添加基本不会变更的js资源库
+
+添加步骤:
+
+1. 将 demo.js 添加到 webpackConfig/public/ 目录下
+
+2. 添加 webpackConfig/common.js HtmlWebpackTagsPlugin[0]tags
+
+```js
+tags: [
+  {
+    path: 'demo.js',
+  },
+  {
+    path: 'echarts.min.js',
+  },
+],
+```
+
+### 添加需要hash后缀的资源
+
+添加步骤:
+
+1. src/static/js 目录下添加demo.js
+
+2. 在 src/static/js/index.js 添加引入 demo.js

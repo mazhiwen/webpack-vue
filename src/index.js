@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import 'static/js';
 
 import 'styles';
 import Vue from 'vue';
@@ -17,7 +18,7 @@ import App from './App.vue';
 
 
 // dsa
-import 'static/js/test.js';
+// import 'static/js/test.js';
 
 Vue.use(VueRouter);
 Vue.use(components);

@@ -48,11 +48,7 @@ module.exports = {
         to: path.resolve(__dirname, '../dist'),
         flatten: true,
       },
-      // {
-      //   from: './webpackConfig/public/images/*',
-      //   to: path.resolve(__dirname, '../dist/images'),
-      //   flatten: true,
-      // }
+      
     ]),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主
@@ -77,9 +73,6 @@ module.exports = {
         {
           path: 'echarts.min.js',
         },
-        {
-          path: 'svgicon.js',
-        },
       ],
       append: false,
     }),
@@ -95,29 +88,22 @@ module.exports = {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
+          name: 'vendors',
         },
-        // static: {
-        //   test: /[\\/]static[\\/]/,
-        //   filename: '[name].bundle.js',
-        // },
+        static: {
+          test: /[\\/]static[\\/]/,
+          priority: -10,
+          name: 'static',
+          minSize: 0,
+          minChunks: 1,
+          enforce: true,
+        },
         default: {
           minChunks: 2,
           priority: -20,
           reuseExistingChunk: true,
         },
       },
-      //* **************************/
-      // cacheGroups: { // 这里开始设置缓存的 chunks
-      //   priority: 0, // 缓存组优先级
-      //   app: { // key 为entry中定义的入口名称
-      //     chunks: 'all', // 必须三选一： "initial" | "all" | "async"(默认就是异步)
-      //     name: 'dom', // 要缓存的 分隔出来的 chunk 名称
-      //     minSize: 0,
-      //     minChunks: 1,
-      //     enforce: true,
-      //     reuseExistingChunk: true
-      //   }
-      // }
     }),
     new webpack.ProvidePlugin({
       _: 'lodash',
@@ -188,9 +174,6 @@ module.exports = {
                 name: '[name].[contenthash].[ext]',
                 outputPath: 'static/',
                 publicPath: 'static/',
-                // postTransformPublicPath: (p) => {
-                //   return `__webpack_public_path__ + ${p}`;
-                // },
               },
             },
           },
