@@ -367,3 +367,9 @@ tags: [
 1. src/static/js 目录下添加demo.js
 
 2. 在 src/static/js/index.js 添加引入 demo.js
+
+### SYSOUTCONFIG
+
+> SYSOUTCONFIG 是不经过uglify的hashjs，并且编译为独立的Chunk以便对编译后的文件，进行现场临时修改
+
+src/static/SYSOUTCONFIG.js

@@ -13,11 +13,16 @@
 
 
 
-import SYSOUTCONFIGS from 'SYSOUTCONFIG';
 import Login from 'views/login';
 import GlobalSvg from 'components/GlobalSvg';
 
+import {
+  test,
+  testfn,
+} from 'static/SYSOUTCONFIG.js';
 
+
+console.log(test, testfn);
 
 export default {
   components:{

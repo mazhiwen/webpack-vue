@@ -1,4 +1,2 @@
-console.log('fuckyou!!!222222!');
-function a() {
-  console.log('fuckyou2222');
-}
+// console.log('fucktest!!!222222!');
+

@@ -6,6 +6,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const colors = require('colors');
+const TerserPlugin = require('terser-webpack-plugin');
 
 
 let API_ENV = '';
@@ -40,10 +41,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: './src/configs/SYSOUTCONFIG.js',
-        to: path.resolve(__dirname, '../dist'),
-      },
-      {
         from: './webpackConfig/public/*',
         to: path.resolve(__dirname, '../dist'),
         flatten: true,
@@ -68,9 +65,6 @@ module.exports = {
     new HtmlWebpackTagsPlugin({
       tags: [
         {
-          path: 'SYSOUTCONFIG.js',
-        },
-        {
           path: 'echarts.min.js',
         },
       ],
@@ -91,9 +85,17 @@ module.exports = {
           name: 'vendors',
         },
         static: {
-          test: /[\\/]static[\\/]/,
+          test: /[\\/]static[\\/]js/,
           priority: -10,
           name: 'static',
+          minSize: 0,
+          minChunks: 1,
+          enforce: true,
+        },
+        SYSOUTCONFIG: {
+          test: /[\\/]SYSOUTCONFIG\.js/,
+          priority: -10,
+          name: 'SYSOUTCONFIG',
           minSize: 0,
           minChunks: 1,
           enforce: true,
@@ -131,7 +133,6 @@ module.exports = {
     extensions: ['.js', '.json', '.vue', '.less', '.css'],
   },
   externals: {
-    SYSOUTCONFIG: 'SYSOUTCONFIG',
   },
   module: {
     rules: [
@@ -190,5 +191,18 @@ module.exports = {
 
     ],
 
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        chunkFilter: (chunk) => {
+          // Exclude uglification for the `SYSOUTCONFIG` chunk
+          if (chunk.name === 'SYSOUTCONFIG') {
+            return false;
+          }
+          return true;
+        },
+      }),
+    ],
   },
 };

@@ -40,7 +40,6 @@ import usaJson from './shenzhen.json';
 import hangzhou from './hangzhou-track.json';
 
 
-import SYSOUTCONFIGS from 'SYSOUTCONFIG';
 
 
 export default {

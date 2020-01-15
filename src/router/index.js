@@ -6,7 +6,7 @@ import extra from './extra';
 const routes = [
   {
     path: '*',
-    redirect: '/home'
+    redirect: '/home',
   },
   ...echart,
   ...demo,
