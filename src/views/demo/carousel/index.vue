@@ -5,7 +5,9 @@
       style="height:300px;"
       :isInfinite="true"
     >
-      <template v-slot:default="slotProps">
+      <template
+        v-slot:default="slotProps"
+      >
         <div
           class="item"
           :style="{
@@ -22,7 +24,7 @@
 <script>
 
 import {
-  copy
+  copy,
 } from 'utils';
 
 export default {
@@ -31,41 +33,39 @@ export default {
       data: [
         {
           text: 1,
-          color: 'red'
+          color: 'red',
         },
         {
           text: 2,
-          color: 'blue'
+          color: 'blue',
         },
         {
           text: 3,
-          color: 'gray'
+          color: 'gray',
         },
         {
           text: 4,
-          color: 'pink'
+          color: 'pink',
         },
         {
           text: 5,
-          color: 'gold'
+          color: 'gold',
         },
       ],
     };
   },
   created() {
-    
+
   },
   mounted() {
 
-
   },
   methods: {
-    
-  }
+
+  },
 };
 </script>
 
 <style lang="less">
 
 </style>>
-

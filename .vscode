@@ -3,28 +3,40 @@
     "workbench.colorTheme": "Default Light+",
     "git.autofetch": true,
     "files.autoSave": "off",
-    // "eslint.codeActionsOnSave": false,
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
     "[javascript]": {
         "editor.defaultFormatter": "HookyQR.beautify"
     },
     "editor.formatOnPaste": true,
-    "editor.formatOnSave": false,
     "editor.tabSize": 2,
-    // "beautify.tabSize": 1,
     "eslint.validate": [
         "javascript",
         "javascriptreact",
         "html",
         {
             "language": "vue",
-            "autoFix": false
+            "autoFix": true
         }
     ],
-    //开启关闭 eslint 
-    // "eslint.enable": true,
+    "eslint.enable": true,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "eslint.alwaysShowStatus": true,
-    // "eslint.quiet": true
-
+    "eslint.format.enable": true,
+    "eslint.probe": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "html",
+        "vue",
+    ],
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.includeLanguages": {
+        "vue-html": "html",
+        "vue": "html"
+    },
 }

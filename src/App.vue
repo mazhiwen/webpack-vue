@@ -1,48 +1,33 @@
 <template>
   <div class="app">
-    <GlobalSvg/>
-    <Login v-if="$route.name=='login'"/>  
+    <GlobalSvg />
+    <Login v-if="$route.name=='login'" />
     <Layout v-else-if="$route.name">
       <router-view />
     </Layout>
   </div>
-
 </template>
 
 <script>
+import Login from "views/login";
+import GlobalSvg from "components/GlobalSvg";
 
-
-
-import Login from 'views/login';
-import GlobalSvg from 'components/GlobalSvg';
-
-import {
-  test,
-  testfn,
-} from 'static/SYSOUTCONFIG.js';
-
+import { test, testfn } from "static/SYSOUTCONFIG.js";
 
 console.log(test, testfn);
 
 export default {
-  components:{
+  components: {
     Login,
     GlobalSvg
   },
   data() {
-    return {
-    };
+    return {};
   },
-  mounted(){
-  },
-  methods: {
-
-  }
- 
-  
+  mounted() {},
+  methods: {}
 };
 </script>
 
 <style lang="less" scoped>
-
 </style>

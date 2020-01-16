@@ -1,12 +1,13 @@
-html,body {
-  height: 100%;  
+html,
+body {
+  height: 100%;
   padding: 0;
   margin: 0;
   background: #fff;
   line-height: 1.5;
   color: rgba(0, 0, 0, .65);
   font-size: 14px;
-  font-family: 
+  font-family:
     -apple-system,
     BlinkMacSystemFont,
     Segoe UI,
@@ -23,25 +24,26 @@ html,body {
   font-variant: tabular-nums;
 }
 
-.app,.main_layout{
-    height: 100%;
+.app,
+.main_layout {
+  height: 100%;
 }
 
 .header {}
 
 
 ::placeholder {
-    color: gray;
+  color: gray;
 }
 
 .image {
-    background-image: url('../images/time.jpg');
+  background-image: url('../images/time.jpg');
 }
 
 @media (min-resolution: 2dppx) {
-    .image {
-        background-image: url('../images/time.jpg');
-    }
+  .image {
+    background-image: url('../images/time.jpg');
+  }
 }
 
 
@@ -50,82 +52,92 @@ html,body {
 
 
 // 主布局
-.layout{
-    background: #f0f2f5;
+.layout {
+  background: #f0f2f5;
 }
+
 .el-header,
 .el-footer {
-    // background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
+  // background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
 }
+
 .el-header {
-    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
-    display: flex;
-    align-items: center;
-    position: relative;
-    background: #fff;
-    line-height: 64px;
-    .header_right{
-        float: right;
-        height: 100%;
-        margin-left: auto;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #fff;
+  line-height: 64px;
 
-    }
+  .header_right {
+    float: right;
+    height: 100%;
+    margin-left: auto;
+
+  }
 }
+
 .el-aside {
-    background-color: #001529;
-    color: #333;
-    text-align: center;
-    box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
-    position: relative;
-    z-index: 10;
+  background-color: #001529;
+  color: #333;
+  text-align: center;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+  position: relative;
+  z-index: 10;
 
-    .el-menu{
-        border-right: solid 1px #001529;
-        background: #001529;
+  .el-menu {
+    border-right: solid 1px #001529;
+    background: #001529;
+  }
+
+  .el-menu-item,
+  .el-submenu__title {
+    color: #fff;
+    text-align: left;
+  }
+
+  .menu_logo {
+    padding: 0 24px;
+
+    a {
+      display: flex;
+      align-items: center;
+      height: 64px;
     }
-    .el-menu-item,
-    .el-submenu__title {
-        color: #fff;
-        text-align: left;
+
+    img {
+      height: 32px;
     }
-    .menu_logo{
-        padding: 0 24px;
-        a{
-            display: flex;
-            align-items: center;
-            height: 64px;
-        }
-        img {
-            height: 32px;
-        }
-        h1 {
-            display: inline-block;
-            margin: 0 0 0 12px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 20px;       
-        }
-    }   
+
+    h1 {
+      display: inline-block;
+      margin: 0 0 0 12px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
 }
+
 .el-main {
-    background: transparent;
-    color: #24313c;
-    text-align: center;
-    border-top-left-radius: .1875rem;
-    border-top-right-radius: .1875rem;
+  background: transparent;
+  color: #24313c;
+  text-align: center;
+  border-top-left-radius: .1875rem;
+  border-top-right-radius: .1875rem;
 }
 
 
 
 // router-link  a
-.router-link-active{
-    color: gray;
+.router-link-active {
+  color: gray;
 }
 
 a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
