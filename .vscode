@@ -7,10 +7,10 @@
     "editor.codeActionsOnSave": {
         "source.fixAll": true
     },
+    "editor.formatOnPaste": true,
     "[javascript]": {
         "editor.defaultFormatter": "HookyQR.beautify"
     },
-    "editor.formatOnPaste": true,
     "editor.tabSize": 2,
     "eslint.validate": [
         "javascript",

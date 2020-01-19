@@ -37,6 +37,6 @@ module.exports = {
     "func-names": "off",
     "vue/attribute-hyphenation": "off",
     "no-lonely-if": "off",
-    quotes: ["warn", "double"]
+    quotes: ["warn", "single"]
   }
 };
