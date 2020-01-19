@@ -1,17 +1,17 @@
-import _ from 'lodash';
-import 'static/js';
-import 'styles';
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import _ from "lodash";
+import "static/js";
+import "styles";
+import Vue from "vue";
+import VueRouter from "vue-router";
 import {
   routes,
-} from 'router';
-import components from 'components';
-import filters from 'filters';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import store from './store';
-import App from './App.vue';
+} from "router";
+import components from "components";
+import filters from "filters";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import store from "./store";
+import App from "./App.vue";
 
 
 Vue.use(VueRouter);
@@ -27,4 +27,4 @@ new Vue({
   store,
   router,
   render: h => h(App),
-}).$mount('#app');
+}).$mount("#app");

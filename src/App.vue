@@ -12,22 +12,22 @@
 import Login from "views/login";
 import GlobalSvg from "components/GlobalSvg";
 
-import { test, testfn } from "static/SYSOUTCONFIG.js";
+import { test, testfn } from "static/SYSOUTCONFIG";
 
 console.log(test, testfn);
 
 export default {
   components: {
     Login,
-    GlobalSvg
+    GlobalSvg,
   },
   data() {
     return {};
   },
   mounted() {},
-  methods: {}
+  methods: {},
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 </style>

@@ -1,4 +1,4 @@
 git status
 git add .
-git commit -m "eharts"
+git commit -m "懒的写commit desc,shell push"
 git push
