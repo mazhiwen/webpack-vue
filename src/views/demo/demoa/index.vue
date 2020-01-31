@@ -1,16 +1,22 @@
 <template>
   <div class="page_demoa">
     <Card>
-      
+      <transition name="fade">
+        <h1 v-if="show">
+          content
+        </h1>
+      </transition>
     </Card>
-      
+    <button @click="show=true">
+      btn
+    </button>
   </div>
 </template>
 
 <script>
 
 import {
-  copy
+  copy,
 } from 'utils';
 import request from 'request';
 
@@ -23,6 +29,7 @@ export default {
   },
   data() {
     return {
+      show: false,
     };
   },
   computed: {
@@ -33,8 +40,8 @@ export default {
   },
   mounted() {
   },
-  methods: {    
-  }
+  methods: {
+  },
 };
 </script>
 

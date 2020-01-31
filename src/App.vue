@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <GlobalSvg />
+
     <Login v-if="$route.name=='login'" />
     <Layout v-else-if="$route.name">
       <router-view />
@@ -9,10 +10,10 @@
 </template>
 
 <script>
-import Login from "views/login";
-import GlobalSvg from "components/GlobalSvg";
+import Login from 'views/login';
+import GlobalSvg from 'components/GlobalSvg';
 
-import { test, testfn } from "static/SYSOUTCONFIG";
+import { test, testfn } from 'static/SYSOUTCONFIG';
 
 console.log(test, testfn);
 
