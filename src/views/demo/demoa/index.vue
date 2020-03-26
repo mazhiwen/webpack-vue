@@ -7,6 +7,9 @@
         </h1>
       </transition>
     </Card>
+    <MarEdit
+      :data-controller="ruleDataController"
+    />
     <button @click="show=true">
       btn
     </button>
@@ -30,6 +33,8 @@ export default {
   data() {
     return {
       show: false,
+      ruleDataController: new this.$EditorDataController.DataController({
+      }),
     };
   },
   computed: {
