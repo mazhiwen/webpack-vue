@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import 'static/js';
 import 'styles';
 import Vue from 'vue';
@@ -10,22 +9,26 @@ import components from 'components';
 import filters from 'filters';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import MARUI from 'vue-ui-mar';
+// import MARUI from 'vue-ui-mar';
+import VueEditorMar from 'vue-editor-mar';
+
 import store from './store';
 import App from './App.vue';
+import 'vue-editor-mar/lib/theme-chalk/index.css';
 
 
 Vue.use(VueRouter);
 Vue.use(components);
 Vue.use(filters);
 Vue.use(ElementUI);
-console.log(MARUI);
+// console.log(MARUI);
 
-Vue.use(MARUI);
-
+// Vue.use(MARUI);
+Vue.use(VueEditorMar);
 const router = new VueRouter({
   routes,
 });
+
 
 new Vue({
   store,

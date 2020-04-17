@@ -7,8 +7,13 @@
         </h1>
       </transition>
     </Card>
-    <MarEdit
+    <!-- <MarEdit
       :data-controller="ruleDataController"
+    /> -->
+    <VueEditorMar
+      ref="VueEditorMar"
+      :content="content"
+      :config="config"
     />
     <button @click="show=true">
       btn
@@ -32,6 +37,16 @@ export default {
   },
   data() {
     return {
+      content: '',
+      config: {
+        wordType: {
+          keyword: ['keyworda', 'keywordb'],
+          condition: ['if', 'else'],
+          operator: ['>', '='],
+          split: [';'],
+          function: ['add'],
+        },
+      },
       show: false,
       ruleDataController: new this.$EditorDataController.DataController({
       }),

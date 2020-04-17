@@ -81,6 +81,7 @@
     "sass-resources-loader": "^2.0.1",
     "utility-mar": "^1.0.27",
     "vue": "^2.6.10",
+    "vue-editor-mar": "^1.0.3",
     "vue-router": "^3.0.6",
     "vue-ui-mar": "^1.0.3",
     "vuex": "^3.1.1"

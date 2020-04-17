@@ -3811,6 +3811,10 @@ loglevel@^1.6.6:
   version "1.6.6"
   resolved "https://registry.npmjs.org/loglevel/-/loglevel-1.6.6.tgz#0ee6300cc058db6b3551fa1c4bf73b83bb771312"
 
+lokijs@^1.5.8:
+  version "1.5.8"
+  resolved "https://registry.npmjs.org/lokijs/-/lokijs-1.5.8.tgz#9296f288edb2147389ec692fc972c428c59179d1"
+
 loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -5979,6 +5983,10 @@ utility-mar@^1.0.27:
   version "1.0.28"
   resolved "https://registry.npmjs.org/utility-mar/-/utility-mar-1.0.28.tgz#4d9c64e8e54d82d7738769ea0007d082a13d6fe1"
 
+utility-mar@^1.0.29:
+  version "1.0.29"
+  resolved "https://registry.npmjs.org/utility-mar/-/utility-mar-1.0.29.tgz#fa80abcaf01be501b6d0407258ed7476c1e7bdb1"
+
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
@@ -6013,6 +6021,19 @@ verror@1.10.0:
 vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npmjs.org/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
+
+vue-editor-mar@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/vue-editor-mar/-/vue-editor-mar-1.0.3.tgz#505de20293ad621bb64b8239379a3b275b4afefc"
+  dependencies:
+    "@babel/polyfill" "^7.4.4"
+    axios "^0.19.0"
+    lokijs "^1.5.8"
+    sass-resources-loader "^2.0.1"
+    utility-mar "^1.0.29"
+    vue "^2.6.10"
+    vue-router "^3.0.6"
+    vuex "^3.1.1"
 
 vue-eslint-parser@^5.0.0:
   version "5.0.0"

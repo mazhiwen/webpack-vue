@@ -146,10 +146,13 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        // exclude: /(node_modules|bower_components)/,
+        include: /(node_modules\/vue-editor-mar|src)/,
         use: {
           loader: 'babel-loader',
-          options: {},
+          options: {
+            rootMode: 'upward',
+          },
         },
       },
       {
