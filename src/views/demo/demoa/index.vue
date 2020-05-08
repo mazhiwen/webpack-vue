@@ -7,17 +7,26 @@
         </h1>
       </transition>
     </Card>
-    <!-- <MarEdit
-      :data-controller="ruleDataController"
-    /> -->
-    <VueEditorMar
+
+    <!-- <VueEditorMar
       ref="VueEditorMar"
       :content="content"
       :config="config"
-    />
-    <button @click="show=true">
-      btn
-    </button>
+    /> -->
+    <div>
+      <button
+        style="width:100px;height:100px;background:gray;"
+        @click="btnClick"
+        @mousemove="btnmove($event)"
+      >
+        btn
+      </button>
+
+      <textarea
+        @input="compositionupdate"
+        @compositionend="compositionupdate"
+      />
+    </div>
   </div>
 </template>
 
@@ -28,6 +37,31 @@ import {
 } from 'utils';
 import request from 'request';
 
+
+const throttle = function (fn, interval) {
+  const handler = fn;
+  let timer;
+  let firstTime = true;
+  return function () {
+    const args = arguments;
+    const innerThis = this;
+    if (firstTime) {
+      handler.apply(innerThis, args);
+      firstTime = false;
+      return;
+    }
+    if (timer) {
+      return false;
+    }
+    timer = setTimeout(() => {
+      clearTimeout(timer);
+      timer = null;
+      handler.apply(innerThis, args);
+    }, interval || 500);
+  };
+};
+
+
 export default {
   components: {
 
@@ -37,6 +71,7 @@ export default {
   },
   data() {
     return {
+
       content: '',
       config: {
         wordType: {
@@ -48,8 +83,8 @@ export default {
         },
       },
       show: false,
-      ruleDataController: new this.$EditorDataController.DataController({
-      }),
+      // ruleDataController: new this.$EditorDataController.DataController({
+      // }),
     };
   },
   computed: {
@@ -61,6 +96,16 @@ export default {
   mounted() {
   },
   methods: {
+    // throttle,
+    btnClick() {
+      console.log('btnClick');
+    },
+    btnmove: throttle((e) => {
+      console.log('执行函数', e);
+    }, 100),
+    compositionupdate(e) {
+      console.log(e);
+    },
   },
 };
 </script>

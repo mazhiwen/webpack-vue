@@ -10,7 +10,7 @@ import filters from 'filters';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // import MARUI from 'vue-ui-mar';
-import VueEditorMar from 'vue-editor-mar';
+// import VueEditorMar from 'vue-editor-mar';
 
 import store from './store';
 import App from './App.vue';
@@ -24,7 +24,7 @@ Vue.use(ElementUI);
 // console.log(MARUI);
 
 // Vue.use(MARUI);
-Vue.use(VueEditorMar);
+// Vue.use(VueEditorMar);
 const router = new VueRouter({
   routes,
 });

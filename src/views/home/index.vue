@@ -1,10 +1,11 @@
 <template>
-  <div >
+  <div>
     home
 
 
-
-
+    <div>
+      qeqdsadadadqweqweq
+    </div>
   </div>
 </template>
 
@@ -19,10 +20,10 @@ export default {
     };
   },
   created() {
-    
+
   },
   mounted() {
-    
+
   },
 };
 </script>
