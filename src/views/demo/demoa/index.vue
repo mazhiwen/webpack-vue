@@ -6,27 +6,8 @@
           content
         </h1>
       </transition>
+
     </Card>
-
-    <!-- <VueEditorMar
-      ref="VueEditorMar"
-      :content="content"
-      :config="config"
-    /> -->
-    <div>
-      <button
-        style="width:100px;height:100px;background:gray;"
-        @click="btnClick"
-        @mousemove="btnmove($event)"
-      >
-        btn
-      </button>
-
-      <textarea
-        @input="compositionupdate"
-        @compositionend="compositionupdate"
-      />
-    </div>
   </div>
 </template>
 
@@ -94,6 +75,8 @@ export default {
   created() {
   },
   mounted() {
+    // this.$parent.parentm();
+    console.log('parentaa', this.$parent.aa);
   },
   methods: {
     // throttle,
@@ -111,5 +94,8 @@ export default {
 </script>
 
 <style lang="less">
+.left,.right{
+
+}
 
 </style>

@@ -26,6 +26,8 @@ Vue.use(ElementUI);
 // Vue.use(MARUI);
 // Vue.use(VueEditorMar);
 const router = new VueRouter({
+  mode: 'history',
+  base: '/base/',
   routes,
 });
 

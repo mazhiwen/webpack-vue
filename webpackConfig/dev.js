@@ -19,7 +19,10 @@ module.exports = merge(common, {
     contentBase: path.resolve(__dirname, '../dist'),
     // webpack-dev-server热更新
     hot: true,
-    historyApiFallback: true,
+    historyApiFallback: {
+      index: '/base/',
+    },
+    // publicPath: '/base/',
     proxy: {
       '/proxyAPI': {
         target: 'http://localhost:3000',
@@ -43,7 +46,6 @@ module.exports = merge(common, {
     }),
   ],
   output: {
-    // publicPath: '/',
     filename: '[name].bundle.js',
   },
   module: {

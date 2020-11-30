@@ -39,6 +39,14 @@ export default [
         },
         component: () => import('views/demo/svg'),
       },
+      {
+        path: 'virtuallist',
+        name: 'demo.virtuallist',
+        meta: {
+          title: 'svg'
+        },
+        component: () => import('views/demo/virtuallist'),
+      },
        
     ]
   },

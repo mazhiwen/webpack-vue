@@ -107,6 +107,11 @@ export default {
               icon: 'el-icon-menu',
               text: '表单 列表'
             },
+            {
+              name: 'demo.virtuallist',
+              icon: 'el-icon-menu',
+              text: '虚拟列表'
+            },
           ]
         },
       ]

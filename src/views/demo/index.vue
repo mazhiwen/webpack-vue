@@ -11,6 +11,7 @@ export default {
 
   data() {
     return {
+      aa: 'fkparent'
     };
   },
   created() {
@@ -19,5 +20,10 @@ export default {
   mounted() {
 
   },
+  methods: {
+    parentm() {
+      console.log(this.aa);
+    }
+  }
 };
 </script>
