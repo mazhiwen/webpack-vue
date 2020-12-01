@@ -47,6 +47,14 @@ export default [
         },
         component: () => import('views/demo/virtuallist'),
       },
+      {
+        path: 'virtualtable',
+        name: 'demo.virtualtable',
+        meta: {
+          title: 'svg'
+        },
+        component: () => import('views/demo/virtualtable'),
+      }
        
     ]
   },
