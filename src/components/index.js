@@ -3,6 +3,7 @@ import Layout from './Layout';
 import Carousel from './Carousel';
 import Icon from './Icon';
 import Card from './Card';
+import VirtualTable from './VirtualTable';
 
 
 const components = {
@@ -11,6 +12,7 @@ const components = {
   Carousel,
   Icon,
   Card,
+  VirtualTable
 };
 
 const install = function (Vue, opts = {}) {
