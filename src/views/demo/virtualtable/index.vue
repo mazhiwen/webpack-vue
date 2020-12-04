@@ -6,7 +6,6 @@
       :rowHead="rowHead"
       :columnHead="columnHead"
       :columnWidth="130"
-      rowHeight="fill"
     />
   </div>
 </template>
@@ -23,7 +22,7 @@ const data = [];
 let i = 0;
 
 const rowHeadData = [];
-while (i<7) {
+while (i<50) {
   data[i] = [];
   rowHeadData.push({
     value: `第${i}行`

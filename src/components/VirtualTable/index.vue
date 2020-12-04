@@ -362,7 +362,6 @@ export default {
       // 计算列的 起始索引 最终索引 偏移量
       let startColumnIndex = 0;
       let offsetColumn = this.getColumnWidth(startColumnIndex);
-      console.log(scrollLeftContent);
       while (offsetColumn < scrollLeftContent) {
         ++startColumnIndex;
         offsetColumn += this.getColumnWidth(startColumnIndex);
@@ -371,7 +370,6 @@ export default {
       let endColumnIndex = startColumnIndex;
       let offsetEndColumn = offsetColumn;
       const minOffsetEndColumn = Math.min(this.allWidth, offsetColumn + clientWidthContent);
-      console.log(minOffsetEndColumn, clientWidthContent);
       while (offsetEndColumn < minOffsetEndColumn) {
         ++endColumnIndex;
         offsetEndColumn += this.getColumnWidth(endColumnIndex);
