@@ -69,18 +69,44 @@
         class="d_table_row"
       >
         <div
-          v-for="(colum, columIndex) in row"
+          v-for="(cell, columIndex) in row"
           :key="columIndex"
           class="d_table_cell"
           :style="{
             height: `${getRowHeight(startRowIndex+rowIndex)}px`,
-            width: `${getColumnWidth(startColumnIndex+columIndex)}px`
+            width: `${getColumnWidth(startColumnIndex+columIndex)}px`,
+            overflow: cell.colSpan?'visible':''
           }"
         >
-          {{colum.value}}
+          
+          <div
+            v-if="cell.colSpan"
+            class="span_cell"
+            :style="{
+              height: `${cell.spanHeight}px`,
+              width: `${cell.spanWidth}px`,
+            }"
+          >
+            span {{cell.value}} 
+          </div>
+          <template v-else>
+            {{cell.value}}
+          </template>
         </div>
       </div>  
     </div>
+    <!-- <div>
+      <div
+        v-for="(visibbleDataSpan, visibbleDataSpanIndex) in visibleDataSpanList"
+        :key="`dataspan${visibbleDataSpanIndex}`"
+        class="span_cell"
+        :style="{
+          transform: visibbleDataSpan.style.transform
+        }"
+      >
+        {{visibbleDataSpan.data.value}}
+      </div>
+    </div> -->
 
   </div>
   
@@ -169,7 +195,7 @@ export default {
       rowHeadTransform: 'translate3d(0, 0, 0)',
       rowHeadFixed: true,
       // 列头部相关数据
-      isHadColumnHead: false,
+      isHadColumnHead: true,
       visibleColumnHeadData: [],
       columnHeadTransform: 'translate3d(0, 0, 0)',
       columnHeadHeight: 0, // 行头部宽度
@@ -177,6 +203,8 @@ export default {
 
       rowLength: 0,
       columnLength:0,
+      // 主数据合并行列 数据
+      visibleDataSpanList: [],
     };
   },
   computed: {
@@ -276,9 +304,12 @@ export default {
       const {
         startRowIndex,offsetRow,endRowIndex,
         startColumnIndex,offsetColumn,endColumnIndex,
-        rowHeadTranslateX,columnHeadTranslateY
+        rowHeadTranslateX,columnHeadTranslateY,
+        // cellHeightAddCache
       } = this.getStartIndexAndOffset();
-
+      const  {
+        getColumnWidth, getRowHeight
+      } = this;
       let visibleData = [];
 
       let i = 0;
@@ -286,6 +317,34 @@ export default {
         visibleData[i] = this.data[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
         i++;
       }
+
+      // 设置span 合并单元格数据
+      // let visibleDataSpanList = [];
+      visibleData.forEach((row, rowIndex) => {
+        row.forEach((cellData, columnIndex) => {
+          let spanWidth = 0;
+          let spanHeight = 0; 
+          if(cellData.colSpan) {
+            let i = cellData.colSpan - 1;
+            while(i >= 0 ){
+              spanWidth += getColumnWidth(columnIndex + i);
+              i--;
+            }
+          }
+          if(cellData.rowSpan) {
+            let i = cellData.rowSpan - 1;            
+            while(i >= 0 ){
+              spanHeight += getRowHeight(rowIndex + i);
+              i--;
+            }  
+          }
+          cellData.spanWidth = spanWidth;
+          cellData.spanHeight = spanHeight;
+          
+        })
+      });
+      // // console.log(cellHeightAddCache);
+      // this.visibleDataSpanList = visibleDataSpanList;
       // 设置主数据 以及 位置
       this.visibleData = visibleData;
       let offsetColumnContent = offsetColumn;
@@ -342,6 +401,7 @@ export default {
           scrollTopContent -= this.columnHeadHeight;
         }
       }
+
       // 计算行的 起始索引 最终索引 偏移量
       let startRowIndex = 0;
       let offsetRow = this.getRowHeight(startRowIndex);
@@ -349,6 +409,7 @@ export default {
         ++startRowIndex;
         offsetRow += this.getRowHeight(startRowIndex);
       }
+      // let cellHeightAddCache = []; // 单元高度叠加量缓存
       this.startRowIndex = startRowIndex;
       let endRowIndex = startRowIndex;
       let offsetEndRow = offsetRow;
@@ -356,6 +417,7 @@ export default {
       offsetRow = offsetRow - this.getRowHeight(startRowIndex);
       while (offsetEndRow < minOffsetEndRow) {
         ++endRowIndex;
+        // cellHeightAddCache.push(offsetEndRow);
         offsetEndRow += this.getRowHeight(endRowIndex);
       }
       ++endRowIndex;
@@ -376,6 +438,7 @@ export default {
       }
       ++endColumnIndex;
       offsetColumn = offsetColumn - this.getColumnWidth(startColumnIndex);
+
       return {
         startRowIndex,
         offsetRow,
@@ -384,7 +447,8 @@ export default {
         endColumnIndex,
         offsetColumn,
         rowHeadTranslateX,
-        columnHeadTranslateY
+        columnHeadTranslateY,
+        // cellHeightAddCache
       }
     },
     getRowHeight(rowIndex) {
@@ -414,10 +478,8 @@ export default {
     position: absolute;
   }
   .d_table_content{
-    position: absolute;
-    // overflow: scroll;
-    // width: 600px;
-    // height: 300px;
+    position: relative;
+    
     .d_table_row{
       font-size: 0;
       white-space: nowrap;
@@ -437,6 +499,7 @@ export default {
     white-space: nowrap;
     vertical-align: middle;
     overflow: hidden;
+    position: relative;
   }
   .d_table_rowhead {
 
@@ -464,7 +527,7 @@ export default {
     background: rgb(244,245,247);
     z-index: 1;
   }
-  .d_table_cell,.rowhead_cell,.columnhead_cell{
+  .d_table_cell,.rowhead_cell,.columnhead_cell,.span_cell{
     padding: 8px 10px;
     box-sizing: border-box;
     align-items: center;
@@ -476,6 +539,17 @@ export default {
     background: rgb(244,245,247);
     position: absolute;
     z-index: 1;
+  }
+  .span_cell{
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: white;
+    // height: 40px;
+    // width: 260px;
+    overflow: hidden;
+    z-index: 1;
+    display: flex;
   }
 }
 

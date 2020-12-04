@@ -28,7 +28,7 @@ while (i<50) {
     value: `第${i}行`
   });
   let j = 0;
-  while (j<20) {
+  while (j<50) {
     data[i].push({
       value: `${i}-${j}:${textList[(i+j)%3]}`
     });
@@ -37,9 +37,15 @@ while (i<50) {
   i++;
   
 }
+data[10][10].colSpan = 2;
+
+data[5][5].rowSpan = 2;
+// data[10][11].colSpan = '2-1';
+
+
 i = 0;
 const columnHeadData = [];
-while (i<10) {
+while (i<50) {
   columnHeadData.push({
     value: `第${i}列`
   });
