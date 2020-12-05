@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 let now = Date.now();
 let textList = [
   '小小',
@@ -18,41 +19,81 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
+let rowCount = 50;
+let columnCount = 20;
+
 const data = [];
 let i = 0;
 
-const rowHeadData = [];
-while (i<50) {
+while (i<rowCount) {
   data[i] = [];
-  rowHeadData.push({
-    value: `第${i}行`
-  });
   let j = 0;
-  while (j<50) {
+  while (j<columnCount) {
     data[i].push({
-      value: `${i}-${j}:${textList[(i+j)%3]}`
+      value: `${i}-${j}:${textList[(i+j)%3]}`,
+      row: i,
+      column: j,
     });
     j++;
   }
   i++;
   
 }
-data[10][10].colSpan = 2;
-
+// data[10][10].colSpan = 2;
+data[5][5].spanStartRow = 5;
+data[5][5].spanStartColumn = 5;
 data[5][5].rowSpan = 2;
-// data[10][11].colSpan = '2-1';
+// data[5][5].columnSpan = 2;
 
 
+
+// 列头数据
 i = 0;
 const columnHeadData = [];
-while (i<50) {
-  columnHeadData.push({
-    value: `第${i}列`
-  });
+while (i<4) {
+  columnHeadData[i] = [];
+  let j = 0;
+  while (j<columnCount) {
+    columnHeadData[i].push({
+      value: `第${i}-${j}列`,
+      row: i,
+      column: j,
+    });
+    j++;
+  }
   i++;
 }
-console.log('data 生成耗时',Date.now() - now);
+columnHeadData[1][4].spanStartRow = 1;
+columnHeadData[1][4].spanStartColumn = 4;
+columnHeadData[1][4].rowSpan = 2;
+columnHeadData[1][4].colSpan = 2;
 
+
+// 行头数据
+i = 0;
+const rowHeadData = [];
+while (i<rowCount) {
+  rowHeadData[i] = [];
+  let j = 0;
+  while (j<2) {
+    rowHeadData[i].push({
+      value: `第${i}-${j}行`,
+      row: i,
+      column: j,
+    });
+    j++;
+  }
+  i++;
+}
+rowHeadData[4][0].spanStartRow = 1;
+rowHeadData[4][0].spanStartColumn = 4;
+rowHeadData[4][0].rowSpan = 2;
+rowHeadData[4][0].colSpan = 2;
+
+
+
+
+console.log('data 生成耗时',Date.now() - now);
 export default {
   data() {
     return {
