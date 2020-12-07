@@ -682,6 +682,8 @@ export default {
     background: rgb(244,245,247);
     position: absolute;
     z-index: 1;
+    color: #7d8292;
+    font-weight: bold;
   }
   .span_cell{
     position: absolute;
