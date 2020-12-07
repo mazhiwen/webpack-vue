@@ -6,12 +6,7 @@
     <VirtualTable
       :data="data"
       :rowHead="rowHead"
-      :columnHead="columnHead"
-      :rowHeadFixed="rowHeadFixed"
-      :columnHeadFixed="columnHeadFixed"
-      :rowHeight="rowHeight"
-      :tableHeight="'auto'"
-      width="100%"
+      :tableHeight="'100%'"
     />
     <el-button @click="changeData">data</el-button>
     <el-button @click="changerowHead">rowHead</el-button>
@@ -113,8 +108,8 @@ console.log('data 生成耗时',Date.now() - now);
 export default {
   data() {
     return {
-      data: null,
-      rowHead:null,
+      data: data,
+      rowHead:rowHeadData,
       columnHead:null,
       rowHeadFixed: false,
       columnHeadFixed: true,

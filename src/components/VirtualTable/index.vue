@@ -207,7 +207,7 @@ export default {
     },
     rowHeight: {
       type: [ Function, Number, Array ],
-      default: () => 40
+      default: 40
     },
     // 行头部宽度
     rowHeadWidth: {
@@ -402,11 +402,13 @@ export default {
       //   // ...
       //   this.getRowHeight = this.getRowHeightFromNumer;
       // } else 
+
       if (typeof this.rowHeight === 'number') {
         // ...
         this.getRowHeight = this.getRowHeightFromNumer;
       } else if (Object.prototype.toString.call(this.rowHeight) === '[object Array]') {
         this.rowHeightList = this.rowHeight;
+        this.getRowHeight = this.getRowHeightFromList;
       }
 
       // 设置容器尺寸
@@ -431,9 +433,11 @@ export default {
         // allWidth += this.rowHeadWidth;
       }
       this.allWidth = allWidth;
+      console.log(this.getRowHeight(1));
       this.data.forEach((value, index)=>{
         allHeight += this.getRowHeight(index);
       })
+      console.log(allHeight);
       if (this.isHadColumnHead) {
         this.columnHeadAllHeight = this.columnHeadHeight * this.columnHead.length;
         allHeight += this.columnHeadAllHeight;
