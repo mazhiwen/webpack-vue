@@ -5,9 +5,18 @@
       :data="data"
       :rowHead="rowHead"
       :columnHead="columnHead"
-      :columnWidth="130"
+      :rowHeadFixed="rowHeadFixed"
+      :columnHeadFixed="columnHeadFixed"
     />
+    <button @click="changeData">data</button>
+    <button @click="changerowHead">rowHead</button>
+    <button @click="changecolumnHead">columnHead</button>
+    <button @click="changerowHeadfix">rowHeadfix</button>
+    <button @click="changecolumnHeadfix">columnHeadfix</button>
   </div>
+
+
+  
 </template>
 
 <script>
@@ -97,9 +106,11 @@ console.log('data 生成耗时',Date.now() - now);
 export default {
   data() {
     return {
-      data,
-      rowHead:rowHeadData,
-      columnHead:columnHeadData
+      data: null,
+      rowHead:null,
+      columnHead:null,
+      rowHeadFixed: false,
+      columnHeadFixed: true,
     };
   },
   computed: {
@@ -118,12 +129,24 @@ export default {
   },
   methods: {
     
-    getColumnWidth(columnIndex) {
-      if (this.widthList[columnIndex]) {
-        return this.heightList[columnIndex];
-      } 
-      return this.defaultColumnWidth;
-    }
+    changeData() {
+      this.data = data;
+    },
+    changerowHead() {
+      this.rowHead = rowHeadData;
+    },
+    changecolumnHead() {
+      this.columnHead = columnHeadData;
+    },
+    changerowHeadfix() {
+      this.rowHeadFixed = !this.rowHeadFixed;
+    },
+    changecolumnHeadfix() {
+      this.columnHeadFixed = !this.columnHeadFixed;
+    },
+
+
+    
   },
 };
 </script>

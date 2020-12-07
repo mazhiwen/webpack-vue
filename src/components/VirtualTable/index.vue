@@ -169,14 +169,29 @@ export default {
     rowHead: {
       type: Array,
       default: () => []
+      // 需要是一个二维数组
     },
+    rowHeadFixed: {
+      type: Boolean,
+      default: true
+      // 需要是一个二维数组
+    },
+    
     columnHead: {
       type: Array,
       default: () => []
+      // 需要是一个二维数组
     },
+    columnHeadFixed: {
+      type: Boolean,
+      default: true
+      // 需要是一个二维数组
+    },
+    
     data: {
       type: Array,
       default: () => []
+      // 需要是一个二维数组
     },
     columnWidth: {
       type: [ String, Function, Number, Array ],
@@ -219,16 +234,14 @@ export default {
       startRowIndex: 0,
       startColumnIndex: 0,
       // 行头部相关数据
-      isHadRowHead: true,
+      // isHadRowHead: true,
       visibleRowHeadData: [],
       rowHeadTransform: 'translate3d(0, 0, 0)',
-      rowHeadFixed: true,
       // 列头部相关数据
-      isHadColumnHead: true,
+      // isHadColumnHead: true,
       visibleColumnHeadData: [],
       visibleRowHeadData: [],
       columnHeadTransform: 'translate3d(0, 0, 0)',
-      columnHeadFixed: false,
 
       rowLength: 0,
       columnLength:0,
@@ -255,6 +268,25 @@ export default {
     //   console.log('allHeight 计算耗时',Date.now() - now);
     //   return allHeight;
     // }
+    isHadRowHead() {
+      return this.rowHead && this.rowHead.length > 0
+    },
+    isHadColumnHead() {
+      return this.columnHead && this.columnHead.length > 0
+    }
+  },
+  watch: {
+    data() {
+      this.init();
+    },
+    rowHead() {
+      this.setAllScrollSize();
+      this.onScroll();
+    },
+    columnHead() {
+      this.setAllScrollSize();
+      this.onScroll();
+    }
   },
   created() {
     
@@ -262,14 +294,19 @@ export default {
   },
   mounted() {
     // 初始化渲染
-    this.setCellSizeData();
-    this.setAllScrollSize();
-    this.onScroll();
+    this.init();
   },
   updated() {
     // this.setItemPositionsCache();
   },
   methods: {
+    init() {
+      if (this.data && this.data.length > 0) {
+        this.setCellSizeData();
+        this.setAllScrollSize();
+        this.onScroll();
+      }
+    },
     setCellSpanSize(cellData, getCellHeight) {
       const  {
         getColumnWidth
@@ -300,6 +337,7 @@ export default {
         cellData.spanHeight = spanHeight;
       }
     },
+    // 设置单元格尺寸数据
     setCellSizeData() {
       let { 
         clientWidth, clientHeight
@@ -332,6 +370,7 @@ export default {
         this.rowHeightList = rowHeightList;
       }
     },
+    // 设置滚动条总尺寸
     setAllScrollSize() {
       let allHeight = 0;
       let allWidth = 0;
@@ -616,7 +655,7 @@ export default {
   }
   .d_table_content{
     position: absolute;
-    
+    background: white;
     .d_table_row{
       font-size: 0;
       white-space: nowrap;
