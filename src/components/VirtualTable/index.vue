@@ -79,7 +79,8 @@
       class="d_table_crosshead"
       :style="{
         height: `${columnHeadAllHeight}px`,
-        width: `${rowHeadAllWidth}px`
+        width: `${rowHeadAllWidth}px`,
+        transform: crossHeadTransform,
       }"
     >
     </div>
@@ -235,7 +236,9 @@ export default {
       visibleDataSpanList: {},
       columnHeadAllHeight: 0,
       rowHeadAllWidth: 0,
-      visibleColumnHeadSpanList: {}
+      visibleColumnHeadSpanList: {},
+
+      crossHeadTransform: 'translate3d(0, 0, 0)',
     };
   },
   computed: {
@@ -369,7 +372,7 @@ export default {
         startRowIndex,offsetRow,endRowIndex,
         startColumnIndex,offsetColumn,endColumnIndex,
         rowHeadTranslateX,columnHeadTranslateY,
-        // cellHeightAddCache
+        crossHeadTransformX,crossHeadTransformY
       } = this.getStartIndexAndOffset();
       const  {
         getColumnWidth, getRowHeight
@@ -441,7 +444,7 @@ export default {
       }
 
       this.contentTransform = `translate3d(${offsetColumnContent}px, ${offsetRowContent}px, 0)`;      
-      
+      this.crossHeadTransform = `translate3d(${crossHeadTransformX}px, ${crossHeadTransformY}px, 0)`;
     },
     // 获取 生成 可视数据 中 合并单元格 数据列表
     getVisibleSpanList(
@@ -489,6 +492,7 @@ export default {
       return visibleSpanList;
     },
     getStartIndexAndOffset() {
+      // 
       let now = Date.now();
       let { 
         scrollTop,scrollLeft,
@@ -500,12 +504,16 @@ export default {
       // 处理行头部数据
       let rowHeadTranslateX = 0;
       let allWidthContent = this.allWidth;
+      let crossHeadTransformX = 0;
+      let crossHeadTransformY = 0;
       if (this.isHadRowHead) { 
         if (this.rowHeadFixed) {
           rowHeadTranslateX = scrollLeft;
           clientWidthContent -= this.rowHeadAllWidth;
+          crossHeadTransformX = scrollLeft;
         } else {
           scrollLeftContent -= this.rowHeadAllWidth;
+          crossHeadTransformX = 0;
         }
         allWidthContent = this.allWidth - this.rowHeadAllWidth;
       }
@@ -518,8 +526,10 @@ export default {
         if (this.columnHeadFixed) {
           columnHeadTranslateY = scrollTop;
           clientHeightContent -= this.columnHeadAllHeight;
+          crossHeadTransformY = scrollTop;
         } else {
           scrollTopContent -= this.columnHeadAllHeight;
+          crossHeadTransformY = 0;
         }
         allHeightContent = this.allHeight - this.columnHeadAllHeight; 
       }
@@ -560,15 +570,10 @@ export default {
       offsetColumn = offsetColumn - this.getColumnWidth(startColumnIndex);
 
       return {
-        startRowIndex,
-        offsetRow,
-        endRowIndex,
-        startColumnIndex,
-        endColumnIndex,
-        offsetColumn,
-        rowHeadTranslateX,
-        columnHeadTranslateY,
-        // cellHeightAddCache
+        startRowIndex,offsetRow,endRowIndex,
+        startColumnIndex,endColumnIndex,offsetColumn,
+        rowHeadTranslateX,columnHeadTranslateY,
+        crossHeadTransformX,crossHeadTransformY
       }
     },
     getRowHeight(rowIndex) {
@@ -602,7 +607,7 @@ export default {
 <style lang="less">
 .d_table{
   width: 100%;
-  height: 500px;
+  height: 300px;
   position: relative;
   border: 1px solid #eeeff0;
   overflow: scroll;
@@ -655,9 +660,11 @@ export default {
     vertical-align: middle;
   }
   .d_table_crosshead{
-    position: fixed;
+    position: absolute;
     background: rgb(244,245,247);
     z-index: 1;
+    left: 0;
+    top: 0;
   }
   .d_table_cell,.rowhead_cell,
   .columnhead_cell,.span_cell,
