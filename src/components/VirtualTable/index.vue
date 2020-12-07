@@ -1,6 +1,10 @@
 <template>
   <div class="d_table"
     @scroll="onScroll"
+    :style="{
+      width: width,
+      height: height
+    }"
   >
     <div
       class="d_table_allcontent"
@@ -202,9 +206,8 @@ export default {
       // Array 
     },
     rowHeight: {
-      type: [ String, Function, Number, Array ],
+      type: [ Function, Number, Array ],
       default: () => 40
-      // String :  fill 
     },
     // 行头部宽度
     rowHeadWidth: {
@@ -215,7 +218,17 @@ export default {
       type: Number,
       default: 50
     },
-    
+    width: {
+      type: String,
+      default: '100%'
+      // 300px 100%
+    },
+    tableHeight: {
+      type: String,
+      default: '300px'
+      // 300px 100% auto 
+      // auto 情况下正好填充满每行数据
+    },
   },
   data() {
     return {
@@ -252,6 +265,8 @@ export default {
       visibleColumnHeadSpanList: {},
 
       crossHeadTransform: 'translate3d(0, 0, 0)',
+
+      height: this.tableHeight,
     };
   },
   computed: {
@@ -286,10 +301,21 @@ export default {
     columnHead() {
       this.setAllScrollSize();
       this.onScroll();
+    },
+    width() {
+      console.log(222222);
+      
+      this.init();
+    },
+    tableHeight(val) {
+      this.init();
+    },
+    rowHeight() {
+      this.init();
     }
   },
   created() {
-    
+    // this.height = this.tableHeight;
 
   },
   mounted() {
@@ -304,7 +330,9 @@ export default {
       if (this.data && this.data.length > 0) {
         this.setCellSizeData();
         this.setAllScrollSize();
-        this.onScroll();
+        this.$nextTick(()=>{
+          this.onScroll();
+        })
       }
     },
     setCellSpanSize(cellData, getCellHeight) {
@@ -359,16 +387,35 @@ export default {
         // ..
         this.columnWidthList = this.columnWidth;
       }
-      if (this.rowHeight === 'fill') {
-        let i = 0;
-        let rowHeightList = [];
-        let averageHeight = Math.floor(clientHeight/this.rowLength*100)/100;
-        while (i < this.rowLength) {
-          rowHeightList.push(averageHeight);
-          i++;
-        }
-        this.rowHeightList = rowHeightList;
+      // if (this.rowHeight === 'fill') {
+      //   let i = 0;
+      //   let rowHeightList = [];
+      //   let averageHeight = Math.floor(clientHeight/this.rowLength*100)/100;
+      //   while (i < this.rowLength) {
+      //     rowHeightList.push(averageHeight);
+      //     i++;
+      //   }
+      //   this.rowHeightList = rowHeightList;
+      //   this.getRowHeight = this.getRowHeightFromList;
+      // } else 
+      // if (this.rowHeight === 'auto') {
+      //   // ...
+      //   this.getRowHeight = this.getRowHeightFromNumer;
+      // } else 
+      if (typeof this.rowHeight === 'number') {
+        // ...
+        this.getRowHeight = this.getRowHeightFromNumer;
+      } else if (Object.prototype.toString.call(this.rowHeight) === '[object Array]') {
+        this.rowHeightList = this.rowHeight;
       }
+
+      // 设置容器尺寸
+      if (this.tableHeight === 'auto') {        
+        this.height = `${this.data.length * this.rowHeight}px`;
+      } else {
+        this.height = this.tableHeight;
+      }
+      
     },
     // 设置滚动条总尺寸
     setAllScrollSize() {
@@ -615,6 +662,12 @@ export default {
         crossHeadTransformX,crossHeadTransformY
       }
     },
+    getRowHeightFromList(rowIndex) {
+      return this.rowHeightList[rowIndex];
+    },
+    getRowHeightFromNumer(rowIndex) {
+      return this.rowHeight;
+    },
     getRowHeight(rowIndex) {
       if (this.rowHeightList[rowIndex]) {
         return this.rowHeightList[rowIndex];
@@ -645,11 +698,9 @@ export default {
 
 <style lang="less">
 .d_table{
-  width: 100%;
-  height: 300px;
   position: relative;
   border: 1px solid #eeeff0;
-  overflow: scroll;
+  overflow: auto;
   .d_table_allcontent{
     position: absolute;
   }

@@ -1,18 +1,25 @@
 <template>
   
-  <div>
+  <div
+    style="height:400px"
+  >
     <VirtualTable
       :data="data"
       :rowHead="rowHead"
       :columnHead="columnHead"
       :rowHeadFixed="rowHeadFixed"
       :columnHeadFixed="columnHeadFixed"
+      :rowHeight="rowHeight"
+      :tableHeight="'auto'"
+      width="100%"
     />
-    <button @click="changeData">data</button>
-    <button @click="changerowHead">rowHead</button>
-    <button @click="changecolumnHead">columnHead</button>
-    <button @click="changerowHeadfix">rowHeadfix</button>
-    <button @click="changecolumnHeadfix">columnHeadfix</button>
+    <el-button @click="changeData">data</el-button>
+    <el-button @click="changerowHead">rowHead</el-button>
+    <el-button @click="changecolumnHead">columnHead</el-button>
+    <el-button @click="changerowHeadfix">rowHeadfix</el-button>
+    <el-button @click="changecolumnHeadfix">columnHeadfix</el-button>
+    <el-button @click="changeWidth">changeWidth</el-button>
+    <el-button @click="changerowHeight">changerowHeight</el-button>
   </div>
 
 
@@ -28,7 +35,7 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 50;
+let rowCount = 7;
 let columnCount = 20;
 
 const data = [];
@@ -111,6 +118,9 @@ export default {
       columnHead:null,
       rowHeadFixed: false,
       columnHeadFixed: true,
+      width: 400,
+      rowHeight: 30,
+      
     };
   },
   computed: {
@@ -144,7 +154,12 @@ export default {
     changecolumnHeadfix() {
       this.columnHeadFixed = !this.columnHeadFixed;
     },
-
+    changeWidth() {
+      this.width += 100;
+    },
+    changerowHeight() {
+      this.rowHeight += 10;
+    },
 
     
   },
