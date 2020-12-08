@@ -1,11 +1,12 @@
 <template>
   <div class="d_table"
-    @scroll="onScroll"
+    @scroll="render"
     :style="{
       width: width,
       height: height
     }"
   >
+    <!-- 生成滚动条 -->
     <div
       class="d_table_allcontent"
       :style="{
@@ -14,9 +15,13 @@
       }"
     >
     </div>
+    <!-- 行头 -->
     <div
       v-if="isHadRowHead"
       class="d_table_rowhead"
+      :class="{
+        transparent_head: isRowHeadTransparent
+      }"
       :style="{
         transform: rowHeadTransform
       }"
@@ -26,18 +31,19 @@
         :key="index"
       >
         <div
-          v-for="(rowHeadCell, rowHeadCellIndex) in value"
-          :key="rowHeadCellIndex"
+          v-for="(cell, cellIndex) in value"
+          :key="cellIndex"
           class="rowhead_cell"
           :style="{
-            height: `${getRowHeight(startRowIndex+rowHeadCellIndex)}px`,
+            height: `${getRowHeight(startRowIndex+cellIndex)}px`,
             width: `${rowHeadWidth}px`
           }"
         >
-          {{rowHeadCell.value}}
+          {{cell.value}}
         </div>
       </div>
     </div>
+    <!-- 列头 -->
     <div
       v-if="isHadColumnHead"
       class="d_table_columnhead"
@@ -78,6 +84,7 @@
         </div>
       </div>
     </div>
+    <!-- 交叉头部 -->
     <div
       v-if="isHadColumnHead && isHadRowHead"
       class="d_table_crosshead"
@@ -87,7 +94,24 @@
         transform: crossHeadTransform,
       }"
     >
+      <div
+        v-for="(value, index) in crossHead"
+        :key="index"
+      >
+        <div
+          v-for="(cell, cellIndex) in value"
+          :key="cellIndex"
+          class="rowhead_cell"
+          :style="{
+            height: `${columnHeadHeight}px`,
+            width: `${rowHeadWidth}px`
+          }"
+        >
+          {{cell.value}}
+        </div>
+      </div>
     </div>
+    <!-- 主数据 -->
     <div class="d_table_content"
       :style="{
         transform: contentTransform
@@ -147,8 +171,9 @@
 
 
 
-// 待添加功能：  多个行头  行头合并  修改行头
-
+// 
+// 待添加功能：  冻结行 或者 列
+// crosshead 区域的单元格的宽度 和 高度 
 
 
 
@@ -199,7 +224,7 @@ export default {
     },
     columnWidth: {
       type: [ String, Function, Number, Array ],
-      default: () => 100
+      default: 100
       // String :  fill  
       // Number: 固定
       // Function
@@ -229,6 +254,18 @@ export default {
       // 300px 100% auto 
       // auto 情况下正好填充满每行数据
     },
+    maxHeight: {
+      type: Number,
+      default: 0
+      // 300 
+      // tableHeight auto 的情况下，maxHeight有效
+    },
+    fixedColumnIndex: {
+      type: Number,
+      default: -1
+    },
+    // 固定列 无行头 无列头
+    // 固定列 无行头 有列头
   },
   data() {
     return {
@@ -251,7 +288,6 @@ export default {
       visibleRowHeadData: [],
       rowHeadTransform: 'translate3d(0, 0, 0)',
       // 列头部相关数据
-      // isHadColumnHead: true,
       visibleColumnHeadData: [],
       visibleRowHeadData: [],
       columnHeadTransform: 'translate3d(0, 0, 0)',
@@ -267,6 +303,16 @@ export default {
       crossHeadTransform: 'translate3d(0, 0, 0)',
 
       height: this.tableHeight,
+
+      _mainData: null,
+      _rowHead: null,
+      _columnHead: null,
+
+      isHadRowHead: false,
+      crosshead: null,
+      isHadColumnHead: false,
+
+      isRowHeadTransparent: false,
     };
   },
   computed: {
@@ -283,28 +329,24 @@ export default {
     //   console.log('allHeight 计算耗时',Date.now() - now);
     //   return allHeight;
     // }
-    isHadRowHead() {
-      return this.rowHead && this.rowHead.length > 0
-    },
-    isHadColumnHead() {
-      return this.columnHead && this.columnHead.length > 0
-    }
+    // isHadRowHead() {
+    //   return this._rowHead && this._rowHead.length > 0
+    // },
+    // isHadColumnHead() {
+    //   return this.columnHead && this.columnHead.length > 0
+    // }
   },
   watch: {
     data() {
       this.init();
     },
     rowHead() {
-      this.setAllScrollSize();
-      this.onScroll();
+      this.init();
     },
     columnHead() {
-      this.setAllScrollSize();
-      this.onScroll();
+      this.init();
     },
-    width() {
-      console.log(222222);
-      
+    width() {      
       this.init();
     },
     tableHeight(val) {
@@ -312,11 +354,13 @@ export default {
     },
     rowHeight() {
       this.init();
+    },
+    fixedColumnIndex() {
+      this.init();
     }
   },
   created() {
-    // this.height = this.tableHeight;
-
+    
   },
   mounted() {
     // 初始化渲染
@@ -328,12 +372,53 @@ export default {
   methods: {
     init() {
       if (this.data && this.data.length > 0) {
+        this.parseParams();
         this.setCellSizeData();
         this.setAllScrollSize();
         this.$nextTick(()=>{
-          this.onScroll();
+          this.render();
         })
       }
+    },
+    parseParams() {
+      let _mainData = [];
+      let _rowHead = [];
+      let _columnHead = [];
+      let crossHead = [];
+      if (this.fixedColumnIndex > -1) {
+        this.isHadRowHead = true;
+        this.isRowHeadTransparent = true;
+        if (this.columnHead && this.columnHead.length > 0) {
+          // 如果有列头
+          // const aboveData = this.data.slice(0, this.columnHead.length);
+          this.isHadColumnHead = true;
+          this.columnHead.forEach((value) => {
+            crossHead.push(value.slice(0, this.fixedColumnIndex + 1));
+            _columnHead.push(value.slice(this.fixedColumnIndex + 1));
+          })
+        }
+        this.data.forEach((value) => {
+          _rowHead.push(value.slice(0, this.fixedColumnIndex + 1));
+          _mainData.push(value.slice(this.fixedColumnIndex + 1));
+        })
+        
+      } else {
+        _mainData = this.data;
+        if (this.columnHead && this.columnHead.length > 0) {
+          this.isHadColumnHead = true;
+          _columnHead = this.columnHead;
+        }
+        if (this.rowHead && this.rowHead.length > 0) {
+          this.isHadRowHead = true;
+          _rowHead = this.rowHead;
+        }
+      }
+      this.crossHead = crossHead;
+      this._columnHead = _columnHead;
+      this._rowHead = _rowHead;
+      this._mainData = _mainData;
+
+      console.log(crossHead,_columnHead,_mainData,_rowHead);
     },
     setCellSpanSize(cellData, getCellHeight) {
       const  {
@@ -370,8 +455,8 @@ export default {
       let { 
         clientWidth, clientHeight
       } = this.$el;
-      this.rowLength = this.data.length;
-      this.columnLength = this.data[0].length;
+      this.rowLength = this._mainData.length;
+      this.columnLength = this._mainData[0].length;
       if (this.columnWidth === 'fill') {
         let i = 0;
         let columnWidthList = [];
@@ -386,7 +471,11 @@ export default {
       } else if (Object.prototype.toString.call(this.columnWidth) === '[object Array]') {
         // ..
         this.columnWidthList = this.columnWidth;
-      }
+        this.getColumnWidth = this.getColumnWidthFromList;
+      } if (typeof this.columnWidth === 'number') {
+        // ...
+        this.getColumnWidth = this.getColumnWidthFromNumer;
+      } 
       // if (this.rowHeight === 'fill') {
       //   let i = 0;
       //   let rowHeightList = [];
@@ -413,33 +502,37 @@ export default {
 
       // 设置容器尺寸
       if (this.tableHeight === 'auto') {        
-        this.height = `${this.data.length * this.rowHeight}px`;
+        let height = this._mainData.length * this.rowHeight;
+        // 此处100%的情况判断有漏洞 后面补上
+        if (this.maxHeight && height > this.maxHeight) {
+          height = this.maxHeight;
+        }
+        this.height = `${height}px`;
       } else {
         this.height = this.tableHeight;
       }
+      
+
       
     },
     // 设置滚动条总尺寸
     setAllScrollSize() {
       let allHeight = 0;
       let allWidth = 0;
-      this.data[0].forEach((value, index)=>{
+      
+      this._mainData[0].forEach((value, index)=>{
         allWidth += this.getColumnWidth(index);
       })
       if (this.isHadRowHead) {
-        this.rowHeadAllWidth = this.rowHeadWidth * this.rowHead[0].length;
+        this.rowHeadAllWidth = this.rowHeadWidth * this._rowHead[0].length;
         allWidth += this.rowHeadAllWidth;
-
-        // allWidth += this.rowHeadWidth;
       }
       this.allWidth = allWidth;
-      console.log(this.getRowHeight(1));
-      this.data.forEach((value, index)=>{
+      this._mainData.forEach((value, index)=>{
         allHeight += this.getRowHeight(index);
       })
-      console.log(allHeight);
       if (this.isHadColumnHead) {
-        this.columnHeadAllHeight = this.columnHeadHeight * this.columnHead.length;
+        this.columnHeadAllHeight = this.columnHeadHeight * this._columnHead.length;
         allHeight += this.columnHeadAllHeight;
       }
       this.allHeight = allHeight;
@@ -455,7 +548,7 @@ export default {
       })
 
     },
-    onScroll: function() {
+    render: function() {
       let curr = countScrollEvet++;
       let now = Date.now();
       const {
@@ -471,13 +564,13 @@ export default {
 
       let i = 0;
       while (i < endRowIndex - startRowIndex) {
-        visibleData[i] = this.data[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
+        visibleData[i] = this._mainData[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
         i++;
       }
 
       this.visibleDataSpanList = this.getVisibleSpanList(
         visibleData,
-        this.data,
+        this._mainData,
         getRowHeight,
         getColumnWidth,
         startRowIndex,
@@ -499,7 +592,7 @@ export default {
         // })
         // this.visibleRowHeadData = visibleRowHeadData;
 
-        this.visibleRowHeadData = this.rowHead.slice(startRowIndex, endRowIndex);
+        this.visibleRowHeadData = this._rowHead.slice(startRowIndex, endRowIndex);
         offsetColumnContent = this.rowHeadAllWidth+offsetColumn;
       }
 
@@ -507,14 +600,14 @@ export default {
       // 设置列头部数据 以及 位置
       if (this.isHadColumnHead) {
         let visibleColumnHeadData = [];
-        this.columnHead.forEach((value, index)=>{
+        this._columnHead.forEach((value, index)=>{
           visibleColumnHeadData[index] = value.slice(startColumnIndex, endColumnIndex);
         })
         this.visibleColumnHeadData = visibleColumnHeadData;
 
         this.visibleColumnHeadSpanList = this.getVisibleSpanList(
           visibleColumnHeadData,
-          this.columnHead,
+          this._columnHead,
           this.getColumnHeadHeight,
           getColumnWidth,
           0,
@@ -669,7 +762,7 @@ export default {
     getRowHeightFromList(rowIndex) {
       return this.rowHeightList[rowIndex];
     },
-    getRowHeightFromNumer(rowIndex) {
+    getRowHeightFromNumer() {
       return this.rowHeight;
     },
     getRowHeight(rowIndex) {
@@ -695,7 +788,13 @@ export default {
         return this.columnWidthList[columnIndex];
       } 
       return this.columnWidth;
-    }
+    },
+    getColumnWidthFromNumer() {
+      return this.columnWidth;
+    },
+    getColumnWidthFromList(columnIndex) {
+      return this.columnWidthList[columnIndex];
+    },
   },
 };
 </script>
@@ -724,7 +823,7 @@ export default {
     
 
   }
-  .d_table_cell{
+  .d_table_cell,.rowhead_cell,.columnhead_cell{
       
     display: inline-flex;
     white-space: nowrap;
@@ -748,18 +847,12 @@ export default {
     box-shadow: 0 2px 6px -2px rgba(0,0,0,0.2);
   }
   .columnhead_cell,.rowhead_cell{
-    display: inline-flex;
-    white-space: normal;
-    word-break: break-all;
-    vertical-align: middle;
+    // display: inline-flex;
+    // white-space: normal;
+    // word-break: break-all;
+    // vertical-align: middle;
   }
-  .d_table_crosshead{
-    position: absolute;
-    background: rgb(244,245,247);
-    z-index: 1;
-    left: 0;
-    top: 0;
-  }
+  
   .d_table_cell,.rowhead_cell,
   .columnhead_cell,.span_cell,
   .columnhead_spancell{
@@ -770,9 +863,15 @@ export default {
     border-right: 1px solid #eeeff0;
     border-bottom: 1px solid #eeeff0;
   }
+  .d_table_crosshead{
+    left: 0;
+    top: 0;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 6px -2px;
+  }
   .d_table_rowhead,
   .d_table_columnhead,
-  .columnhead_spancell{
+  .columnhead_spancell,
+  .d_table_crosshead{
     background: rgb(244,245,247);
     position: absolute;
     z-index: 1;
@@ -794,6 +893,11 @@ export default {
     position: absolute;
     left: 0;
     top: 0;
+  }
+  .transparent_head{
+    background: white;
+    color: inherit;
+    font-weight: normal;
   }
 }
 

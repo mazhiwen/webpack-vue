@@ -6,7 +6,9 @@
     <VirtualTable
       :data="data"
       :rowHead="rowHead"
-      :tableHeight="'100%'"
+      :columnHead="columnHead"
+      :tableHeight="'400px'"
+      :rowHeadFixed="rowHeadFixed"
     />
     <el-button @click="changeData">data</el-button>
     <el-button @click="changerowHead">rowHead</el-button>
@@ -30,7 +32,7 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 7;
+let rowCount = 20;
 let columnCount = 20;
 
 const data = [];
@@ -59,8 +61,56 @@ data[5][5].rowSpan = 2;
 
 
 // 列头数据
-i = 0;
 const columnHeadData = [];
+// let originColumnHeadData = [
+//   {
+//     value: 1
+//   },
+//   {
+//     value: 2,
+//     children: [
+//       {
+//         value: '2-1'
+//       },
+//       {
+//         value: '2-2',
+//         children: [
+//           {
+//             value: '2-2-1'
+//           },
+//           {
+//             value: '2-2-2'
+//           },  
+//         ]
+//       },
+//       {
+//         value: '2-2'
+//       },  
+//     ]
+//   },
+//   {
+//     value: 3,
+//     children: [
+//       {
+//         value: '3-1'
+//       },
+//       {
+//         value: '3-2'
+//       },  
+//     ]
+//   }
+// ]
+
+
+// let rowData = [];
+// originColumnHeadData.forEach((value,index)=>{
+//   rowData.push({
+//     value: value.value
+//   })
+// })
+
+
+i = 0;
 while (i<4) {
   columnHeadData[i] = [];
   let j = 0;
@@ -105,11 +155,12 @@ rowHeadData[4][0].colSpan = 2;
 
 
 console.log('data 生成耗时',Date.now() - now);
+console.log(data);
 export default {
   data() {
     return {
-      data: data,
-      rowHead:rowHeadData,
+      data: null,
+      rowHead:null,
       columnHead:null,
       rowHeadFixed: false,
       columnHeadFixed: true,
