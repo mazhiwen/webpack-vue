@@ -1,6 +1,6 @@
 <template>
   <div class="d_table"
-    @scroll="render"
+    @scroll="onScroll"
     :style="{
       width: width,
       height: height
@@ -313,6 +313,7 @@ export default {
       isHadColumnHead: false,
 
       isRowHeadTransparent: false,
+      _rowHeadFixed: this.rowHeadFixed,
     };
   },
   computed: {
@@ -357,7 +358,13 @@ export default {
     },
     fixedColumnIndex() {
       this.init();
-    }
+    },
+    rowHeadFixed() {
+      this.init();
+    },
+    columnHeadFixed() {
+      this.init();
+    },
   },
   created() {
     
@@ -370,6 +377,23 @@ export default {
     // this.setItemPositionsCache();
   },
   methods: {
+    onScroll() {
+      let { 
+        scrollTop,scrollLeft,
+        clientWidth,clientHeight
+      } = this.$el;
+      const {
+        allWidth, allHeight
+      } = this;
+      // 此处功能有待优化，影响性能
+      this.$emit(
+        "onScroll",
+        allWidth - scrollLeft - clientWidth, // 距离右侧边缘距离
+        allHeight - scrollTop - clientHeight // 距离底部边缘距离
+      );
+      
+      this.render();
+    },
     init() {
       if (this.data && this.data.length > 0) {
         this.parseParams();
@@ -387,6 +411,7 @@ export default {
       let crossHead = [];
       if (this.fixedColumnIndex > -1) {
         this.isHadRowHead = true;
+        this._rowHeadFixed = true;
         this.isRowHeadTransparent = true;
         if (this.columnHead && this.columnHead.length > 0) {
           // 如果有列头
@@ -409,6 +434,7 @@ export default {
           _columnHead = this.columnHead;
         }
         if (this.rowHead && this.rowHead.length > 0) {
+          this._rowHeadFixed = this.rowHeadFixed;
           this.isHadRowHead = true;
           _rowHead = this.rowHead;
         }
@@ -418,9 +444,11 @@ export default {
       this._rowHead = _rowHead;
       this._mainData = _mainData;
 
-      console.log(crossHead,_columnHead,_mainData,_rowHead);
     },
-    setCellSpanSize(cellData, getCellHeight) {
+    // 设置合并单元格尺寸
+    setCellSpanSize(
+      cellData, getCellHeight, spanStartRow, spanStartColumn
+    ) {
       const  {
         getColumnWidth
         // , getRowHeight
@@ -431,20 +459,20 @@ export default {
         if(cellData.colSpan) {
           let i = cellData.colSpan - 1;
           while(i >= 0 ) {
-            spanWidth += getColumnWidth(cellData.row + i);
+            spanWidth += getColumnWidth(spanStartRow + i);
             i--;
           }
         } else {
-          spanWidth += getColumnWidth(cellData.row);
+          spanWidth += getColumnWidth(spanStartRow);
         }
         if(cellData.rowSpan) {
           let i = cellData.rowSpan - 1;            
           while(i >= 0 ) {
-            spanHeight += getCellHeight(cellData.column + i);
+            spanHeight += getCellHeight(spanStartColumn + i);
             i--;
           }  
         } else {
-          spanHeight = getCellHeight(cellData.column);
+          spanHeight = getCellHeight(spanStartColumn);
         }
         cellData.spanWidth = spanWidth;
         cellData.spanHeight = spanHeight;
@@ -644,31 +672,40 @@ export default {
       let visibleSpanList = {};
       visibleData.forEach((row, rowIndex) => {
         row.forEach((cellData, columnIndex) => {
-          if(
-            cellData.spanStartRow > -1
-            && !visibleSpanList[`${cellData.spanStartRow}-${cellData.spanStartColumn}`]
-          ) {
-            this.setCellSpanSize(
-              data[cellData.spanStartRow][cellData.spanStartColumn],
-              getCellHeight
-            );
-            // 计算合并单元格的 偏移transform
-            // 起始span 距离content startrow的偏移row startcolumn的偏移column
-            // let i = startRowIndex;
-            let i = cellData.spanStartRow;
-            let transformY = 0;
-            while (i-- > startRowIndex) {
-              transformY += getCellHeight(i);
+          if(cellData.spanStartRow > -1) {
+            let spanStartRow = cellData.spanStartRow;
+            let spanStartColumn = cellData.spanStartColumn;
+            if (this.fixedColumnIndex) {
+              spanStartColumn -= this.fixedColumnIndex + 1;
             }
-            i = cellData.spanStartColumn;
-            let transformX = 0;
-            while (i-- > startColumnIndex) {
-              transformX += getCellWidth(i);
+            if(
+              !visibleSpanList[`${spanStartRow}-${spanStartColumn}`]
+            ) {
+              this.setCellSpanSize(
+                data[spanStartRow][spanStartColumn],
+                getCellHeight,
+                spanStartRow,
+                spanStartColumn
+              );
+              // 计算合并单元格的 偏移transform
+              // 起始span 距离content startrow的偏移row startcolumn的偏移column
+              // let i = startRowIndex;
+              let i = spanStartRow;
+              let transformY = 0;
+              while (i-- > startRowIndex) {
+                transformY += getCellHeight(i);
+              }
+              i = spanStartColumn;
+              let transformX = 0;
+              while (i-- > startColumnIndex) {
+                transformX += getCellWidth(i);
+              }
+              visibleSpanList[`${spanStartRow}-${spanStartColumn}`] = {
+                data: data[spanStartRow][spanStartColumn],
+                transform: `translate3d(${transformX}px, ${transformY}px, 0)`
+              }  
             }
-            visibleSpanList[`${cellData.spanStartRow}-${cellData.spanStartColumn}`] = {
-              data: data[cellData.spanStartRow][cellData.spanStartColumn],
-              transform: `translate3d(${transformX}px, ${transformY}px, 0)`
-            }  
+              
           }
         })
       });
@@ -690,7 +727,7 @@ export default {
       let crossHeadTransformX = 0;
       let crossHeadTransformY = 0;
       if (this.isHadRowHead) { 
-        if (this.rowHeadFixed) {
+        if (this._rowHeadFixed) {
           rowHeadTranslateX = scrollLeft;
           clientWidthContent -= this.rowHeadAllWidth;
           crossHeadTransformX = scrollLeft;

@@ -6,9 +6,12 @@
     <VirtualTable
       :data="data"
       :rowHead="rowHead"
-      :columnHead="columnHead"
+      :columnHead="null"
       :tableHeight="'400px'"
       :rowHeadFixed="rowHeadFixed"
+      :columnHeadFixed="columnHeadFixed"
+      :fixedColumnIndex="-1"
+      @onScroll="onScrollRightEdge"
     />
     <el-button @click="changeData">data</el-button>
     <el-button @click="changerowHead">rowHead</el-button>
@@ -35,7 +38,11 @@ let textList = [
 let rowCount = 20;
 let columnCount = 20;
 
-const data = [];
+let data = [];
+
+
+
+
 let i = 0;
 
 while (i<rowCount) {
@@ -126,6 +133,8 @@ while (i<4) {
 }
 columnHeadData[1][4].spanStartRow = 1;
 columnHeadData[1][4].spanStartColumn = 4;
+// columnHeadData[1][4].spanOffsetStartRow = 0;
+// columnHeadData[1][4].spanOffsetStartColumn = 0;
 columnHeadData[1][4].rowSpan = 2;
 columnHeadData[1][4].colSpan = 2;
 
@@ -159,9 +168,9 @@ console.log(data);
 export default {
   data() {
     return {
-      data: null,
-      rowHead:null,
-      columnHead:null,
+      data: data,
+      rowHead:rowHeadData,
+      columnHead:columnHeadData,
       rowHeadFixed: false,
       columnHeadFixed: true,
       width: 400,
@@ -184,7 +193,20 @@ export default {
     // this.setItemPositionsCache();
   },
   methods: {
-    
+    onScrollRightEdge(toRight, toBottom) {
+      console.log('onScroll',toRight,toBottom);
+      if (toRight < 50) {
+        let data = [];
+        this.data.forEach((value)=>{
+          
+          value = value.concat(value);
+          data.push(value);
+        })
+        this.data = data;
+        console.log(data);
+      }
+      
+    },
     changeData() {
       this.data = data;
     },
