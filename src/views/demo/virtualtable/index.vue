@@ -194,7 +194,7 @@ export default {
   },
   methods: {
     onScrollRightEdge(toRight, toBottom) {
-      console.log('onScroll',toRight,toBottom);
+      // console.log('onScroll',toRight,toBottom);
       if (toRight < 50) {
         let data = [];
         this.data.forEach((value)=>{
