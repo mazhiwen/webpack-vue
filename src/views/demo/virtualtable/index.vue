@@ -5,8 +5,8 @@
   >
     <VirtualTable
       :data="data"
-      :rowHead="rowHead"
-      :columnHead="null"
+      :rowHead="null"
+      :columnHead="columnHead"
       :tableHeight="'400px'"
       :rowHeadFixed="rowHeadFixed"
       :columnHeadFixed="columnHeadFixed"
@@ -35,8 +35,8 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 20;
-let columnCount = 20;
+let rowCount = 200;
+let columnCount = 200;
 
 let data = [];
 
@@ -164,11 +164,11 @@ rowHeadData[4][0].colSpan = 2;
 
 
 console.log('data 生成耗时',Date.now() - now);
-console.log(data);
+// console.log(data);
 export default {
   data() {
     return {
-      data: data,
+      data: Object.freeze(data),
       rowHead:rowHeadData,
       columnHead:columnHeadData,
       rowHeadFixed: false,
@@ -195,16 +195,23 @@ export default {
   methods: {
     onScrollRightEdge(toRight, toBottom) {
       // console.log('onScroll',toRight,toBottom);
-      if (toRight < 50) {
+      // 
+      // 区块划分：每块的长度n*n 一般是固定写死的. 
+      // 区块的位置表示：起始坐标(x*n,y*n), 长度n 
+      // 初始化加载 n*n数据
+      // 滑动时 判断，获取，填充 当前可视区域数据区块 周边8个格子的数据
+
+      if (toBottom < 50) { 
         let data = [];
-        this.data.forEach((value)=>{
+        // this.data.forEach((value)=>{
           
-          value = value.concat(value);
-          data.push(value);
-        })
-        this.data = data;
-        console.log(data);
-      }
+        //   value = value.concat(value);
+        //   data.push(value);
+        // })
+        // request(pageNum,pageSize);
+        this.data = this.data.concat(this.data);
+        // console.log(data);
+      } 
       
     },
     changeData() {

@@ -175,7 +175,7 @@
 // 待添加功能：  冻结行 或者 列
 // crosshead 区域的单元格的宽度 和 高度 
 
-
+let now = Date.now();
 
 let countScrollEvet = 0;
 
@@ -366,11 +366,18 @@ export default {
       this.init();
     },
   },
+  beforeCreated(){
+    console.log('beforeCreated结束耗时',Date.now() - now);
+    now = Date.now();
+  },
   created() {
-    
+    console.log('created结束耗时',Date.now() - now);
+    now = Date.now();
   },
   mounted() {
     // 初始化渲染
+    console.log('mounted结束耗时',Date.now() - now);
+    now = Date.now();
     this.init();
   },
   updated() {
@@ -391,7 +398,37 @@ export default {
         allWidth - scrollLeft - clientWidth, // 距离右侧边缘距离
         allHeight - scrollTop - clientHeight // 距离底部边缘距离
       );
+      // 判断当前可视区域所在区块的 周围8格是否有数据
+      // 如果有 直接渲染
+      // 如果没有 去判断获取填充周围8格数据
+      // 每一个区块的表示：始终坐标 (0,0) - (n,n)
+      // 判断获取 (0,0) - (3n,3n)
+
+
+      // 判断当前数据所在区块 :
+      // (Math.floor(x/n)*n, Math.floor(y/n)*n) = 
+      // currentPositionX = Math.floor(x/n)*n 
+      // => (currentPositionX,currentPositionY)
+      // 依次判断周围8块 缺少数据的区块
+      // 判断标准： 判断区块起始位置是否有数据
+      // 数据块标序依次为 
+      // 1 2 3 
+      // 4 5 6
+      // 7 8 9            
+      // 1: (currentPositionX-n,currentPositionY-n)
+      // 2: (currentPositionX,currentPositionY-n)
+      // 3: (currentPositionX+2n,currentPositionY-n)
+      // 4: (currentPositionX-n,currentPositionY)
+      // 6: (currentPositionX+2n,currentPositionY)
+      // 7: (currentPositionX-n,currentPositionY+2n)
+      // 8: (currentPositionX,currentPositionY+2n)
+      // 9: (currentPositionX+2n,currentPositionY+2n)
+      // 或者直接获取  (currentPositionX-n,currentPositionY-n)  -> (currentPositionX+2n,currentPositionY+2n) 的数据
       
+      
+      // 判断 右侧3块 和 下侧3块 有没有数据 
+      // 
+
       this.render();
     },
     init() {
