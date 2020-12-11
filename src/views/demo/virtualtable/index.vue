@@ -6,12 +6,12 @@
     <VirtualTable
       :data="data"
       :rowHead="null"
-      :columnHead="columnHead"
-      :tableHeight="'400px'"
+      :columnHead="null"
+      :tableHeight="'auto'"
       :rowHeadFixed="rowHeadFixed"
       :columnHeadFixed="columnHeadFixed"
       :fixedColumnIndex="-1"
-      @onScroll="onScrollRightEdge"
+      @onScroll="onScroll"
     />
     <el-button @click="changeData">data</el-button>
     <el-button @click="changerowHead">rowHead</el-button>
@@ -35,7 +35,7 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 200;
+let rowCount = 30;
 let columnCount = 200;
 
 let data = [];
@@ -59,10 +59,9 @@ while (i<rowCount) {
   i++;
   
 }
-// data[10][10].colSpan = 2;
-data[5][5].spanStartRow = 5;
-data[5][5].spanStartColumn = 5;
-data[5][5].rowSpan = 2;
+// data[5][5].spanStartRow = 5;
+// data[5][5].spanStartColumn = 5;
+// data[5][5].rowSpan = 2;
 // data[5][5].columnSpan = 2;
 
 
@@ -155,10 +154,10 @@ while (i<rowCount) {
   }
   i++;
 }
-rowHeadData[4][0].spanStartRow = 1;
-rowHeadData[4][0].spanStartColumn = 4;
-rowHeadData[4][0].rowSpan = 2;
-rowHeadData[4][0].colSpan = 2;
+// rowHeadData[4][0].spanStartRow = 1;
+// rowHeadData[4][0].spanStartColumn = 4;
+// rowHeadData[4][0].rowSpan = 2;
+// rowHeadData[4][0].colSpan = 2;
 
 
 
@@ -193,7 +192,7 @@ export default {
     // this.setItemPositionsCache();
   },
   methods: {
-    onScrollRightEdge(toRight, toBottom) {
+    onScroll(toRight, toBottom) {
       // console.log('onScroll',toRight,toBottom);
       // 
       // 区块划分：每块的长度n*n 一般是固定写死的. 

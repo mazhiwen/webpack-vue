@@ -256,7 +256,7 @@ export default {
     },
     maxHeight: {
       type: Number,
-      default: 0
+      default: 400
       // 300 
       // tableHeight auto 的情况下，maxHeight有效
     },
@@ -974,5 +974,6 @@ export default {
     font-weight: normal;
   }
 }
+
 
 </style>
