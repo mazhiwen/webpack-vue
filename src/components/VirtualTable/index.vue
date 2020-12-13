@@ -42,6 +42,22 @@
           {{cell.value}}
         </div>
       </div>
+      <div
+        class="d_table_dataspan_wrap"
+      >
+        <div
+          v-for="(value, index) in visibleRowHeadSpanList"
+          :key="index"
+          class="columnhead_spancell"
+          :style="{
+            transform: value.transform,
+            height: `${value.data.spanHeight}px`,
+            width: `${value.data.spanWidth}px`,
+          }"
+        >
+          {{value.data.value}}
+        </div>
+      </div>
     </div>
     <!-- 列头 -->
     <div
@@ -56,15 +72,15 @@
         :key="index"
       >
         <div
-          v-for="(columnHeadCell, columnHeadCellIndex) in value"
-          :key="columnHeadCellIndex"
+          v-for="(cell, cellIndex) in value"
+          :key="cellIndex"
           class="columnhead_cell"
           :style="{
             height: `${columnHeadHeight}px`,
-            width: `${getColumnWidth((startColumnIndex+columnHeadCellIndex))}px`
+            width: `${getColumnWidth((startColumnIndex+cellIndex))}px`
           }"
         >
-          {{columnHeadCell.value}}
+          {{cell.value}}
         </div>
       </div>
       <div
@@ -299,7 +315,7 @@ export default {
       columnHeadAllHeight: 0,
       rowHeadAllWidth: 0,
       visibleColumnHeadSpanList: {},
-
+      visibleRowHeadSpanList: {},
       crossHeadTransform: 'translate3d(0, 0, 0)',
 
       height: this.tableHeight,
@@ -484,23 +500,20 @@ export default {
     },
     // 设置合并单元格尺寸
     setCellSpanSize(
-      cellData, getCellHeight, spanStartRow, spanStartColumn
+      cellData, getCellHeight, getCellWidth,
+      spanStartRow, spanStartColumn
     ) {
-      const  {
-        getColumnWidth
-        // , getRowHeight
-      } = this;
       if (!cellData.spanWidth) {
         let spanWidth = 0;
         let spanHeight = 0;
         if(cellData.colSpan) {
           let i = cellData.colSpan - 1;
           while(i >= 0 ) {
-            spanWidth += getColumnWidth(spanStartRow + i);
+            spanWidth += getCellWidth(spanStartRow + i);
             i--;
           }
         } else {
-          spanWidth += getColumnWidth(spanStartRow);
+          spanWidth += getCellWidth(spanStartRow);
         }
         if(cellData.rowSpan) {
           let i = cellData.rowSpan - 1;            
@@ -658,6 +671,16 @@ export default {
         // this.visibleRowHeadData = visibleRowHeadData;
 
         this.visibleRowHeadData = this._rowHead.slice(startRowIndex, endRowIndex);
+        
+        this.visibleRowHeadSpanList = this.getVisibleSpanList(
+          this.visibleRowHeadData,
+          this._rowHead,
+          getRowHeight,
+          this.getRowHeadWidth,
+          startRowIndex,
+          0
+        );
+
         offsetColumnContent = this.rowHeadAllWidth+offsetColumn;
       }
 
@@ -720,7 +743,7 @@ export default {
             ) {
               this.setCellSpanSize(
                 data[spanStartRow][spanStartColumn],
-                getCellHeight,
+                getCellHeight,getCellWidth,
                 spanStartRow,
                 spanStartColumn
               );

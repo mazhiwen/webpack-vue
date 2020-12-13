@@ -5,7 +5,7 @@
   >
     <VirtualTable
       :data="data"
-      :rowHead="null"
+      :rowHead="rowHead"
       :columnHead="null"
       :tableHeight="'auto'"
       :rowHeadFixed="rowHeadFixed"
@@ -154,10 +154,10 @@ while (i<rowCount) {
   }
   i++;
 }
-// rowHeadData[4][0].spanStartRow = 1;
-// rowHeadData[4][0].spanStartColumn = 4;
-// rowHeadData[4][0].rowSpan = 2;
-// rowHeadData[4][0].colSpan = 2;
+rowHeadData[4][0].spanStartRow = 4;
+rowHeadData[4][0].spanStartColumn = 0;
+rowHeadData[4][0].rowSpan = 2;
+rowHeadData[4][0].colSpan = 2;
 
 
 
