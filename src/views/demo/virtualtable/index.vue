@@ -10,7 +10,7 @@
       :tableHeight="'auto'"
       :rowHeadFixed="rowHeadFixed"
       :columnHeadFixed="columnHeadFixed"
-      :fixedColumnIndex="-1"
+      :fixedColumnIndex="2"
       @onScroll="onScroll"
     />
     <el-button @click="changeData">data</el-button>
@@ -59,10 +59,10 @@ while (i<rowCount) {
   i++;
   
 }
-// data[5][5].spanStartRow = 5;
-// data[5][5].spanStartColumn = 5;
-// data[5][5].rowSpan = 2;
-// data[5][5].columnSpan = 2;
+data[1][0].spanStartRow = 1;
+data[1][0].spanStartColumn = 0;
+data[1][0].rowSpan = 2;
+data[1][0].colSpan = 2;
 
 
 

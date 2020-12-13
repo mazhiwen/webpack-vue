@@ -48,7 +48,10 @@
         <div
           v-for="(value, index) in visibleRowHeadSpanList"
           :key="index"
-          class="columnhead_spancell"
+          class="head_spancell"
+          :class="{
+            transparent_head: isRowHeadTransparent
+          }"
           :style="{
             transform: value.transform,
             height: `${value.data.spanHeight}px`,
@@ -89,7 +92,7 @@
         <div
           v-for="(value, index) in visibleColumnHeadSpanList"
           :key="index"
-          class="columnhead_spancell"
+          class="head_spancell"
           :style="{
             transform: value.transform,
             height: `${value.data.spanHeight}px`,
@@ -645,14 +648,19 @@ export default {
         visibleData[i] = this._mainData[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
         i++;
       }
-
+      let spanStartColumnOffset = 0;
+      if (this.fixedColumnIndex) {
+        // 固定列的情况: 处理列头数据，data数据时 需要如此判断
+        spanStartColumnOffset = this.fixedColumnIndex + 1;
+      }
       this.visibleDataSpanList = this.getVisibleSpanList(
         visibleData,
         this._mainData,
         getRowHeight,
         getColumnWidth,
         startRowIndex,
-        startColumnIndex
+        startColumnIndex,
+        spanStartColumnOffset
       );
 
       // 设置主数据 以及 位置
@@ -671,13 +679,13 @@ export default {
         // this.visibleRowHeadData = visibleRowHeadData;
 
         this.visibleRowHeadData = this._rowHead.slice(startRowIndex, endRowIndex);
-        
         this.visibleRowHeadSpanList = this.getVisibleSpanList(
           this.visibleRowHeadData,
           this._rowHead,
           getRowHeight,
           this.getRowHeadWidth,
           startRowIndex,
+          0,
           0
         );
 
@@ -699,7 +707,8 @@ export default {
           this.getColumnHeadHeight,
           getColumnWidth,
           0,
-          startColumnIndex
+          startColumnIndex,
+          spanStartColumnOffset
         );
 
         offsetRowContent = this.columnHeadAllHeight+offsetRow;
@@ -724,7 +733,8 @@ export default {
       getCellHeight,
       getCellWidth,
       startRowIndex,
-      startColumnIndex
+      startColumnIndex,
+      spanStartColumnOffset
     ) {
       // 设置span 合并单元格数据
       // 此处可以做数据缓存优化， 或者把数据处理放在初始化
@@ -735,9 +745,7 @@ export default {
           if(cellData.spanStartRow > -1) {
             let spanStartRow = cellData.spanStartRow;
             let spanStartColumn = cellData.spanStartColumn;
-            if (this.fixedColumnIndex) {
-              spanStartColumn -= this.fixedColumnIndex + 1;
-            }
+            spanStartColumn -= spanStartColumnOffset;
             if(
               !visibleSpanList[`${spanStartRow}-${spanStartColumn}`]
             ) {
@@ -952,7 +960,7 @@ export default {
   
   .d_table_cell,.rowhead_cell,
   .columnhead_cell,.span_cell,
-  .columnhead_spancell{
+  .head_spancell{
     padding: 8px 10px;
     box-sizing: border-box;
     align-items: center;
@@ -967,7 +975,7 @@ export default {
   }
   .d_table_rowhead,
   .d_table_columnhead,
-  .columnhead_spancell,
+  .head_spancell,
   .d_table_crosshead{
     background: rgb(244,245,247);
     position: absolute;
@@ -980,8 +988,6 @@ export default {
     left: 0;
     top: 0;
     background: white;
-    // height: 40px;
-    // width: 260px;
     overflow: hidden;
     z-index: 1;
     display: block;
