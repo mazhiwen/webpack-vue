@@ -5,12 +5,13 @@
   >
     <VirtualTable
       :data="data"
-      :rowHead="rowHead"
-      :columnHead="null"
+      :rowHead="null"
+      :columnHead="columnHead"
+      :columnWidth="'fill'"
       :tableHeight="'auto'"
       :rowHeadFixed="rowHeadFixed"
       :columnHeadFixed="columnHeadFixed"
-      :fixedColumnIndex="2"
+      :fixedColumnIndex="1"
       @onScroll="onScroll"
     />
     <el-button @click="changeData">data</el-button>
@@ -20,6 +21,7 @@
     <el-button @click="changecolumnHeadfix">columnHeadfix</el-button>
     <el-button @click="changeWidth">changeWidth</el-button>
     <el-button @click="changerowHeight">changerowHeight</el-button>
+    <el-button @click="changeData1">changeData1</el-button>
   </div>
 
 
@@ -35,89 +37,45 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 30;
-let columnCount = 200;
-
-let data = [];
+let rowCount = 40;
+let columnCount = 10;
 
 
 
 
-let i = 0;
 
-while (i<rowCount) {
-  data[i] = [];
-  let j = 0;
-  while (j<columnCount) {
-    data[i].push({
-      value: `${i}-${j}:${textList[(i+j)%3]}`,
-      row: i,
-      column: j,
-    });
-    j++;
+function generateData(rowCount, columnCount) {
+
+  let data = [];
+  let i = 0;
+  while (i<rowCount) {
+    data[i] = [];
+    let j = 0;
+    while (j<columnCount) {
+      data[i].push({
+        value: `${i}-${j}:${textList[(i+j)%3]}`,
+        row: i,
+        column: j,
+      });
+      j++;
+    }
+    i++;
+    
   }
-  i++;
-  
+  data[1][0].spanStartRow = 1;
+  data[1][0].spanStartColumn = 0;
+  data[1][0].rowSpan = 2;
+  data[1][0].colSpan = 2;
+  return data;
 }
-data[1][0].spanStartRow = 1;
-data[1][0].spanStartColumn = 0;
-data[1][0].rowSpan = 2;
-data[1][0].colSpan = 2;
 
+const data = generateData(rowCount,columnCount);
 
 
 // 列头数据
 const columnHeadData = [];
-// let originColumnHeadData = [
-//   {
-//     value: 1
-//   },
-//   {
-//     value: 2,
-//     children: [
-//       {
-//         value: '2-1'
-//       },
-//       {
-//         value: '2-2',
-//         children: [
-//           {
-//             value: '2-2-1'
-//           },
-//           {
-//             value: '2-2-2'
-//           },  
-//         ]
-//       },
-//       {
-//         value: '2-2'
-//       },  
-//     ]
-//   },
-//   {
-//     value: 3,
-//     children: [
-//       {
-//         value: '3-1'
-//       },
-//       {
-//         value: '3-2'
-//       },  
-//     ]
-//   }
-// ]
-
-
-// let rowData = [];
-// originColumnHeadData.forEach((value,index)=>{
-//   rowData.push({
-//     value: value.value
-//   })
-// })
-
-
-i = 0;
-while (i<4) {
+let i = 0;
+while (i<2) {
   columnHeadData[i] = [];
   let j = 0;
   while (j<columnCount) {
@@ -130,12 +88,12 @@ while (i<4) {
   }
   i++;
 }
-columnHeadData[1][4].spanStartRow = 1;
-columnHeadData[1][4].spanStartColumn = 4;
+columnHeadData[0][4].spanStartRow = 0;
+columnHeadData[0][4].spanStartColumn = 4;
 // columnHeadData[1][4].spanOffsetStartRow = 0;
 // columnHeadData[1][4].spanOffsetStartColumn = 0;
-columnHeadData[1][4].rowSpan = 2;
-columnHeadData[1][4].colSpan = 2;
+columnHeadData[0][4].rowSpan = 2;
+columnHeadData[0][4].colSpan = 2;
 
 
 // 行头数据
@@ -154,10 +112,10 @@ while (i<rowCount) {
   }
   i++;
 }
-rowHeadData[4][0].spanStartRow = 4;
-rowHeadData[4][0].spanStartColumn = 0;
-rowHeadData[4][0].rowSpan = 2;
-rowHeadData[4][0].colSpan = 2;
+rowHeadData[0][0].spanStartRow = 0;
+rowHeadData[0][0].spanStartColumn = 0;
+rowHeadData[0][0].rowSpan = 2;
+rowHeadData[0][0].colSpan = 2;
 
 
 
@@ -200,17 +158,10 @@ export default {
       // 初始化加载 n*n数据
       // 滑动时 判断，获取，填充 当前可视区域数据区块 周边8个格子的数据
 
-      if (toBottom < 50) { 
-        let data = [];
-        // this.data.forEach((value)=>{
-          
-        //   value = value.concat(value);
-        //   data.push(value);
-        // })
-        // request(pageNum,pageSize);
-        this.data = this.data.concat(this.data);
-        // console.log(data);
-      } 
+      // if (toBottom < 50) { 
+      //   let data = [];
+      //   this.data = this.data.concat(this.data);
+      // } 
       
     },
     changeData() {
@@ -234,7 +185,9 @@ export default {
     changerowHeight() {
       this.rowHeight += 10;
     },
-
+    changeData1() {
+      this.data = generateData(4,10);
+    }
     
   },
 };

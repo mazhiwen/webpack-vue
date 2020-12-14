@@ -33,7 +33,7 @@
         <div
           v-for="(cell, cellIndex) in value"
           :key="cellIndex"
-          class="rowhead_cell"
+          class="head_cell"
           :style="{
             height: `${getRowHeight(startRowIndex+cellIndex)}px`,
             width: `${rowHeadWidth}px`
@@ -77,7 +77,7 @@
         <div
           v-for="(cell, cellIndex) in value"
           :key="cellIndex"
-          class="columnhead_cell"
+          class="head_cell"
           :style="{
             height: `${columnHeadHeight}px`,
             width: `${getColumnWidth((startColumnIndex+cellIndex))}px`
@@ -120,7 +120,7 @@
         <div
           v-for="(cell, cellIndex) in value"
           :key="cellIndex"
-          class="rowhead_cell"
+          class="head_cell"
           :style="{
             height: `${columnHeadHeight}px`,
             width: `${rowHeadWidth}px`
@@ -375,7 +375,17 @@ export default {
     rowHeight() {
       this.init();
     },
-    fixedColumnIndex() {
+    fixedColumnIndex(newV, oldV) {
+      // 变化时 需要清空 rowhead 里 合并单元格的spanWidth spanHeight
+      let clearLength = Math.max(newV, oldV);
+      this.data.forEach((row) => {
+        let i = 0;
+        while(i <= clearLength) {
+          row[i].spanWidth = null;
+          row[i].spanHeight = null;
+          i++;
+        }
+      })
       this.init();
     },
     rowHeadFixed() {
@@ -485,6 +495,7 @@ export default {
         
       } else {
         _mainData = this.data;
+        
         if (this.columnHead && this.columnHead.length > 0) {
           this.isHadColumnHead = true;
           _columnHead = this.columnHead;
@@ -493,6 +504,8 @@ export default {
           this._rowHeadFixed = this.rowHeadFixed;
           this.isHadRowHead = true;
           _rowHead = this.rowHead;
+        } else {
+          this.isHadRowHead = false;
         }
       }
       this.crossHead = crossHead;
@@ -538,10 +551,17 @@ export default {
       } = this.$el;
       this.rowLength = this._mainData.length;
       this.columnLength = this._mainData[0].length;
+      // 此处 'fill' 宽度逻辑 应该改为默认 小于 100%，则fill。 否则按照其他填充宽度list
       if (this.columnWidth === 'fill') {
         let i = 0;
         let columnWidthList = [];
-        let averageWidth = Math.floor(clientWidth/this.columnLength*100)/100;
+        
+        let clientWidthContent = clientWidth;
+        if (this.isHadRowHead) {
+          clientWidthContent = clientWidth - this.rowHeadWidth * this._rowHead[0].length;
+        }
+        
+        let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
         while (i < this.columnLength) {
           columnWidthList.push(averageWidth);
           i++;
@@ -582,8 +602,12 @@ export default {
       }
 
       // 设置容器尺寸
-      if (this.tableHeight === 'auto') {        
+      if (this.tableHeight === 'auto') {
+        // 此处计算高度有问题，应该是动态的        
         let height = this._mainData.length * this.rowHeight;
+        if (this.isHadColumnHead) {
+          height += this._columnHead.length * this.columnHeadHeight;
+        }
         // 此处100%的情况判断有漏洞 后面补上
         if (this.maxHeight && height > this.maxHeight) {
           height = this.maxHeight;
@@ -677,7 +701,6 @@ export default {
         //   visibleRowHeadData[index] = value.slice(startColumnIndex, endColumnIndex);
         // })
         // this.visibleRowHeadData = visibleRowHeadData;
-
         this.visibleRowHeadData = this._rowHead.slice(startRowIndex, endRowIndex);
         this.visibleRowHeadSpanList = this.getVisibleSpanList(
           this.visibleRowHeadData,
@@ -928,7 +951,7 @@ export default {
     
 
   }
-  .d_table_cell,.rowhead_cell,.columnhead_cell{
+  .d_table_cell,.head_cell{
       
     display: inline-flex;
     white-space: nowrap;
@@ -940,27 +963,15 @@ export default {
 
     box-shadow: 2px 0 6px -2px rgba(0,0,0,0.2);
   }
-  .rowhead_cell{
-    
-    // display: flex;
-    
-  }
   .d_table_columnhead{    
     font-size: 0;
     text-align: left;
     white-space: nowrap;
     box-shadow: 0 2px 6px -2px rgba(0,0,0,0.2);
   }
-  .columnhead_cell,.rowhead_cell{
-    // display: inline-flex;
-    // white-space: normal;
-    // word-break: break-all;
-    // vertical-align: middle;
-  }
   
-  .d_table_cell,.rowhead_cell,
-  .columnhead_cell,.span_cell,
-  .head_spancell{
+  .d_table_cell,.span_cell,
+  .head_cell,.head_spancell{
     padding: 8px 10px;
     box-sizing: border-box;
     align-items: center;
