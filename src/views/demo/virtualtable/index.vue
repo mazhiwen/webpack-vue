@@ -7,7 +7,7 @@
       :data="data"
       :rowHead="null"
       :columnHead="columnHead"
-      :columnWidth="'fill'"
+      :columnWidth="150"
       :tableHeight="'auto'"
       :rowHeadFixed="rowHeadFixed"
       :columnHeadFixed="columnHeadFixed"
@@ -38,7 +38,7 @@ let textList = [
 ];
 
 let rowCount = 400;
-let columnCount = 10;
+let columnCount = 20;
 
 
 

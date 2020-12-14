@@ -271,13 +271,19 @@ export default {
       type: String,
       default: '300px'
       // 300px 100% auto 
-      // auto 情况下正好填充满每行数据
+      // auto 情况下视情况 数据少正好填充满每行数据 数据多滚动
     },
     maxHeight: {
       type: Number,
       default: 400
       // 300 
       // tableHeight auto 的情况下，maxHeight有效
+    },
+    tableWidth: {
+      type: String,
+      default: '100%'
+      // 300px 100% auto 
+      // auto 情况下 数据少正好填充满每列数据 数据多滚动
     },
     fixedColumnIndex: {
       type: Number,
@@ -361,6 +367,7 @@ export default {
       // 此处有问题，还需要判断其他影响高度的参数
       // 原scroll 距离偏大时，数据变少，总content高度变低，但是滚动距离scroll距离不会变小
       // 还需要添加 scrollLeft 的情况
+      // 新数据长度变小时，把滚动高度置0 否则会计算错误视口高度。
       if(newV.length < oldV.length) {
         this.$el.scrollTop = 0;
       }
@@ -434,37 +441,6 @@ export default {
         allWidth - scrollLeft - clientWidth, // 距离右侧边缘距离
         allHeight - scrollTop - clientHeight // 距离底部边缘距离
       );
-      // 判断当前可视区域所在区块的 周围8格是否有数据
-      // 如果有 直接渲染
-      // 如果没有 去判断获取填充周围8格数据
-      // 每一个区块的表示：始终坐标 (0,0) - (n,n)
-      // 判断获取 (0,0) - (3n,3n)
-
-
-      // 判断当前数据所在区块 :
-      // (Math.floor(x/n)*n, Math.floor(y/n)*n) = 
-      // currentPositionX = Math.floor(x/n)*n 
-      // => (currentPositionX,currentPositionY)
-      // 依次判断周围8块 缺少数据的区块
-      // 判断标准： 判断区块起始位置是否有数据
-      // 数据块标序依次为 
-      // 1 2 3 
-      // 4 5 6
-      // 7 8 9            
-      // 1: (currentPositionX-n,currentPositionY-n)
-      // 2: (currentPositionX,currentPositionY-n)
-      // 3: (currentPositionX+2n,currentPositionY-n)
-      // 4: (currentPositionX-n,currentPositionY)
-      // 6: (currentPositionX+2n,currentPositionY)
-      // 7: (currentPositionX-n,currentPositionY+2n)
-      // 8: (currentPositionX,currentPositionY+2n)
-      // 9: (currentPositionX+2n,currentPositionY+2n)
-      // 或者直接获取  (currentPositionX-n,currentPositionY-n)  -> (currentPositionX+2n,currentPositionY+2n) 的数据
-      
-      
-      // 判断 右侧3块 和 下侧3块 有没有数据 
-      // 
-
       this.render();
     },
     init() {
@@ -559,31 +535,40 @@ export default {
       this.rowLength = this._mainData.length;
       this.columnLength = this._mainData[0].length;
       // 此处 'fill' 宽度逻辑 应该改为默认 小于 100%，则fill。 否则按照其他填充宽度list
-      if (this.columnWidth === 'fill') {
-        let i = 0;
-        let columnWidthList = [];
-        
-        let clientWidthContent = clientWidth;
-        if (this.isHadRowHead) {
-          clientWidthContent = clientWidth - this.rowHeadWidth * this._rowHead[0].length;
-        }
-        
-        let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
-        while (i < this.columnLength) {
-          columnWidthList.push(averageWidth);
-          i++;
-        }
-        this.columnWidthList = columnWidthList;
-      } else if (typeof(this.columnWidth) === 'function') {
+      // 处理列宽数据
+      
+      if (typeof(this.columnWidth) === 'function') {
         // ..
       } else if (Object.prototype.toString.call(this.columnWidth) === '[object Array]') {
         // ..
         this.columnWidthList = this.columnWidth;
         this.getColumnWidth = this.getColumnWidthFromList;
       } if (typeof this.columnWidth === 'number') {
-        // ...
-        this.getColumnWidth = this.getColumnWidthFromNumer;
-      }  
+        // 此处计算影响性能。考虑固定高宽，不做自适应填满
+        let allWidth = this._mainData[0].length*this.columnWidth;
+        if (this.isHadRowHead) {
+          allWidth += this.rowHeadWidth * this._rowHead[0].length;
+        }
+        if (allWidth < clientWidth) {
+          let clientWidthContent = clientWidth;
+          if (this.isHadRowHead) {
+            clientWidthContent = clientWidth - this.rowHeadWidth * this._rowHead[0].length;
+          }
+          let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
+          let columnWidthList = [];
+          let i = 0;
+          while (i < this.columnLength) {
+            columnWidthList.push(averageWidth);
+            i++;
+          }
+          this.columnWidthList = columnWidthList;
+          this.getColumnWidth = this.getColumnWidthFromList;
+        } else {
+          this.getColumnWidth = this.getColumnWidthFromNumer;
+        }
+      }
+      
+      
       // 处理行高数据
       if (typeof this.rowHeight === 'number') {
         // ...
@@ -595,7 +580,8 @@ export default {
 
       // 设置容器尺寸
       if (this.tableHeight === 'auto') {
-        // 此处计算高度有问题，应该是动态的        
+        // 此处计算高度有问题，应该是动态的  
+        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
         let height = this._mainData.length * this.rowHeight;
         if (this.isHadColumnHead) {
           height += this._columnHead.length * this.columnHeadHeight;
