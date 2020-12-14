@@ -357,7 +357,13 @@ export default {
     // }
   },
   watch: {
-    data() {
+    data(newV, oldV) {
+      // 此处有问题，还需要判断其他影响高度的参数
+      // 原scroll 距离偏大时，数据变少，总content高度变低，但是滚动距离scroll距离不会变小
+      // 还需要添加 scrollLeft 的情况
+      if(newV.length < oldV.length) {
+        this.$el.scrollTop = 0;
+      }
       this.init();
     },
     rowHead() {
@@ -377,6 +383,7 @@ export default {
     },
     fixedColumnIndex(newV, oldV) {
       // 变化时 需要清空 rowhead 里 合并单元格的spanWidth spanHeight
+      //  此处有问题，实际只需要处理 设置过的
       let clearLength = Math.max(newV, oldV);
       this.data.forEach((row) => {
         let i = 0;
@@ -576,23 +583,8 @@ export default {
       } if (typeof this.columnWidth === 'number') {
         // ...
         this.getColumnWidth = this.getColumnWidthFromNumer;
-      } 
-      // if (this.rowHeight === 'fill') {
-      //   let i = 0;
-      //   let rowHeightList = [];
-      //   let averageHeight = Math.floor(clientHeight/this.rowLength*100)/100;
-      //   while (i < this.rowLength) {
-      //     rowHeightList.push(averageHeight);
-      //     i++;
-      //   }
-      //   this.rowHeightList = rowHeightList;
-      //   this.getRowHeight = this.getRowHeightFromList;
-      // } else 
-      // if (this.rowHeight === 'auto') {
-      //   // ...
-      //   this.getRowHeight = this.getRowHeightFromNumer;
-      // } else 
-
+      }  
+      // 处理行高数据
       if (typeof this.rowHeight === 'number') {
         // ...
         this.getRowHeight = this.getRowHeightFromNumer;
@@ -803,13 +795,11 @@ export default {
       return visibleSpanList;
     },
     getStartIndexAndOffset() {
-      // 
       let now = Date.now();
       let { 
         scrollTop,scrollLeft,
         clientWidth,clientHeight
       } = this.$el;
-
       let clientWidthContent = clientWidth;
       let scrollLeftContent = scrollLeft;
       // 处理行头部数据

@@ -37,7 +37,7 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 40;
+let rowCount = 400;
 let columnCount = 10;
 
 
@@ -186,7 +186,7 @@ export default {
       this.rowHeight += 10;
     },
     changeData1() {
-      this.data = generateData(4,10);
+      this.data = generateData(10,10);
     }
     
   },
