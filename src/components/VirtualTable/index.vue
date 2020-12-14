@@ -477,6 +477,7 @@ export default {
         })
         
       } else {
+        // 此处合并列会 忽略 行头rowhead数据
         _mainData = this.data;
         
         if (this.columnHead && this.columnHead.length > 0) {

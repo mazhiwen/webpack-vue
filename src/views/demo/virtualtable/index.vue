@@ -5,12 +5,10 @@
   >
     <VirtualTable
       :data="data"
-      :rowHead="null"
+      :rowHead="rowHead"
       :columnHead="columnHead"
       :columnWidth="150"
       :tableHeight="'auto'"
-      :rowHeadFixed="rowHeadFixed"
-      :columnHeadFixed="columnHeadFixed"
       :fixedColumnIndex="1"
       @onScroll="onScroll"
     />
@@ -38,7 +36,7 @@ let textList = [
 ];
 
 let rowCount = 400;
-let columnCount = 20;
+let columnCount = 3;
 
 
 
@@ -62,10 +60,10 @@ function generateData(rowCount, columnCount) {
     i++;
     
   }
-  data[1][0].spanStartRow = 1;
-  data[1][0].spanStartColumn = 0;
-  data[1][0].rowSpan = 2;
-  data[1][0].colSpan = 2;
+  // data[1][0].spanStartRow = 1;
+  // data[1][0].spanStartColumn = 0;
+  // data[1][0].rowSpan = 2;
+  // data[1][0].colSpan = 2;
   return data;
 }
 
@@ -88,12 +86,10 @@ while (i<2) {
   }
   i++;
 }
-columnHeadData[0][4].spanStartRow = 0;
-columnHeadData[0][4].spanStartColumn = 4;
-// columnHeadData[1][4].spanOffsetStartRow = 0;
-// columnHeadData[1][4].spanOffsetStartColumn = 0;
-columnHeadData[0][4].rowSpan = 2;
-columnHeadData[0][4].colSpan = 2;
+// columnHeadData[0][4].spanStartRow = 0;
+// columnHeadData[0][4].spanStartColumn = 4;
+// columnHeadData[0][4].rowSpan = 2;
+// columnHeadData[0][4].colSpan = 2;
 
 
 // 行头数据
@@ -112,10 +108,10 @@ while (i<rowCount) {
   }
   i++;
 }
-rowHeadData[0][0].spanStartRow = 0;
-rowHeadData[0][0].spanStartColumn = 0;
-rowHeadData[0][0].rowSpan = 2;
-rowHeadData[0][0].colSpan = 2;
+// rowHeadData[0][0].spanStartRow = 0;
+// rowHeadData[0][0].spanStartColumn = 0;
+// rowHeadData[0][0].rowSpan = 2;
+// rowHeadData[0][0].colSpan = 2;
 
 
 
