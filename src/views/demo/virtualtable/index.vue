@@ -5,11 +5,11 @@
   >
     <VirtualTable
       :data="data"
-      :rowHead="rowHead"
-      :columnHead="columnHead"
+      :rowHead="null"
+      :columnHead="null"
       :columnWidth="150"
-      :tableHeight="'auto'"
-      :fixedColumnIndex="1"
+      :tableHeight="'300px'"
+      :fixedColumnIndex="-1"
       @onScroll="onScroll"
     />
     <el-button @click="changeData">data</el-button>
@@ -35,8 +35,8 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 400;
-let columnCount = 3;
+let rowCount = 15;
+let columnCount = 4;
 
 
 
@@ -60,10 +60,34 @@ function generateData(rowCount, columnCount) {
     i++;
     
   }
-  // data[1][0].spanStartRow = 1;
-  // data[1][0].spanStartColumn = 0;
-  // data[1][0].rowSpan = 2;
-  // data[1][0].colSpan = 2;
+  data[0][0].spanStartRow = 0;
+  data[0][0].spanStartColumn = 0;
+  data[0][0].rowSpan = 3;
+  data[0][0].colSpan = 1;
+  data[1][0].spanStartRow = 0;
+  data[1][0].spanStartColumn = 0;
+  data[1][0].rowSpan = 3;
+  data[1][0].colSpan = 1;
+  data[2][0].spanStartRow = 0;
+  data[2][0].spanStartColumn = 0;
+  data[2][0].rowSpan = 3;
+  data[2][0].colSpan = 1;
+  data[3][0].spanStartRow = 3;
+  data[3][0].spanStartColumn = 0;
+  data[3][0].rowSpan = 3;
+  data[3][0].colSpan = 1;
+  data[4][0].spanStartRow = 3;
+  data[4][0].spanStartColumn = 0;
+  data[4][0].rowSpan = 3;
+  data[4][0].colSpan = 1;
+  data[5][0].spanStartRow = 3;
+  data[5][0].spanStartColumn = 0;
+  data[5][0].rowSpan = 3;
+  data[5][0].colSpan = 1;
+  data[13][0].spanStartRow = 13;
+  data[13][0].spanStartColumn = 0;
+  data[13][0].rowSpan = 7;
+  data[13][0].colSpan = 1;
   return data;
 }
 
@@ -86,11 +110,21 @@ while (i<2) {
   }
   i++;
 }
-// columnHeadData[0][4].spanStartRow = 0;
-// columnHeadData[0][4].spanStartColumn = 4;
-// columnHeadData[0][4].rowSpan = 2;
-// columnHeadData[0][4].colSpan = 2;
 
+columnHeadData[0][0].spanStartRow = 0;
+columnHeadData[0][0].spanStartColumn = 0;
+columnHeadData[0][0].rowSpan = 2;
+columnHeadData[0][0].colSpan = 1;
+columnHeadData[0][1].spanStartRow = 0;
+columnHeadData[0][1].spanStartColumn = 1;
+columnHeadData[0][1].rowSpan = 1;
+columnHeadData[0][1].colSpan = 1;
+columnHeadData[0][2].spanStartRow = 0;
+columnHeadData[0][2].spanStartColumn = 2;
+columnHeadData[0][2].rowSpan = 1;
+columnHeadData[0][2].colSpan = 1;
+
+console.log(columnHeadData);
 
 // 行头数据
 i = 0;

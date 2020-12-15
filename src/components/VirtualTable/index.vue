@@ -224,7 +224,15 @@ export default {
       default: true
       // 需要是一个二维数组
     },
-    
+    // 行头部宽度
+    rowHeadWidth: {
+      type: Number,
+      default: 150
+    },
+    rowHeight: {
+      type: [ Function, Number, Array ],
+      default: 40
+    },
     columnHead: {
       type: Array,
       default: () => []
@@ -235,11 +243,9 @@ export default {
       default: true
       // 需要是一个二维数组
     },
-    
-    data: {
-      type: Array,
-      default: () => []
-      // 需要是一个二维数组
+    columnHeadHeight: {
+      type: Number,
+      default: 50
     },
     columnWidth: {
       type: [ String, Function, Number, Array ],
@@ -249,18 +255,10 @@ export default {
       // Function
       // Array 
     },
-    rowHeight: {
-      type: [ Function, Number, Array ],
-      default: 40
-    },
-    // 行头部宽度
-    rowHeadWidth: {
-      type: Number,
-      default: 150
-    },
-    columnHeadHeight: {
-      type: Number,
-      default: 50
+    data: {
+      type: Array,
+      default: () => []
+      // 需要是一个二维数组
     },
     width: {
       type: String,
@@ -278,12 +276,6 @@ export default {
       default: 400
       // 300 
       // tableHeight auto 的情况下，maxHeight有效
-    },
-    tableWidth: {
-      type: String,
-      default: '100%'
-      // 300px 100% auto 
-      // auto 情况下 数据少正好填充满每列数据 数据多滚动
     },
     fixedColumnIndex: {
       type: Number,
@@ -509,23 +501,24 @@ export default {
         if(cellData.colSpan) {
           let i = cellData.colSpan - 1;
           while(i >= 0 ) {
-            spanWidth += getCellWidth(spanStartRow + i);
+            spanWidth += getCellWidth(spanStartColumn + i);
             i--;
           }
         } else {
-          spanWidth += getCellWidth(spanStartRow);
+          spanWidth += getCellWidth(spanStartColumn);
         }
         if(cellData.rowSpan) {
           let i = cellData.rowSpan - 1;            
           while(i >= 0 ) {
-            spanHeight += getCellHeight(spanStartColumn + i);
+            spanHeight += getCellHeight(spanStartRow + i);
             i--;
           }  
         } else {
-          spanHeight = getCellHeight(spanStartColumn);
+          spanHeight = getCellHeight(spanStartRow);
         }
         cellData.spanWidth = spanWidth;
         cellData.spanHeight = spanHeight;
+        console.log(cellData);
       }
     },
     // 设置单元格尺寸数据
@@ -652,7 +645,7 @@ export default {
         i++;
       }
       let spanStartColumnOffset = 0;
-      if (this.fixedColumnIndex) {
+      if (this.fixedColumnIndex > -1) {
         // 固定列的情况: 处理列头数据，data数据时 需要如此判断
         spanStartColumnOffset = this.fixedColumnIndex + 1;
       }
@@ -762,13 +755,26 @@ export default {
               // let i = startRowIndex;
               let i = spanStartRow;
               let transformY = 0;
-              while (i-- > startRowIndex) {
-                transformY += getCellHeight(i);
+              // 合并单元格起始行i >= 视口startRowIndex 的情况
+              if (i >= startRowIndex) {
+                while (i-- > startRowIndex) {
+                  transformY += getCellHeight(i);
+                }
+              } else {
+                while (startRowIndex > i++) {
+                  transformY -= getCellHeight(i);
+                }
               }
               i = spanStartColumn;
               let transformX = 0;
-              while (i-- > startColumnIndex) {
-                transformX += getCellWidth(i);
+              if (i >= startColumnIndex) {
+                while (i-- > startColumnIndex) {
+                  transformX += getCellWidth(i);
+                }
+              } else {
+                while (startColumnIndex > i++) {
+                  transformX -= getCellWidth(i);
+                }
               }
               visibleSpanList[`${spanStartRow}-${spanStartColumn}`] = {
                 data: data[spanStartRow][spanStartColumn],
