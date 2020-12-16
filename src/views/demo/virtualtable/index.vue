@@ -6,10 +6,10 @@
     <VirtualTable
       :data="data"
       :rowHead="null"
-      :columnHead="null"
+      :columnHead="columnHead"
       :columnWidth="150"
       :tableHeight="'300px'"
-      :fixedColumnIndex="-1"
+      :fixedColumnIndex="1"
       @onScroll="onScroll"
     />
     <el-button @click="changeData">data</el-button>
@@ -36,7 +36,7 @@ let textList = [
 ];
 
 let rowCount = 15;
-let columnCount = 4;
+let columnCount = 20;
 
 
 
@@ -60,34 +60,34 @@ function generateData(rowCount, columnCount) {
     i++;
     
   }
-  data[0][0].spanStartRow = 0;
-  data[0][0].spanStartColumn = 0;
-  data[0][0].rowSpan = 3;
-  data[0][0].colSpan = 1;
-  data[1][0].spanStartRow = 0;
-  data[1][0].spanStartColumn = 0;
-  data[1][0].rowSpan = 3;
-  data[1][0].colSpan = 1;
-  data[2][0].spanStartRow = 0;
-  data[2][0].spanStartColumn = 0;
-  data[2][0].rowSpan = 3;
-  data[2][0].colSpan = 1;
-  data[3][0].spanStartRow = 3;
-  data[3][0].spanStartColumn = 0;
-  data[3][0].rowSpan = 3;
-  data[3][0].colSpan = 1;
-  data[4][0].spanStartRow = 3;
-  data[4][0].spanStartColumn = 0;
-  data[4][0].rowSpan = 3;
-  data[4][0].colSpan = 1;
-  data[5][0].spanStartRow = 3;
-  data[5][0].spanStartColumn = 0;
-  data[5][0].rowSpan = 3;
-  data[5][0].colSpan = 1;
-  data[13][0].spanStartRow = 13;
-  data[13][0].spanStartColumn = 0;
-  data[13][0].rowSpan = 7;
-  data[13][0].colSpan = 1;
+  // data[0][0].spanStartRow = 0;
+  // data[0][0].spanStartColumn = 0;
+  // data[0][0].rowSpan = 3;
+  // data[0][0].colSpan = 1;
+  // data[1][0].spanStartRow = 0;
+  // data[1][0].spanStartColumn = 0;
+  // data[1][0].rowSpan = 3;
+  // data[1][0].colSpan = 1;
+  // data[2][0].spanStartRow = 0;
+  // data[2][0].spanStartColumn = 0;
+  // data[2][0].rowSpan = 3;
+  // data[2][0].colSpan = 1;
+  // data[3][0].spanStartRow = 3;
+  // data[3][0].spanStartColumn = 0;
+  // data[3][0].rowSpan = 3;
+  // data[3][0].colSpan = 1;
+  // data[4][0].spanStartRow = 3;
+  // data[4][0].spanStartColumn = 0;
+  // data[4][0].rowSpan = 3;
+  // data[4][0].colSpan = 1;
+  // data[5][0].spanStartRow = 3;
+  // data[5][0].spanStartColumn = 0;
+  // data[5][0].rowSpan = 3;
+  // data[5][0].colSpan = 1;
+  // data[13][0].spanStartRow = 13;
+  // data[13][0].spanStartColumn = 0;
+  // data[13][0].rowSpan = 7;
+  // data[13][0].colSpan = 1;
   return data;
 }
 
@@ -97,7 +97,7 @@ const data = generateData(rowCount,columnCount);
 // 列头数据
 const columnHeadData = [];
 let i = 0;
-while (i<2) {
+while (i<3) {
   columnHeadData[i] = [];
   let j = 0;
   while (j<columnCount) {
@@ -113,16 +113,12 @@ while (i<2) {
 
 columnHeadData[0][0].spanStartRow = 0;
 columnHeadData[0][0].spanStartColumn = 0;
-columnHeadData[0][0].rowSpan = 2;
+columnHeadData[0][0].rowSpan = 3;
 columnHeadData[0][0].colSpan = 1;
-columnHeadData[0][1].spanStartRow = 0;
-columnHeadData[0][1].spanStartColumn = 1;
-columnHeadData[0][1].rowSpan = 1;
-columnHeadData[0][1].colSpan = 1;
-columnHeadData[0][2].spanStartRow = 0;
-columnHeadData[0][2].spanStartColumn = 2;
-columnHeadData[0][2].rowSpan = 1;
-columnHeadData[0][2].colSpan = 1;
+columnHeadData[1][0].spanStartRow = 0;
+columnHeadData[1][0].spanStartColumn = 0;
+columnHeadData[2][0].spanStartRow = 0;
+columnHeadData[2][0].spanStartColumn = 0;
 
 console.log(columnHeadData);
 
@@ -190,7 +186,7 @@ export default {
 
       // if (toBottom < 50) { 
       //   let data = [];
-      //   this.data = this.data.concat(this.data);
+      //   this.data = Object.freeze(this.data.concat(this.data));
       // } 
       
     },

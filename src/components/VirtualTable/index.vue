@@ -18,7 +18,7 @@
     <!-- 行头 -->
     <div
       v-if="isHadRowHead"
-      class="d_table_rowhead"
+      class="d_tablerowHeadInner"
       :class="{
         transparent_head: isRowHeadTransparent
       }"
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div
-        class="d_table_dataspan_wrap"
+        class="d_table_span_wrap"
       >
         <div
           v-for="(value, index) in visibleRowHeadSpanList"
@@ -65,7 +65,7 @@
     <!-- 列头 -->
     <div
       v-if="isHadColumnHead"
-      class="d_table_columnhead"
+      class="d_tablecolumnHeadInner"
       :style="{
         transform: columnHeadTransform
       }"
@@ -87,7 +87,7 @@
         </div>
       </div>
       <div
-        class="d_table_dataspan_wrap"
+        class="d_table_span_wrap"
       >
         <div
           v-for="(value, index) in visibleColumnHeadSpanList"
@@ -129,6 +129,22 @@
           {{cell.value}}
         </div>
       </div>
+      <div
+        class="d_table_span_wrap"
+      >
+        <div
+          v-for="(value, index) in visibleCrossHeadSpanList"
+          :key="index"
+          class="head_spancell"
+          :style="{
+            transform: value.transform,
+            height: `${value.data.spanHeight}px`,
+            width: `${value.data.spanWidth}px`,
+          }"
+        >
+          {{value.data.value}}
+        </div>
+      </div>
     </div>
     <!-- 主数据 -->
     <div class="d_table_content"
@@ -154,7 +170,7 @@
         </div>
       </div>
       <div
-        class="d_table_dataspan_wrap"
+        class="d_table_span_wrap"
       >
         <div
           v-for="(visibbleDataSpan, visibbleDataSpanIndex) in visibleDataSpanList"
@@ -290,8 +306,7 @@ export default {
       visibleData: [],
       contentTransform: 'translate3d(0, 0, 0)',
       itemHeight: null,
-      itemPositionsCache:[
-      ],
+      itemPositionsCache:[],
       startIndex: 0,
       lastStartIndex: 0,
       allWidth: 0,
@@ -306,9 +321,7 @@ export default {
       rowHeadTransform: 'translate3d(0, 0, 0)',
       // 列头部相关数据
       visibleColumnHeadData: [],
-      visibleRowHeadData: [],
       columnHeadTransform: 'translate3d(0, 0, 0)',
-
       rowLength: 0,
       columnLength:0,
       // 主数据合并行列 数据
@@ -316,21 +329,22 @@ export default {
       columnHeadAllHeight: 0,
       rowHeadAllWidth: 0,
       visibleColumnHeadSpanList: {},
+      visibleCrossHeadSpanList: {},
       visibleRowHeadSpanList: {},
       crossHeadTransform: 'translate3d(0, 0, 0)',
 
       height: this.tableHeight,
 
-      _mainData: null,
-      _rowHead: null,
-      _columnHead: null,
+      mainDataInner: null,
+      rowHeadInner: null,
+      columnHeadInner: null,
 
       isHadRowHead: false,
       crosshead: null,
       isHadColumnHead: false,
 
       isRowHeadTransparent: false,
-      _rowHeadFixed: this.rowHeadFixed,
+      rowHeadInnerFixed: this.rowHeadFixed,
     };
   },
   computed: {
@@ -348,7 +362,7 @@ export default {
     //   return allHeight;
     // }
     // isHadRowHead() {
-    //   return this._rowHead && this._rowHead.length > 0
+    //   return this.rowHeadInner && this.rowHeadInner.length > 0
     // },
     // isHadColumnHead() {
     //   return this.columnHead && this.columnHead.length > 0
@@ -402,16 +416,16 @@ export default {
     },
   },
   beforeCreated(){
-    console.log('beforeCreated结束耗时',Date.now() - now);
+    // console.log('beforeCreated结束耗时',Date.now() - now);
     now = Date.now();
   },
   created() {
-    console.log('created结束耗时',Date.now() - now);
+    // console.log('created结束耗时',Date.now() - now);
     now = Date.now();
   },
   mounted() {
     // 初始化渲染
-    console.log('mounted结束耗时',Date.now() - now);
+    // console.log('mounted结束耗时',Date.now() - now);
     now = Date.now();
     this.init();
   },
@@ -446,13 +460,13 @@ export default {
       }
     },
     parseParams() {
-      let _mainData = [];
-      let _rowHead = [];
-      let _columnHead = [];
+      let mainDataInner = [];
+      let rowHeadInner = [];
+      let columnHeadInner = [];
       let crossHead = [];
       if (this.fixedColumnIndex > -1) {
         this.isHadRowHead = true;
-        this._rowHeadFixed = true;
+        this.rowHeadInnerFixed = true;
         this.isRowHeadTransparent = true;
         if (this.columnHead && this.columnHead.length > 0) {
           // 如果有列头
@@ -460,34 +474,34 @@ export default {
           this.isHadColumnHead = true;
           this.columnHead.forEach((value) => {
             crossHead.push(value.slice(0, this.fixedColumnIndex + 1));
-            _columnHead.push(value.slice(this.fixedColumnIndex + 1));
+            columnHeadInner.push(value.slice(this.fixedColumnIndex + 1));
           })
         }
         this.data.forEach((value) => {
-          _rowHead.push(value.slice(0, this.fixedColumnIndex + 1));
-          _mainData.push(value.slice(this.fixedColumnIndex + 1));
+          rowHeadInner.push(value.slice(0, this.fixedColumnIndex + 1));
+          mainDataInner.push(value.slice(this.fixedColumnIndex + 1));
         })
         
       } else {
         // 此处合并列会 忽略 行头rowhead数据
-        _mainData = this.data;
+        mainDataInner = this.data;
         
         if (this.columnHead && this.columnHead.length > 0) {
           this.isHadColumnHead = true;
-          _columnHead = this.columnHead;
+          columnHeadInner = this.columnHead;
         }
         if (this.rowHead && this.rowHead.length > 0) {
-          this._rowHeadFixed = this.rowHeadFixed;
+          this.rowHeadInnerFixed = this.rowHeadFixed;
           this.isHadRowHead = true;
-          _rowHead = this.rowHead;
+          rowHeadInner = this.rowHead;
         } else {
           this.isHadRowHead = false;
         }
       }
       this.crossHead = crossHead;
-      this._columnHead = _columnHead;
-      this._rowHead = _rowHead;
-      this._mainData = _mainData;
+      this.columnHeadInner = columnHeadInner;
+      this.rowHeadInner = rowHeadInner;
+      this.mainDataInner = mainDataInner;
 
     },
     // 设置合并单元格尺寸
@@ -518,7 +532,6 @@ export default {
         }
         cellData.spanWidth = spanWidth;
         cellData.spanHeight = spanHeight;
-        console.log(cellData);
       }
     },
     // 设置单元格尺寸数据
@@ -526,8 +539,8 @@ export default {
       let { 
         clientWidth, clientHeight
       } = this.$el;
-      this.rowLength = this._mainData.length;
-      this.columnLength = this._mainData[0].length;
+      this.rowLength = this.mainDataInner.length;
+      this.columnLength = this.mainDataInner[0].length;
       // 此处 'fill' 宽度逻辑 应该改为默认 小于 100%，则fill。 否则按照其他填充宽度list
       // 处理列宽数据
       
@@ -539,14 +552,14 @@ export default {
         this.getColumnWidth = this.getColumnWidthFromList;
       } if (typeof this.columnWidth === 'number') {
         // 此处计算影响性能。考虑固定高宽，不做自适应填满
-        let allWidth = this._mainData[0].length*this.columnWidth;
+        let allWidth = this.mainDataInner[0].length*this.columnWidth;
         if (this.isHadRowHead) {
-          allWidth += this.rowHeadWidth * this._rowHead[0].length;
+          allWidth += this.rowHeadWidth * this.rowHeadInner[0].length;
         }
         if (allWidth < clientWidth) {
           let clientWidthContent = clientWidth;
           if (this.isHadRowHead) {
-            clientWidthContent = clientWidth - this.rowHeadWidth * this._rowHead[0].length;
+            clientWidthContent = clientWidth - this.rowHeadWidth * this.rowHeadInner[0].length;
           }
           let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
           let columnWidthList = [];
@@ -576,9 +589,9 @@ export default {
       if (this.tableHeight === 'auto') {
         // 此处计算高度有问题，应该是动态的  
         // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
-        let height = this._mainData.length * this.rowHeight;
+        let height = this.mainDataInner.length * this.rowHeight;
         if (this.isHadColumnHead) {
-          height += this._columnHead.length * this.columnHeadHeight;
+          height += this.columnHeadInner.length * this.columnHeadHeight;
         }
         // 此处100%的情况判断有漏洞 后面补上
         if (this.maxHeight && height > this.maxHeight) {
@@ -597,19 +610,19 @@ export default {
       let allHeight = 0;
       let allWidth = 0;
       
-      this._mainData[0].forEach((value, index)=>{
+      this.mainDataInner[0].forEach((value, index)=>{
         allWidth += this.getColumnWidth(index);
       })
       if (this.isHadRowHead) {
-        this.rowHeadAllWidth = this.rowHeadWidth * this._rowHead[0].length;
+        this.rowHeadAllWidth = this.rowHeadWidth * this.rowHeadInner[0].length;
         allWidth += this.rowHeadAllWidth;
       }
       this.allWidth = allWidth;
-      this._mainData.forEach((value, index)=>{
+      this.mainDataInner.forEach((value, index)=>{
         allHeight += this.getRowHeight(index);
       })
       if (this.isHadColumnHead) {
-        this.columnHeadAllHeight = this.columnHeadHeight * this._columnHead.length;
+        this.columnHeadAllHeight = this.columnHeadHeight * this.columnHeadInner.length;
         allHeight += this.columnHeadAllHeight;
       }
       this.allHeight = allHeight;
@@ -641,7 +654,7 @@ export default {
 
       let i = 0;
       while (i < endRowIndex - startRowIndex) {
-        visibleData[i] = this._mainData[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
+        visibleData[i] = this.mainDataInner[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
         i++;
       }
       let spanStartColumnOffset = 0;
@@ -651,7 +664,7 @@ export default {
       }
       this.visibleDataSpanList = this.getVisibleSpanList(
         visibleData,
-        this._mainData,
+        this.mainDataInner,
         getRowHeight,
         getColumnWidth,
         startRowIndex,
@@ -673,10 +686,10 @@ export default {
         //   visibleRowHeadData[index] = value.slice(startColumnIndex, endColumnIndex);
         // })
         // this.visibleRowHeadData = visibleRowHeadData;
-        this.visibleRowHeadData = this._rowHead.slice(startRowIndex, endRowIndex);
+        this.visibleRowHeadData = this.rowHeadInner.slice(startRowIndex, endRowIndex);
         this.visibleRowHeadSpanList = this.getVisibleSpanList(
           this.visibleRowHeadData,
-          this._rowHead,
+          this.rowHeadInner,
           getRowHeight,
           this.getRowHeadWidth,
           startRowIndex,
@@ -691,14 +704,14 @@ export default {
       // 设置列头部数据 以及 位置
       if (this.isHadColumnHead) {
         let visibleColumnHeadData = [];
-        this._columnHead.forEach((value, index)=>{
+        this.columnHeadInner.forEach((value, index)=>{
           visibleColumnHeadData[index] = value.slice(startColumnIndex, endColumnIndex);
         })
         this.visibleColumnHeadData = visibleColumnHeadData;
 
         this.visibleColumnHeadSpanList = this.getVisibleSpanList(
           visibleColumnHeadData,
-          this._columnHead,
+          this.columnHeadInner,
           this.getColumnHeadHeight,
           getColumnWidth,
           0,
@@ -708,7 +721,18 @@ export default {
 
         offsetRowContent = this.columnHeadAllHeight+offsetRow;
       }
-
+      // 设置交叉头部合并单元格数据
+      if (this.isHadColumnHead && this.isHadRowHead) {
+        this.visibleCrossHeadSpanList = this.getVisibleSpanList(
+          this.crossHead,
+          this.crossHead,
+          this.getColumnHeadHeight,
+          this.getRowHeadWidth,
+          0,
+          0,
+          0
+        );
+      }
 
       if (this.isHadRowHead) {
         this.rowHeadTransform = `translate3d(${rowHeadTranslateX}px, ${offsetRowContent}px, 0)`;
@@ -801,7 +825,7 @@ export default {
       let crossHeadTransformX = 0;
       let crossHeadTransformY = 0;
       if (this.isHadRowHead) { 
-        if (this._rowHeadFixed) {
+        if (this.rowHeadInnerFixed) {
           rowHeadTranslateX = scrollLeft;
           clientWidthContent -= this.rowHeadAllWidth;
           crossHeadTransformX = scrollLeft;
@@ -915,6 +939,9 @@ export default {
   position: relative;
   border: 1px solid #eeeff0;
   overflow: auto;
+  // 配合滚动条样式设置
+  box-sizing: content-box;
+  padding-bottom: 12px;
   .d_table_allcontent{
     position: absolute;
   }
@@ -942,11 +969,11 @@ export default {
     overflow: hidden;
     position: relative;
   }
-  .d_table_rowhead {
+  .d_tablerowHeadInner {
 
     box-shadow: 2px 0 6px -2px rgba(0,0,0,0.2);
   }
-  .d_table_columnhead{    
+  .d_tablecolumnHeadInner{    
     font-size: 0;
     text-align: left;
     white-space: nowrap;
@@ -967,8 +994,8 @@ export default {
     top: 0;
     box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 6px -2px;
   }
-  .d_table_rowhead,
-  .d_table_columnhead,
+  .d_tablerowHeadInner,
+  .d_tablecolumnHeadInner,
   .head_spancell,
   .d_table_crosshead{
     background: rgb(244,245,247);
@@ -986,7 +1013,7 @@ export default {
     z-index: 1;
     display: block;
   }
-  .d_table_dataspan_wrap{
+  .d_table_span_wrap{
     position: absolute;
     left: 0;
     top: 0;
