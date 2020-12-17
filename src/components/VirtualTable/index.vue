@@ -945,7 +945,7 @@ export default {
     position: relative;
   }
   .d_table_rowhead {
-
+    
     box-shadow: 2px 0 6px -2px rgba(0,0,0,0.2);
   }
   .d_table_columnhead{    
@@ -977,6 +977,7 @@ export default {
     z-index: 1;
     color: #7d8292;
     font-weight: bold;
+    overflow: hidden;
   }
   .span_cell{
     position: absolute;

@@ -8,9 +8,7 @@
       :rowHead="null"
       :columnHead="columnHead"
       :columnWidth="150"
-      :tableHeight="'300px'"
-      :columnHeadHeight="40"
-      :rowHeight="35"
+      :tableHeight="'350px'"
       :fixedColumnIndex="1"
       @onScroll="onScroll"
     />
