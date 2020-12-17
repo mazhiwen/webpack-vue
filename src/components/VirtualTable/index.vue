@@ -18,7 +18,7 @@
     <!-- 行头 -->
     <div
       v-if="isHadRowHead"
-      class="d_tablerowHeadInner"
+      class="d_table_rowhead"
       :class="{
         transparent_head: isRowHeadTransparent
       }"
@@ -35,7 +35,7 @@
           :key="cellIndex"
           class="head_cell"
           :style="{
-            height: `${getRowHeight(startRowIndex+cellIndex)}px`,
+            height: `${getRowHeight(startRowIndex+index)}px`,
             width: `${rowHeadWidth}px`
           }"
         >
@@ -65,7 +65,7 @@
     <!-- 列头 -->
     <div
       v-if="isHadColumnHead"
-      class="d_tablecolumnHeadInner"
+      class="d_table_columnhead"
       :style="{
         transform: columnHeadTransform
       }"
@@ -344,29 +344,10 @@ export default {
       isHadColumnHead: false,
 
       isRowHeadTransparent: false,
-      rowHeadInnerFixed: this.rowHeadFixed,
+      rowHeadFixedInner: this.rowHeadFixed,
     };
   },
   computed: {
-    // allHeight() {
-    //   //allHeight : 实际全部的内容自由撑开的总高度
-
-    //   // return this.data.length * this.itemHeight;
-    //   let now = Date.now();
-    //   const { data, getRowHeight } = this;
-    //   let allHeight = 0;
-    //   for (let i = 0, j = data.length; i < j; i++) {
-    //     allHeight += getRowHeight(i);
-    //   }
-    //   console.log('allHeight 计算耗时',Date.now() - now);
-    //   return allHeight;
-    // }
-    // isHadRowHead() {
-    //   return this.rowHeadInner && this.rowHeadInner.length > 0
-    // },
-    // isHadColumnHead() {
-    //   return this.columnHead && this.columnHead.length > 0
-    // }
   },
   watch: {
     data(newV, oldV) {
@@ -452,8 +433,8 @@ export default {
     init() {
       if (this.data && this.data.length > 0) {
         this.parseParams();
-        this.setCellSizeData();
-        this.setAllScrollSize();
+        this.setCellSizeHandler();
+        this.setContainerSize();
         this.$nextTick(()=>{
           this.render();
         })
@@ -466,7 +447,7 @@ export default {
       let crossHead = [];
       if (this.fixedColumnIndex > -1) {
         this.isHadRowHead = true;
-        this.rowHeadInnerFixed = true;
+        this.rowHeadFixedInner = true;
         this.isRowHeadTransparent = true;
         if (this.columnHead && this.columnHead.length > 0) {
           // 如果有列头
@@ -491,7 +472,7 @@ export default {
           columnHeadInner = this.columnHead;
         }
         if (this.rowHead && this.rowHead.length > 0) {
-          this.rowHeadInnerFixed = this.rowHeadFixed;
+          this.rowHeadFixedInner = this.rowHeadFixed;
           this.isHadRowHead = true;
           rowHeadInner = this.rowHead;
         } else {
@@ -534,13 +515,12 @@ export default {
         cellData.spanHeight = spanHeight;
       }
     },
-    // 设置单元格尺寸数据
-    setCellSizeData() {
+    // 设置单元格尺寸高度 宽度 获取方法
+    setCellSizeHandler() {
       let { 
         clientWidth, clientHeight
       } = this.$el;
       this.rowLength = this.mainDataInner.length;
-      this.columnLength = this.mainDataInner[0].length;
       // 此处 'fill' 宽度逻辑 应该改为默认 小于 100%，则fill。 否则按照其他填充宽度list
       // 处理列宽数据
       
@@ -552,30 +532,8 @@ export default {
         this.getColumnWidth = this.getColumnWidthFromList;
       } if (typeof this.columnWidth === 'number') {
         // 此处计算影响性能。考虑固定高宽，不做自适应填满
-        let allWidth = this.mainDataInner[0].length*this.columnWidth;
-        if (this.isHadRowHead) {
-          allWidth += this.rowHeadWidth * this.rowHeadInner[0].length;
-        }
-        if (allWidth < clientWidth) {
-          let clientWidthContent = clientWidth;
-          if (this.isHadRowHead) {
-            clientWidthContent = clientWidth - this.rowHeadWidth * this.rowHeadInner[0].length;
-          }
-          let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
-          let columnWidthList = [];
-          let i = 0;
-          while (i < this.columnLength) {
-            columnWidthList.push(averageWidth);
-            i++;
-          }
-          this.columnWidthList = columnWidthList;
-          this.getColumnWidth = this.getColumnWidthFromList;
-        } else {
-          this.getColumnWidth = this.getColumnWidthFromNumer;
-        }
+        this.getColumnWidth = this.getColumnWidthFromNumer;
       }
-      
-      
       // 处理行高数据
       if (typeof this.rowHeight === 'number') {
         // ...
@@ -584,32 +542,17 @@ export default {
         this.rowHeightList = this.rowHeight;
         this.getRowHeight = this.getRowHeightFromList;
       }
-
-      // 设置容器尺寸
-      if (this.tableHeight === 'auto') {
-        // 此处计算高度有问题，应该是动态的  
-        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
-        let height = this.mainDataInner.length * this.rowHeight;
-        if (this.isHadColumnHead) {
-          height += this.columnHeadInner.length * this.columnHeadHeight;
-        }
-        // 此处100%的情况判断有漏洞 后面补上
-        if (this.maxHeight && height > this.maxHeight) {
-          height = this.maxHeight;
-        }
-        this.height = `${height}px`;
-      } else {
-        this.height = this.tableHeight;
-      }
-      
-
       
     },
     // 设置滚动条总尺寸
-    setAllScrollSize() {
+    setContainerSize() {
       let allHeight = 0;
       let allWidth = 0;
-      
+      let { 
+        clientWidth, clientHeight
+      } = this.$el;
+      // 计算滚动总宽度
+      this.columnLength = this.mainDataInner[0].length;
       this.mainDataInner[0].forEach((value, index)=>{
         allWidth += this.getColumnWidth(index);
       })
@@ -617,7 +560,27 @@ export default {
         this.rowHeadAllWidth = this.rowHeadWidth * this.rowHeadInner[0].length;
         allWidth += this.rowHeadAllWidth;
       }
-      this.allWidth = allWidth;
+      // 判断实际内容宽度 是否小于 容器宽度
+      if (allWidth < clientWidth) {
+        let clientWidthContent = clientWidth;
+        if (this.isHadRowHead) {
+          clientWidthContent = clientWidth - this.rowHeadWidth * this.rowHeadInner[0].length;
+        }
+        let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
+        let columnWidthList = [];
+        let i = 0;
+        while (i < this.columnLength) {
+          columnWidthList.push(averageWidth);
+          i++;
+        }
+        this.columnWidthList = columnWidthList;
+        this.getColumnWidth = this.getColumnWidthFromList;
+        this.allWidth = clientWidth;
+      } else {
+        this.allWidth = allWidth;
+      }
+      // 计算滚动总高度
+      // 此处计算高度有问题，应该是动态的  
       this.mainDataInner.forEach((value, index)=>{
         allHeight += this.getRowHeight(index);
       })
@@ -626,6 +589,18 @@ export default {
         allHeight += this.columnHeadAllHeight;
       }
       this.allHeight = allHeight;
+      // 设置容器尺寸
+      if (this.tableHeight === 'auto') {
+        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
+        // 此处100%的情况判断有漏洞 后面补上
+        let height = allHeight;
+        if (this.maxHeight && allHeight > this.maxHeight) {
+          height = this.maxHeight;
+        }
+        this.height = `${height}px`;
+      } else {
+        this.height = this.tableHeight;
+      }
     },
     setItemPositionsCache () {
       let now = Date.now();      
@@ -825,7 +800,7 @@ export default {
       let crossHeadTransformX = 0;
       let crossHeadTransformY = 0;
       if (this.isHadRowHead) { 
-        if (this.rowHeadInnerFixed) {
+        if (this.rowHeadFixedInner) {
           rowHeadTranslateX = scrollLeft;
           clientWidthContent -= this.rowHeadAllWidth;
           crossHeadTransformX = scrollLeft;
@@ -939,6 +914,7 @@ export default {
   position: relative;
   border: 1px solid #eeeff0;
   overflow: auto;
+  font-size: 0;
   // 配合滚动条样式设置
   box-sizing: content-box;
   padding-bottom: 12px;
@@ -949,7 +925,6 @@ export default {
     position: absolute;
     background: white;
     .d_table_row{
-      font-size: 0;
       white-space: nowrap;
       &:nth-child(odd) {
         // background: #f7f8fa;
@@ -969,12 +944,11 @@ export default {
     overflow: hidden;
     position: relative;
   }
-  .d_tablerowHeadInner {
+  .d_table_rowhead {
 
     box-shadow: 2px 0 6px -2px rgba(0,0,0,0.2);
   }
-  .d_tablecolumnHeadInner{    
-    font-size: 0;
+  .d_table_columnhead{    
     text-align: left;
     white-space: nowrap;
     box-shadow: 0 2px 6px -2px rgba(0,0,0,0.2);
@@ -994,8 +968,8 @@ export default {
     top: 0;
     box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 6px -2px;
   }
-  .d_tablerowHeadInner,
-  .d_tablecolumnHeadInner,
+  .d_table_rowhead,
+  .d_table_columnhead,
   .head_spancell,
   .d_table_crosshead{
     background: rgb(244,245,247);
@@ -1024,6 +998,4 @@ export default {
     font-weight: normal;
   }
 }
-
-
 </style>

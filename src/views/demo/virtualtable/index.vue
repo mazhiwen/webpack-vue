@@ -9,6 +9,8 @@
       :columnHead="columnHead"
       :columnWidth="150"
       :tableHeight="'300px'"
+      :columnHeadHeight="40"
+      :rowHeight="35"
       :fixedColumnIndex="1"
       @onScroll="onScroll"
     />
@@ -35,8 +37,8 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 15;
-let columnCount = 20;
+let rowCount = 49;
+let columnCount = 10000;
 
 
 
@@ -158,7 +160,7 @@ export default {
       columnHeadFixed: true,
       width: 400,
       rowHeight: 30,
-      
+      isScroll: true,
     };
   },
   computed: {
@@ -183,11 +185,16 @@ export default {
       // 区块的位置表示：起始坐标(x*n,y*n), 长度n 
       // 初始化加载 n*n数据
       // 滑动时 判断，获取，填充 当前可视区域数据区块 周边8个格子的数据
+      console.log(toBottom);
+      if (toBottom < 50 && this.isScroll) { 
+        let data = [];
 
-      // if (toBottom < 50) { 
-      //   let data = [];
-      //   this.data = Object.freeze(this.data.concat(this.data));
-      // } 
+        this.isScroll = false;
+        setTimeout(()=>{
+          this.data = Object.freeze(this.data.concat(this.data));
+        }, 3*1000)
+        
+      } 
       
     },
     changeData() {
