@@ -211,7 +211,7 @@
 // crosshead 区域的单元格的宽度 和 高度 
 
 let now = Date.now();
-
+let nowrender = Date.now();
 let countScrollEvet = 0;
 
 function throttle(fn) {
@@ -344,7 +344,6 @@ export default {
       isHadColumnHead: false,
 
       isRowHeadTransparent: false,
-      rowHeadFixedInner: this.rowHeadFixed,
     };
   },
   computed: {
@@ -398,16 +397,16 @@ export default {
   },
   beforeCreated(){
     // console.log('beforeCreated结束耗时',Date.now() - now);
-    now = Date.now();
+    // now = Date.now();
   },
   created() {
     // console.log('created结束耗时',Date.now() - now);
-    now = Date.now();
+    // now = Date.now();
   },
   mounted() {
     // 初始化渲染
     // console.log('mounted结束耗时',Date.now() - now);
-    now = Date.now();
+    // now = Date.now();
     this.init();
   },
   updated() {
@@ -428,15 +427,23 @@ export default {
         allWidth - scrollLeft - clientWidth, // 距离右侧边缘距离
         allHeight - scrollTop - clientHeight // 距离底部边缘距离
       );
-      this.render();
+      requestAnimationFrame(this.render);
     },
     init() {
       if (this.data && this.data.length > 0) {
         this.parseParams();
+        // console.log('parseParams结束耗时',Date.now() - now);
+        // now = Date.now();
         this.setCellSizeHandler();
+        // console.log('setCellSizeHandler结束耗时',Date.now() - now);
+        // now = Date.now();
         this.setContainerSize();
+        // console.log('setContainerSize结束耗时',Date.now() - now);
+        // now = Date.now();
         this.$nextTick(()=>{
           this.render();
+          // console.log('init结束耗时',Date.now() - now);
+          // now = Date.now();
         })
       }
     },
@@ -447,7 +454,6 @@ export default {
       let crossHead = [];
       if (this.fixedColumnIndex > -1) {
         this.isHadRowHead = true;
-        this.rowHeadFixedInner = true;
         this.isRowHeadTransparent = true;
         if (this.columnHead && this.columnHead.length > 0) {
           // 如果有列头
@@ -457,11 +463,18 @@ export default {
             crossHead.push(value.slice(0, this.fixedColumnIndex + 1));
             columnHeadInner.push(value.slice(this.fixedColumnIndex + 1));
           })
+          // console.log('parseParams1结束耗时',Date.now() - now);
+          // now = Date.now();
         }
         this.data.forEach((value) => {
           rowHeadInner.push(value.slice(0, this.fixedColumnIndex + 1));
           mainDataInner.push(value.slice(this.fixedColumnIndex + 1));
         })
+        // console.log('parseParams2结束耗时',Date.now() - now);
+        // now = Date.now();
+        
+        
+
         
       } else {
         // 此处合并列会 忽略 行头rowhead数据
@@ -472,18 +485,18 @@ export default {
           columnHeadInner = this.columnHead;
         }
         if (this.rowHead && this.rowHead.length > 0) {
-          this.rowHeadFixedInner = this.rowHeadFixed;
           this.isHadRowHead = true;
           rowHeadInner = this.rowHead;
         } else {
           this.isHadRowHead = false;
         }
       }
-      this.crossHead = crossHead;
-      this.columnHeadInner = columnHeadInner;
-      this.rowHeadInner = rowHeadInner;
-      this.mainDataInner = mainDataInner;
-
+      this.crossHead = Object.freeze(crossHead);
+      this.columnHeadInner = Object.freeze(columnHeadInner);
+      this.rowHeadInner = Object.freeze(rowHeadInner);
+      this.mainDataInner = Object.freeze(mainDataInner);
+      // console.log('parseParams3结束耗时',Date.now() - now,crossHead,columnHeadInner,rowHeadInner,mainDataInner);
+      // now = Date.now();
     },
     // 设置合并单元格尺寸
     setCellSpanSize(
@@ -614,8 +627,10 @@ export default {
 
     },
     render: function() {
+      // console.log('距离上次render', Date.now() - now);
+      // now = Date.now();
+      // nowrender = now;
       let curr = countScrollEvet++;
-      let now = Date.now();
       const {
         startRowIndex,offsetRow,endRowIndex,
         startColumnIndex,offsetColumn,endColumnIndex,
@@ -719,6 +734,7 @@ export default {
 
       this.contentTransform = `translate3d(${offsetColumnContent}px, ${offsetRowContent}px, 0)`;      
       this.crossHeadTransform = `translate3d(${crossHeadTransformX}px, ${crossHeadTransformY}px, 0)`;
+      // console.log('耗时render', Date.now() - nowrender);
     },
     // 获取 生成 可视数据 中 合并单元格 数据列表
     getVisibleSpanList(
@@ -800,7 +816,7 @@ export default {
       let crossHeadTransformX = 0;
       let crossHeadTransformY = 0;
       if (this.isHadRowHead) { 
-        if (this.rowHeadFixedInner) {
+        if (this.rowHeadFixed) {
           rowHeadTranslateX = scrollLeft;
           clientWidthContent -= this.rowHeadAllWidth;
           crossHeadTransformX = scrollLeft;

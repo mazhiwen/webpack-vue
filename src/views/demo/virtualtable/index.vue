@@ -10,6 +10,7 @@
       :columnWidth="150"
       :tableHeight="'350px'"
       :fixedColumnIndex="1"
+      :rowHeadFixed="rowHeadFixed"
       @onScroll="onScroll"
     />
     <el-button @click="changeData">data</el-button>
@@ -20,6 +21,11 @@
     <el-button @click="changeWidth">changeWidth</el-button>
     <el-button @click="changerowHeight">changerowHeight</el-button>
     <el-button @click="changeData1">changeData1</el-button>
+    <div
+      :style="{width: `${testwidth}px`}"
+      style="background:red;height:20px"
+
+    >test</div>
   </div>
 
 
@@ -35,8 +41,8 @@ let textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
 ];
 
-let rowCount = 49;
-let columnCount = 10000;
+let rowCount = 20;
+let columnCount = 200;
 
 
 
@@ -152,13 +158,14 @@ export default {
   data() {
     return {
       data: Object.freeze(data),
-      rowHead:rowHeadData,
-      columnHead:columnHeadData,
+      rowHead:Object.freeze(rowHeadData),
+      columnHead:Object.freeze(columnHeadData),
       rowHeadFixed: false,
       columnHeadFixed: true,
       width: 400,
       rowHeight: 30,
       isScroll: true,
+      testwidth: 0
     };
   },
   computed: {
@@ -171,11 +178,20 @@ export default {
   mounted() {
     // 初始化渲染
     // this.onScroll();
+    // requestAnimationFrame(this.testsetwidth);
   },
   updated() {
     // this.setItemPositionsCache();
   },
   methods: {
+    testsetwidth(){
+      console.log('testsetwidth');
+      if(this.testwidth<200){
+        this.testwidth += 1;
+        requestAnimationFrame(this.testsetwidth);
+      }
+      
+    },
     onScroll(toRight, toBottom) {
       // console.log('onScroll',toRight,toBottom);
       // 
@@ -183,16 +199,15 @@ export default {
       // 区块的位置表示：起始坐标(x*n,y*n), 长度n 
       // 初始化加载 n*n数据
       // 滑动时 判断，获取，填充 当前可视区域数据区块 周边8个格子的数据
-      console.log(toBottom);
-      if (toBottom < 50 && this.isScroll) { 
-        let data = [];
+      // if (toBottom < 50 && this.isScroll) { 
+      //   let data = [];
 
-        this.isScroll = false;
-        setTimeout(()=>{
-          this.data = Object.freeze(this.data.concat(this.data));
-        }, 3*1000)
+      //   this.isScroll = false;
+      //   setTimeout(()=>{
+      //     this.data = Object.freeze(this.data.concat(this.data));
+      //   }, 3*1000)
         
-      } 
+      // } 
       
     },
     changeData() {
