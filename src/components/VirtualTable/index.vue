@@ -371,6 +371,9 @@ export default {
     tableHeight(val) {
       this.init();
     },
+    maxHeight(val) {
+      this.init();
+    },
     rowHeight() {
       this.init();
     },
@@ -562,7 +565,7 @@ export default {
       let allHeight = 0;
       let allWidth = 0;
       let { 
-        clientWidth, clientHeight
+        clientWidth, clientHeight, offsetWidth
       } = this.$el;
       // 计算滚动总宽度
       this.columnLength = this.mainDataInner[0].length;
@@ -572,6 +575,44 @@ export default {
       if (this.isHadRowHead) {
         this.rowHeadAllWidth = this.rowHeadWidth * this.rowHeadInner[0].length;
         allWidth += this.rowHeadAllWidth;
+      }
+      // 计算滚动总高度
+      // 此处计算高度有问题，应该是动态的  
+      this.mainDataInner.forEach((value, index)=>{
+        allHeight += this.getRowHeight(index);
+      })
+      if (this.isHadColumnHead) {
+        this.columnHeadAllHeight = this.columnHeadHeight * this.columnHeadInner.length;
+        allHeight += this.columnHeadAllHeight;
+      }
+      this.allHeight = allHeight;
+
+      let heightNumber  = 0;
+      let height;
+      let heightSmallerThanMax = false;
+      // 设置容器尺寸
+      if (this.tableHeight === 'auto') {
+        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
+        // 此处100%的情况判断有漏洞 后面补上
+        
+        if (this.maxHeight && allHeight > this.maxHeight) {
+          height = this.maxHeight;
+        } else {
+          heightSmallerThanMax = true;
+          height = allHeight;
+        }
+        heightNumber = height;
+        height = `${height}px`;
+      } else {
+        height = this.tableHeight;
+        if (this.tableHeight === '100%') {
+          heightNumber = clientHeight;
+        } else {
+          heightNumber = parseFloat(this.tableHeight);
+        }
+      }
+      if (allHeight > heightNumber) {
+        clientWidth = offsetWidth - 12 - 2;
       }
       // 判断实际内容宽度 是否小于 容器宽度
       if (allWidth < clientWidth) {
@@ -591,29 +632,11 @@ export default {
         this.allWidth = clientWidth;
       } else {
         this.allWidth = allWidth;
-      }
-      // 计算滚动总高度
-      // 此处计算高度有问题，应该是动态的  
-      this.mainDataInner.forEach((value, index)=>{
-        allHeight += this.getRowHeight(index);
-      })
-      if (this.isHadColumnHead) {
-        this.columnHeadAllHeight = this.columnHeadHeight * this.columnHeadInner.length;
-        allHeight += this.columnHeadAllHeight;
-      }
-      this.allHeight = allHeight;
-      // 设置容器尺寸
-      if (this.tableHeight === 'auto') {
-        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
-        // 此处100%的情况判断有漏洞 后面补上
-        let height = allHeight;
-        if (this.maxHeight && allHeight > this.maxHeight) {
-          height = this.maxHeight;
+        if (heightSmallerThanMax) {
+          height = `${Math.min(this.maxHeight, allHeight+12)}px`;
         }
-        this.height = `${height}px`;
-      } else {
-        this.height = this.tableHeight;
       }
+      this.height = height;
     },
     setItemPositionsCache () {
       let now = Date.now();      
@@ -933,7 +956,8 @@ export default {
   font-size: 0;
   // 配合滚动条样式设置
   box-sizing: content-box;
-  padding-bottom: 12px;
+  // padding-bottom: 12px;
+  // padding-right: 12px;
   .d_table_allcontent{
     position: absolute;
   }
