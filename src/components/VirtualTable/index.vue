@@ -223,7 +223,7 @@ function throttle(fn) {
       fn.apply(this, arguments);
       // 最后在setTimeout执行完毕后再把标记设置为true(关键)表示可以执行下一次循环了。当定时器没有执行的时候标记永远是false，在开头被return掉
       canRun = true;
-    }, 50);
+    }, 500);
   };
 }
 
@@ -411,11 +411,22 @@ export default {
     // console.log('mounted结束耗时',Date.now() - now);
     // now = Date.now();
     this.init();
+    this.addGlobalEvent();
+    
   },
   updated() {
     // this.setItemPositionsCache();
   },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.throttleInit)
+  },
   methods: {
+    addGlobalEvent(){
+      window.addEventListener('resize', this.throttleInit);
+    },
+    throttleInit: throttle(function(){
+      this.init();
+    }),
     onScroll() {
       let { 
         scrollTop,scrollLeft,
@@ -433,6 +444,7 @@ export default {
       requestAnimationFrame(this.render);
     },
     init() {
+      console.log(22);
       if (this.data && this.data.length > 0) {
         this.parseParams();
         // console.log('parseParams结束耗时',Date.now() - now);
