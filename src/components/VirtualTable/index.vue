@@ -209,7 +209,7 @@
 // 
 // 待添加功能：  冻结行 或者 列
 // crosshead 区域的单元格的宽度 和 高度 
-
+// 问题 会污染原数据
 let now = Date.now();
 let nowrender = Date.now();
 let countScrollEvet = 0;
@@ -494,7 +494,7 @@ export default {
       } else {
         // 此处合并列会 忽略 行头rowhead数据
         mainDataInner = this.data;
-        
+        this.isRowHeadTransparent = false;
         if (this.columnHead && this.columnHead.length > 0) {
           this.isHadColumnHead = true;
           columnHeadInner = this.columnHead;
