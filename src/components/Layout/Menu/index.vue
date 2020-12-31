@@ -112,6 +112,16 @@ export default {
               icon: 'el-icon-menu',
               text: '虚拟列表'
             },
+            {
+              name: 'demo.virtualtable',
+              icon: 'el-icon-menu',
+              text: 'excel'
+            },
+            {
+              name: 'demo.canvas',
+              icon: 'el-icon-menu',
+              text: 'canvas'
+            },
           ]
         },
       ]

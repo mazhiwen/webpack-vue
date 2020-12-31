@@ -54,6 +54,14 @@ export default [
           title: 'svg'
         },
         component: () => import('views/demo/virtualtable'),
+      },
+      {
+        path: 'canvas',
+        name: 'demo.canvas',
+        meta: {
+          title: 'svg'
+        },
+        component: () => import('views/demo/canvas'),
       }
        
     ]

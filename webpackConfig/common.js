@@ -29,9 +29,13 @@ module.exports = {
     app: './src/index.js',
   },
   plugins: [
+    
     new webpack.DefinePlugin({
       'webpack.API_ENV': JSON.stringify(API_ENV),
     }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: require('../dist/vendor-manifest.json')
+    // }),
     // vueloader需要的plugin
     // 相关options选项:
     // https://vue-loader.vuejs.org/zh/options.html#transformasseturls
