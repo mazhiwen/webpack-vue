@@ -1,3 +1,5 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import 'static/js';
 import 'styles';
 import Vue from 'vue';
@@ -15,8 +17,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import store from './store';
 import App from './App.vue';
 import 'vue-editor-mar/lib/theme-chalk/index.css';
+import { test, testfn } from 'static/SYSOUTCONFIG';
 
-
+console.log(test);
 Vue.use(VueRouter);
 Vue.use(components);
 Vue.use(filters);
@@ -27,7 +30,8 @@ Vue.use(ElementUI);
 // Vue.use(VueEditorMar);
 const router = new VueRouter({
   mode: 'history',
-  base: '/base/',
+  // base: '/base/',
+  base: '/',
   routes,
 });
 

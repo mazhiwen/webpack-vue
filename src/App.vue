@@ -13,9 +13,9 @@
 import Login from 'views/login';
 import GlobalSvg from 'components/GlobalSvg';
 
-import { test, testfn } from 'static/SYSOUTCONFIG';
 
-console.log(test, testfn);
+import logo from 'images/time.jpg';
+
 
 export default {
   components: {

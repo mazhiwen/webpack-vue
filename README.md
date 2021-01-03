@@ -30,7 +30,6 @@ yarn build --API_ENV=环境标识Str
 1. 新建文件夹commit以后，不要修改文件夹名称大小写
 2. router必需全部配置 name
 
-
 ## API配置
 
 src/configs/index.js
@@ -51,6 +50,7 @@ API: {
   },
 },
 ```
+
 ```sh
 yarn build --API_ENV=development
 ```
@@ -58,6 +58,7 @@ yarn build --API_ENV=development
 ## 本地跨域host
 
 修改  webpackConfig/dev.js -> proxy['/proxyAPI'].target 为需要跨域的host
+
 ```js
 proxy: {
   '/proxyAPI': {
@@ -65,6 +66,7 @@ proxy: {
   }
 }
 ```
+
 ```sh
 yarn start --API_ENV=proxy
 ```
@@ -114,10 +116,7 @@ src/components/index.js 会自动注册目录内的组件。
 />
 ```
 
-
-
 ## 图片
-
 
 - 作为DataURI引用
 
@@ -175,6 +174,7 @@ data() {
 > 文件./src/styles/lib.less 以及 ./src/styles/components文件夹内 有常用的一些样式封装，可以自行修改。文件内的样式class 可以直接全局引用
 
 如：
+
 ```css
 .box{
 
@@ -204,7 +204,7 @@ data() {
 
 作为style scoped的替代方案
 
-https://vue-loader.vuejs.org/zh/guide/css-modules.html#%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8
+<https://vue-loader.vuejs.org/zh/guide/css-modules.html#%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8>
 
 <style module>
 .red {
@@ -223,6 +223,7 @@ https://vue-loader.vuejs.org/zh/guide/css-modules.html#%E5%92%8C%E9%A2%84%E5%A4%
 
 开启cssmodule需要在webpack css-loader
 配置:
+
 ```js
 options: {
   //开启 CSS Modules
@@ -339,9 +340,22 @@ export default {
 }
 ```
 
+## 配置host base
+
+1. webpackConfig/common.js:  output.publicPath
+
+2. webpackConfig/dev.js:  historyApiFallback.index
+
+3. src/index.js router.base
+
 ## 静态js资源
 
 ### 添加基本不会变更的js资源库
+
+思路：
+
+CopyWebpackPlugin  和 HtmlWebpackTagsPlugin 共同作用。
+这个做法性能有问题，会增加请求数
 
 添加步骤:
 
@@ -360,7 +374,18 @@ tags: [
 ],
 ```
 
+3. 需要变更文件版本的时候，在后面添加 ?t=时间戳 即可
+
+### 配置CDN
+
+1. 进行以上 `添加基本不会变更的js资源库` 操作
+2. 在HtmlWebpackTagsPlugin 把地址改为CDN地址
+
 ### 添加需要hash后缀的资源
+
+默认关闭
+
+开启时，在 SplitChunksPlugin 单独生成一个chunk
 
 添加步骤:
 
@@ -370,6 +395,19 @@ tags: [
 
 ### SYSOUTCONFIG
 
-> SYSOUTCONFIG 是不经过uglify的hashjs，并且编译为独立的Chunk以便对编译后的文件，进行现场临时修改
+默认关闭
+
+开启时，在 SplitChunksPlugin 单独生成一个chunk
+
+
+SYSOUTCONFIG 是不经过uglify的hashjs，并且编译为独立的Chunk以便对编译后的文件，进行现场临时修改
 
 src/static/SYSOUTCONFIG.js
+
+## webpack优化
+
+### DLLPlugin
+
+思路： 命令参数配置时间戳 是否重新编译dll文件，并且在dll文件后添加时间戳
+
+### SplitChunksPlugin

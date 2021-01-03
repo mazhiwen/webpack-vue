@@ -20,7 +20,8 @@ module.exports = merge(common, {
     // webpack-dev-server热更新
     hot: true,
     historyApiFallback: {
-      index: '/base/',
+      // index: '/base/',
+      index: '/',
     },
     // publicPath: '/base/',
     proxy: {

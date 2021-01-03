@@ -21,20 +21,25 @@ console.log(colors.rainbow(`> API_ENV为:${API_ENV}`));
 
 // __webpack_public_path__ = `'https://dasd.com/web/'`;
 
+console.log(22);
+// console.log(require('../dist/vendor-manifest.json'));
 
 module.exports = {
 
   entry: {
-    '@babel/polyfill': '@babel/polyfill',
+    // '@babel/polyfill': '@babel/polyfill',
     app: './src/index.js',
   },
   plugins: [
-    
+
     new webpack.DefinePlugin({
       'webpack.API_ENV': JSON.stringify(API_ENV),
     }),
+    // dllplugin 搭配 build:dll
+    // html 加下面脚本
+    // <script type="text/javascript" src="./vendor.dll.js"></script>
     // new webpack.DllReferencePlugin({
-    //   manifest: require('../dist/vendor-manifest.json')
+    //   manifest: require('../dist/vendor-manifest.json'),
     // }),
     // vueloader需要的plugin
     // 相关options选项:
@@ -49,7 +54,6 @@ module.exports = {
         to: path.resolve(__dirname, '../dist'),
         flatten: true,
       },
-
     ]),
     new HtmlWebpackPlugin({
       // 如果设置了templeta 则tile等可能以template配置为主
@@ -67,6 +71,9 @@ module.exports = {
       },
     }),
     new HtmlWebpackTagsPlugin({
+      // 生产环境开启这个选项 并且配置path 为 cdn地址
+      // usePublicPath: false,
+      // path: 'http://cdn.test/echarts.min.js',
       tags: [
         {
           path: 'echarts.min.js',
@@ -88,22 +95,22 @@ module.exports = {
           priority: -10,
           name: 'vendors',
         },
-        static: {
-          test: /[\\/]static[\\/]js/,
-          priority: -10,
-          name: 'static',
-          minSize: 0,
-          minChunks: 1,
-          enforce: true,
-        },
-        SYSOUTCONFIG: {
-          test: /[\\/]SYSOUTCONFIG\.js/,
-          priority: -10,
-          name: 'SYSOUTCONFIG',
-          minSize: 0,
-          minChunks: 1,
-          enforce: true,
-        },
+        // static: {
+        //   test: /[\\/]static[\\/]js/,
+        //   priority: -10,
+        //   name: 'static',
+        //   minSize: 0,
+        //   minChunks: 1,
+        //   enforce: true,
+        // },
+        // SYSOUTCONFIG: {
+        //   test: /[\\/]SYSOUTCONFIG\.js/,
+        //   priority: -10,
+        //   name: 'SYSOUTCONFIG',
+        //   minSize: 0,
+        //   minChunks: 1,
+        //   enforce: true,
+        // },
         default: {
           minChunks: 2,
           priority: -20,
@@ -119,7 +126,8 @@ module.exports = {
   output: {
     // filename: '[name].bundle.js',
     path: path.resolve(__dirname, '../dist'),
-    publicPath: '/base/',
+    // publicPath: '/base/',
+    publicPath: '/',
   },
   resolve: {
     alias: {
@@ -140,6 +148,10 @@ module.exports = {
   externals: {
   },
   module: {
+    // noParse: (content) => {
+    //   console.log(1111, content, /oparse/.test(content), content.includes('noparse'));
+    //   return /oparse/.test(content);
+    // },
     rules: [
       {
         test: /\.ejs$/,
