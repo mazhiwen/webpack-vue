@@ -85,9 +85,10 @@ module.exports = {
       // ************************默认
       chunks: 'all', // 默认async
       minSize: 30000,
+      // maxSize: 500000,
       minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
+      maxAsyncRequests: 6,
+      maxInitialRequests: 4,
       name: 'vendors',
       cacheGroups: {
         vendors: {
@@ -111,11 +112,20 @@ module.exports = {
         //   minChunks: 1,
         //   enforce: true,
         // },
+        element: {
+          chunks: 'all',
+          name: `element-ui`,
+          test: /[\\/]element-ui[\\/]/,
+          priority: 0,
+        },
         default: {
+          name: 'default',
           minChunks: 2,
           priority: -20,
+          chunks: 'initial',
           reuseExistingChunk: true,
         },
+        
       },
     }),
     new webpack.ProvidePlugin({

@@ -6,7 +6,8 @@
           content
         </h1>
       </transition>
-
+      <el-button @click="btnClick('a')">a</el-button>
+      <el-button @click="btnClick('b')">b</el-button>
     </Card>
   </div>
 </template>
@@ -80,8 +81,10 @@ export default {
   },
   methods: {
     // throttle,
-    btnClick() {
-      console.log('btnClick');
+    btnClick(type) {
+      import(/* webpackChunkName: "type" */ `./${type}`).then((data) => {
+        console.log(data)
+      })
     },
     btnmove: throttle((e) => {
       console.log('执行函数', e);

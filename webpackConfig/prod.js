@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./common.js');
 const commonOptions = require('./commonOptions');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // babel-presets-react-app需要配置node babel env
 process.env.NODE_ENV = 'production';
@@ -24,6 +25,9 @@ module.exports = merge(common, {
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css',
     }),
+    // 打包分析插件需要时，开启即可
+    // new BundleAnalyzerPlugin()
+
   ],
   output: {
     filename: '[name].[chunkhash].js',
