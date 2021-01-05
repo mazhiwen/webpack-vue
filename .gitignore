@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 
+webpack_build_log.json
 # testing
 /coverage
 git.sh

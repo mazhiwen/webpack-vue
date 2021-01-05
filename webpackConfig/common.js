@@ -153,7 +153,7 @@ module.exports = {
       static: path.resolve(__dirname, '../src/static'),
     },
     // 配置默认import index的文件扩展名
-    extensions: ['.js', '.json', '.vue', '.less', '.css'],
+    extensions: ['.js', '.vue', '.less', '.css', '.json'],
   },
   externals: {
   },
