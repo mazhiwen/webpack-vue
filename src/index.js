@@ -41,3 +41,8 @@ new Vue({
   router,
   render: h => h(App),
 }).$mount('#app');
+
+
+/************************  treeshaking ************/
+// import { cube } from 'utils/treeshaking'
+// cube(12322)

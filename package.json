@@ -7,7 +7,7 @@
     "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --progress --open --config webpackConfig/dev.js",
-    "build": "webpack --config webpackConfig/prod.js --progress --hide-modules --profile --json > webpack_build_log.json",
+    "build": "webpack --config webpackConfig/prod.js --progress --hide-modules --profile",
     "build:dll": "webpack --config webpackConfig/dll.js",
     "lint": "eslint --ext .js,.jsx src",
     "lint-fix": "eslint --fix --ext .js,jsx src webpackConfig",
