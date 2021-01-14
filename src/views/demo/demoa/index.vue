@@ -9,6 +9,7 @@
       <el-button @click="btnClick('a')">a</el-button>
       <el-button @click="btnClick('b')">b</el-button>
     </Card>
+
   </div>
 </template>
 

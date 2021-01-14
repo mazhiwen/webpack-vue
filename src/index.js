@@ -45,4 +45,14 @@ new Vue({
 
 /************************  treeshaking ************/
 // import { cube } from 'utils/treeshaking'
-// cube(12322)
+// cube(123322)
+
+
+
+/****** 测试class */
+// class classFoo{
+//   constructor(x) {
+//       this.x = x;
+//   }
+// }
+// var aclassfoo = new classFoo(2);
