@@ -44,7 +44,6 @@ const throttle = function (fn, interval) {
   };
 };
 
-
 export default {
   components: {
 
