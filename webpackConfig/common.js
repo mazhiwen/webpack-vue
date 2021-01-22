@@ -28,7 +28,7 @@ module.exports = {
 
   entry: {
     // '@babel/polyfill': '@babel/polyfill',
-    app: './src/index.js',
+    app: './src/index.ts',
   },
   plugins: [
 
@@ -153,7 +153,7 @@ module.exports = {
       static: path.resolve(__dirname, '../src/static'),
     },
     // 配置默认import index的文件扩展名
-    extensions: ['.js', '.vue', '.less', '.css', '.json'],
+    extensions: ['.ts', '.js', '.vue', '.less', '.css', '.json'],
   },
   externals: {
   },
@@ -170,6 +170,12 @@ module.exports = {
         query: {
 
         },
+      },
+      { test: /\.tsx?$/,
+        loader: "ts-loader",
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
       },
       {
         test: /\.js$/,
