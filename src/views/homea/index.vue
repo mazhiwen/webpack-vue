@@ -2,8 +2,7 @@
   <div class="home">
 
     <div class="table">
-      <div>11111</div>
-        <div>home</div>
+        <div>homea</div>
     </div>
     
 

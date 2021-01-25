@@ -1,22 +1,23 @@
 <template>
   <div class="app">
-    <!-- <GlobalSvg />
+    <!-- <GlobalSvg /> -->
 
     <Login v-if="$route.name=='login'" />
     <Layout v-else-if="$route.name">
       <router-view />
-    </Layout> -->text
-    {{propB}} {{title}}
-    <Layout/>
+    </Layout>
+    
+    
   </div>
 </template>
 
 <script lang="ts">
+import Login from 'views/login/index.vue';
 
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 @Component({
-  // components: { Layout },
+  components: { Login },
 })
 
 export default class extends Vue {
@@ -41,31 +42,8 @@ export default class extends Vue {
   // @Watch('person')
   // onPersonChanged2(val: Person, oldVal: Person) {}
 
-
-
 }
 
-
-
-// 非ts写法
-// <script>
-// import Login from 'views/login';
-// import GlobalSvg from 'components/GlobalSvg';
-// import logo from 'images/time.jpg';
-// export default {
-//   components: {
-//     // Login,
-//     // GlobalSvg,
-//   },
-//   data() {
-//     return {
-//       propB: 'propB'
-//     };
-//   },
-//   mounted() {},
-//   methods: {},
-// };
-// </script>
 
 
 

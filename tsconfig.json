@@ -10,7 +10,7 @@
     // 以严格模式解析
     // "strict": true,
     // module moduleResolution 配置了之后  import ElementUI from 'element-ui' 写法可以生效
-    // 采用的模块系统
+    // ts文件中采用的模块系统
     "module": "esnext",
     // 如何处理模块
     "moduleResolution": "node",
@@ -34,7 +34,7 @@
     // "removeComments": true,
     // "suppressImplicitAnyIndexErrors": true,
     // 允许编译javascript文件
-    // "allowJs": true,
+    "allowJs": true,
     // 解析非相对模块名的基准目录
     // "baseUrl": "./",
     // 指定特殊模块的路径

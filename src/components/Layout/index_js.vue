@@ -8,7 +8,7 @@
       >
         <a href="/">
           <img
-            src=""
+            :src="logo"
           >
           <h1>
             Admin Marjoven
@@ -53,17 +53,26 @@
   </el-container>
 </template>
 
-<script lang="ts">
-// import logo from 'images/time.jpg';
-import Menu from './Menu/index.vue';
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+<script>
+import logo from 'images/time.jpg';
+import Menu from './Menu';
 
-@Component({
-  components: { Menu },
-})
+export default {
+  components: {
+    Menu,
+  },
+  data() {
+    return {
+      logo,
+    };
+  },
+  mounted() {
 
-export default class extends Vue{
-  // logo
+  },
+  methods: {
+  },
+
+
 };
 </script>
 

@@ -21,48 +21,36 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
-import {
-  copy,
-} from 'utils';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+@Component
+export default class extends Vue{
 
-export default {
-  data() {
-    return {
-      data: [
-        {
-          text: 1,
-          color: 'red',
-        },
-        {
-          text: 2,
-          color: 'blue',
-        },
-        {
-          text: 3,
-          color: 'gray',
-        },
-        {
-          text: 4,
-          color: 'pink',
-        },
-        {
-          text: 5,
-          color: 'gold',
-        },
-      ],
-    };
-  },
-  created() {
+  data = [
+    {
+      text: 1,
+      color: 'red',
+    },
+    {
+      text: 2,
+      color: 'blue',
+    },
+    {
+      text: 3,
+      color: 'gray',
+    },
+    {
+      text: 4,
+      color: 'pink',
+    },
+    {
+      text: 5,
+      color: 'gold',
+    },
+  ]
 
-  },
-  mounted() {
 
-  },
-  methods: {
-
-  },
 };
 </script>
 

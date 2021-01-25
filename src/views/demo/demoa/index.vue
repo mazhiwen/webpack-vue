@@ -9,16 +9,13 @@
       <el-button @click="btnClick('a')">a</el-button>
       <el-button @click="btnClick('b')">b</el-button>
     </Card>
-
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
-import {
-  copy,
-} from 'utils';
-import request from 'request';
+
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 
 const throttle = function (fn, interval) {
@@ -43,56 +40,34 @@ const throttle = function (fn, interval) {
     }, interval || 500);
   };
 };
+@Component
+export default class extends Vue{
+  
+  // components: {
 
-export default {
-  components: {
+  // },
+  // props: {
 
-  },
-  props: {
-
-  },
-  data() {
-    return {
-
-      content: '',
-      config: {
-        wordType: {
-          keyword: ['keyworda', 'keywordb'],
-          condition: ['if', 'else'],
-          operator: ['>', '='],
-          split: [';'],
-          function: ['add'],
-        },
-      },
-      show: false,
-      // ruleDataController: new this.$EditorDataController.DataController({
-      // }),
-    };
-  },
-  computed: {
-  },
-  watch: {
-  },
-  created() {
-  },
-  mounted() {
-    // this.$parent.parentm();
-    console.log('parentaa', this.$parent.aa);
-  },
-  methods: {
-    // throttle,
-    btnClick(type) {
-      import(/* webpackChunkName: "type" */ `./${type}`).then((data) => {
-        console.log(data)
-      })
-    },
-    btnmove: throttle((e) => {
-      console.log('执行函数', e);
-    }, 100),
-    compositionupdate(e) {
-      console.log(e);
-    },
-  },
+  // },
+  show = false
+  // computed: {
+  // },
+  // watch: {
+  // },
+  // created() {
+  // },
+  // mounted() {
+  //   console.log('parentaa', this.$parent.aa);
+  // },
+  btnClick(type) {
+    import(/* webpackChunkName: "type" */ `./${type}`).then((data) => {
+      console.log(data)
+    })
+  }
+  // btnmove: throttle((e) => {
+  //   console.log('执行函数', e);
+  // }, 100)
+  
 };
 </script>
 

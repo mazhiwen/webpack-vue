@@ -1,29 +1,14 @@
 <template>
   <router-view v-if="$route.name!=='demo'" />
   <div v-else>
-    todo...
+    todo... demo
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+@Component
+export default class extends Vue{
 
-export default {
-
-  data() {
-    return {
-      aa: 'fkparent'
-    };
-  },
-  created() {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-    parentm() {
-      console.log(this.aa);
-    }
-  }
 };
 </script>

@@ -54,90 +54,89 @@
         {{value.text}}
       </router-link>
     </el-menu-item>
-  </diV>
+  </div>
   
 
 </el-menu>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      menu: [
-        {
-          name: 'echart',
-          icon: 'el-icon-menu',
-          text: '图表',
-          children: [
-            {
-              name: 'echart.relation',
-              icon: 'el-icon-menu',
-              text: '关系图'
-            },
-            {
-              name: 'echart.line',
-              icon: 'el-icon-menu',
-              text: '折线图'
-            }
-          ]
-        },
-        {
-          name: 'demo',
-          icon: 'el-icon-menu',
-          text: 'demo',
-          children: [
-            {
-              name: 'demo.demoa',
-              icon: 'el-icon-menu',
-              text: '可以复制demo页面开发'
-            },
-            {
-              name: 'demo.carousel',
-              icon: 'el-icon-menu',
-              text: '无缝轮播'
-            },
-            {
-              name: 'demo.svg',
-              icon: 'el-icon-document',
-              text: 'svg Map'
-            },
-            {
-              name: 'demo.table',
-              icon: 'el-icon-menu',
-              text: '表单 列表'
-            },
-            {
-              name: 'demo.virtuallist',
-              icon: 'el-icon-menu',
-              text: '虚拟列表'
-            },
-            {
-              name: 'demo.virtualtable',
-              icon: 'el-icon-menu',
-              text: 'excel'
-            },
-            {
-              name: 'demo.canvas',
-              icon: 'el-icon-menu',
-              text: 'canvas'
-            },
-          ]
-        },
-      ]
-    };
-  },
-  mounted(){
+<script lang="ts">
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+@Component
 
-  },
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+export default class extends Vue{
+
+  menu = [
+    // {
+    //   name: 'echart',
+    //   icon: 'el-icon-menu',
+    //   text: '图表',
+    //   children: [
+    //     {
+    //       name: 'echart.relation',
+    //       icon: 'el-icon-menu',
+    //       text: '关系图'
+    //     },
+    //     {
+    //       name: 'echart.line',
+    //       icon: 'el-icon-menu',
+    //       text: '折线图'
+    //     }
+    //   ]
+    // },
+    {
+      name: 'demoo',
+      icon: 'el-icon-menu',
+      text: 'demo',
+      children: [
+        {
+          name: 'demo.demoa',
+          icon: 'el-icon-menu',
+          text: '可以复制demo页面开发'
+        },
+        {
+          name: 'demo.carousel',
+          icon: 'el-icon-menu',
+          text: '无缝轮播'
+        },
+        // {
+        //   name: 'demo.svg',
+        //   icon: 'el-icon-document',
+        //   text: 'svg Map'
+        // },
+        // {
+        //   name: 'demo.table',
+        //   icon: 'el-icon-menu',
+        //   text: '表单 列表'
+        // },
+        // {
+        //   name: 'demo.virtuallist',
+        //   icon: 'el-icon-menu',
+        //   text: '虚拟列表'
+        // },
+        // {
+        //   name: 'demo.virtualtable',
+        //   icon: 'el-icon-menu',
+        //   text: 'excel'
+        // },
+        // {
+        //   name: 'demo.canvas',
+        //   icon: 'el-icon-menu',
+        //   text: 'canvas'
+        // },
+      ]
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
+  ]
+
+
+  handleOpen(key, keyPath) {
+    console.log(key, keyPath);
   }
+  
+  handleClose(key, keyPath) {
+    console.log(key, keyPath);
+  }
+  
  
   
 };

@@ -1,16 +1,16 @@
 import Layout from './Layout/index.vue';
-// import Carousel from './Carousel';
-// import Icon from './Icon';
-// import Card from './Card';
-// import VirtualTable from './VirtualTable';
+import Carousel from './Carousel/index.vue';
+import Icon from './Icon/index.vue';
+import Card from './Card/index.vue';
+import VirtualTable from './VirtualTable/index.vue';
 
 
 const components = {
   Layout,
-  // Carousel,
-  // Icon,
-  // Card,
-  // VirtualTable
+  Carousel,
+  Icon,
+  Card,
+  VirtualTable
 };
 
 const install: any = function (Vue, opts = {}) {

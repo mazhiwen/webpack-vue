@@ -6,15 +6,15 @@ import 'regenerator-runtime/runtime';
 import 'static/js/index.ts';
 import 'styles';
 import Vue from 'vue';
-// import VueRouter from 'vue-router';
-// import {
-//   routes,
-// } from 'router';
+import VueRouter from 'vue-router';
+import {
+  routes,
+} from 'router';
 import components from 'components';
 // import filters from 'filters';
 // import * as ElementUI from 'element-ui';
 import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
 // // import MARUI from 'vue-ui-mar';
 // // import VueEditorMar from 'vue-editor-mar';
 
@@ -24,7 +24,7 @@ import App from './App.vue';
 // import { test, testfn } from 'static/SYSOUTCONFIG';
 
 // console.log(test);
-// Vue.use(VueRouter);
+Vue.use(VueRouter);
 Vue.use(components);
 // Vue.use(filters);
 console.log(ElementUI);
@@ -32,17 +32,17 @@ Vue.use(ElementUI);
 
 // // Vue.use(MARUI);
 // // Vue.use(VueEditorMar);
-// const router = new VueRouter({
-//   mode: 'history',
-//   // base: '/base/',
-//   base: '/',
-//   routes,
-// });
+const router = new VueRouter({
+  mode: 'history',
+  // base: '/base/',
+  base: '/',
+  routes,
+});
 
 
 new Vue({
   // store,
-  // router,
+  router,
   render: h => h(App),
 }).$mount('#app');
 

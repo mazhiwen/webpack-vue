@@ -3,35 +3,20 @@
     logissssn
 
     <div class="container">
-      <!-- <div class="wrapper">
-        <div class="box1" />
-      </div> -->
-      <div class="box2">
-        22
-      </div>
-      <!-- <div class="box3">
-        33
-      </div> -->
+      
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
-import request from 'request';
-// request.login.loginpost();
-export default {
-  data() {
-    return {
-      msg: 'home页面 !',
-    };
-  },
-  created() {
 
-  },
-  mounted() {
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+@Component
+export default class extends Vue{
 
-  },
+
+
 };
 </script>
 
