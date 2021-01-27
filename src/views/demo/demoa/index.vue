@@ -9,6 +9,8 @@
       <el-button @click="btnClick('a')">a</el-button>
       <el-button @click="btnClick('b')">b</el-button>
     </Card>
+
+    <p>212</p>
   </div>
 </template>
 
@@ -56,9 +58,11 @@ export default class extends Vue{
   // },
   // created() {
   // },
-  // mounted() {
-  //   console.log('parentaa', this.$parent.aa);
-  // },
+  mounted() {
+    // let fra = window.document.createDocumentFragmentent;
+
+  }
+
   btnClick(type) {
     import(/* webpackChunkName: "type" */ `./${type}`).then((data) => {
       console.log(data)
@@ -72,8 +76,20 @@ export default class extends Vue{
 </script>
 
 <style lang="less">
-.left,.right{
-
+p {
+  position: relative;
+  line-height: 1.5em;
+  /*高度为需要显示的行数*行高，比如这里我们显示两行，则为3*/
+  height: 3em;
+  overflow: hidden;
+  width: 50px;
+}
+p:after {
+  content: '...';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
 }
 
 </style>
