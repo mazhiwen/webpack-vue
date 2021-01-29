@@ -2,7 +2,7 @@
   <div class="home">
 
     <div class="table" ref="aaa">
-      <div>11111</div>
+      <div class="a b">11111</div>
         <div>home</div>
     </div>
     
