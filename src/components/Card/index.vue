@@ -14,10 +14,6 @@
 
 <script>
 
-import {
-  copy
-} from 'utils';
-import request from 'request';
 
 export default {
   components: {
