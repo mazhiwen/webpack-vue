@@ -29,6 +29,7 @@ module.exports = {
   entry: {
     // '@babel/polyfill': '@babel/polyfill',
     app: './src/index.ts',
+    // app1: './src/index1.ts',
   },
   plugins: [
 
@@ -96,22 +97,6 @@ module.exports = {
           priority: -10,
           name: 'vendors',
         },
-        // static: {
-        //   test: /[\\/]static[\\/]js/,
-        //   priority: -10,
-        //   name: 'static',
-        //   minSize: 0,
-        //   minChunks: 1,
-        //   enforce: true,
-        // },
-        // SYSOUTCONFIG: {
-        //   test: /[\\/]SYSOUTCONFIG\.js/,
-        //   priority: -10,
-        //   name: 'SYSOUTCONFIG',
-        //   minSize: 0,
-        //   minChunks: 1,
-        //   enforce: true,
-        // },
         element: {
           chunks: 'all',
           name: `element-ui`,
@@ -125,7 +110,13 @@ module.exports = {
           chunks: 'initial',
           reuseExistingChunk: true,
         },
-        
+        // default: {
+        //   name: 'default',
+        //   minChunks: 2,
+        //   priority: -20,
+        //   chunks: 'all',
+        //   // reuseExistingChunk: true,
+        // },
       },
     }),
     new webpack.ProvidePlugin({

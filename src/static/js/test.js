@@ -1,2 +1,2 @@
-// console.log('fucktest!!!222222!');
+console.log('fucktest!!!222222!');
 

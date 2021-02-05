@@ -1,9 +1,8 @@
 
-console.log(22);
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import 'static/js/index.ts';
+import 'static/js/index.js';
 import 'styles';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
