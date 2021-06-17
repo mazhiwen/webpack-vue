@@ -42,7 +42,9 @@ const throttle = function (fn, interval) {
     }, interval || 500);
   };
 };
-@Component
+@Component({
+  // components: { Button },
+})
 export default class extends Vue{
   
   // components: {

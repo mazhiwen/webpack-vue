@@ -33,8 +33,14 @@ export default [
           title: 'carousel'
         },
         component: () => import('views/demo/carousel'),
-        // component: () => import('views/demo/carousel').then(m => m.default)
-
+      },
+      {
+        path: 'carouselvertical',
+        name: 'demo.carouselvertical',
+        meta: {
+          title: 'carousel'
+        },
+        component: () => import('views/demo/carouselvertical'),
       },
       // {
       //   path: 'svg',

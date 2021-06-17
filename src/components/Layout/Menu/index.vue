@@ -99,6 +99,11 @@ export default class extends Vue{
           icon: 'el-icon-menu',
           text: '无缝轮播'
         },
+        {
+          name: 'demo.carouselvertical',
+          icon: 'el-icon-menu',
+          text: '无缝轮播纵向'
+        },
         // {
         //   name: 'demo.svg',
         //   icon: 'el-icon-document',
