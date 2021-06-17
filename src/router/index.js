@@ -13,7 +13,7 @@ const routes = [
   //   name: 'login',
   //   component: () => import('views/login'),
   // },
-  // ...echart,
+  ...echart,
   ...demo,
   ...extra,
 ];

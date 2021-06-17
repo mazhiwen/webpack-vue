@@ -67,23 +67,23 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 export default class extends Vue{
 
   menu = [
-    // {
-    //   name: 'echart',
-    //   icon: 'el-icon-menu',
-    //   text: '图表',
-    //   children: [
-    //     {
-    //       name: 'echart.relation',
-    //       icon: 'el-icon-menu',
-    //       text: '关系图'
-    //     },
-    //     {
-    //       name: 'echart.line',
-    //       icon: 'el-icon-menu',
-    //       text: '折线图'
-    //     }
-    //   ]
-    // },
+    {
+      name: 'echart',
+      icon: 'el-icon-menu',
+      text: '图表',
+      children: [
+        // {
+        //   name: 'echart.relation',
+        //   icon: 'el-icon-menu',
+        //   text: '关系图'
+        // },
+        {
+          name: 'echart.line',
+          icon: 'el-icon-menu',
+          text: '折线图'
+        }
+      ]
+    },
     {
       name: 'demoo',
       icon: 'el-icon-menu',
