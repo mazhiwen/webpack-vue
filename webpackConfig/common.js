@@ -147,6 +147,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.vue', '.less', '.css', '.json'],
   },
   externals: {
+    videojss: 'videojs'
   },
   module: {
     // noParse: (content) => {
@@ -185,7 +186,7 @@ module.exports = {
       },
       // 处理资源路径
       {
-        test: /\.(png|svg|jpg|gif|woff|ttf)$/,
+        test: /\.(png|svg|jpg|gif|woff|ttf|eot)$/,
         // use: ['file-loader']
         // 可以用fileloader 和 urlloader
         // urlloader 将limit大小的文件转为dataurl

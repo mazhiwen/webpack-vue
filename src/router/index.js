@@ -8,11 +8,6 @@ const routes = [
     path: '*',
     redirect: '/home',
   },
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   component: () => import('views/login'),
-  // },
   ...echart,
   ...demo,
   ...extra,

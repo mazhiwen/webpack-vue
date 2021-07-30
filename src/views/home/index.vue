@@ -31,9 +31,9 @@ export default {
     setTimeout(()=>{
       console.log(2);
     },40)
-    request.login.loginpost().then(()=>{
-      console.log(3);
-    })
+    // request.login.loginpost().then(()=>{
+    //   console.log(3);
+    // })
 
   }
 }

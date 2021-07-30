@@ -10,7 +10,12 @@
       <el-button @click="btnClick('b')">b</el-button>
     </Card>
 
-    <p>212</p>
+      <video
+        id="example-video" width="600" height="300"
+        class="video-js vjs-default-skin vjs-big-play-centered" poster=""
+        data-setup='{}'
+      >
+      </video>
   </div>
 </template>
 
@@ -18,6 +23,7 @@
 
 
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+
 
 
 const throttle = function (fn, interval) {
@@ -61,8 +67,6 @@ export default class extends Vue{
   // created() {
   // },
   mounted() {
-    // let fra = window.document.createDocumentFragmentent;
-
   }
 
   btnClick(type) {
@@ -78,20 +82,17 @@ export default class extends Vue{
 </script>
 
 <style lang="less">
-p {
+.a1 {
   position: relative;
-  line-height: 1.5em;
-  /*高度为需要显示的行数*行高，比如这里我们显示两行，则为3*/
-  height: 3em;
-  overflow: hidden;
-  width: 50px;
+  background: red;
 }
-p:after {
-  content: '...';
+.a2{
   position: absolute;
-  bottom: 0;
-  right: 0;
-  background-color: #fff;
+  background: blue;
+}
+.a3 {
+  position: absolute;
+  background: gray;
 }
 
 </style>

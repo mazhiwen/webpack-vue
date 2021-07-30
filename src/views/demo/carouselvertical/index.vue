@@ -14,7 +14,9 @@
             background:slotProps.rowData.color
           }"
         >
-          {{ slotProps.rowData.text }}
+          <span>{{ slotProps.rowData.text }}</span>
+          <span>{{ slotProps.rowData.text }}</span>
+          <span>{{ slotProps.rowData.text }}</span>
         </div>
       </template>
     </CarouselVertical>
