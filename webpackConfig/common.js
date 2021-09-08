@@ -19,66 +19,33 @@ if (APIENVIndex > 0) {
 console.log(colors.rainbow(`> API_ENV为:${API_ENV}`));
 
 
-// __webpack_public_path__ = `'https://dasd.com/web/'`;
 
 console.log(22);
-// console.log(require('../dist/vendor-manifest.json'));
 
 module.exports = {
 
   entry: {
-    // '@babel/polyfill': '@babel/polyfill',
     app: './src/index.ts',
-    // app1: './src/index1.ts',
   },
   plugins: [
 
     new webpack.DefinePlugin({
       'webpack.API_ENV': JSON.stringify(API_ENV),
     }),
-    // dllplugin 搭配 build:dll
-    // html 加下面脚本
-    // <script type="text/javascript" src="./vendor.dll.js"></script>
-    // new webpack.DllReferencePlugin({
-    //   manifest: require('../dist/vendor-manifest.json'),
-    // }),
-    // vueloader需要的plugin
-    // 相关options选项:
-    // https://vue-loader.vuejs.org/zh/options.html#transformasseturls
     new VueLoaderPlugin(),
     new CleanWebpackPlugin([path.resolve(__dirname, '../dist')], {
       root: path.resolve(__dirname, '../'),
     }),
     new CopyWebpackPlugin([
-      {
-        from: './webpackConfig/public/*',
-        to: path.resolve(__dirname, '../dist'),
-        flatten: true,
-      },
     ]),
     new HtmlWebpackPlugin({
-      // 如果设置了templeta 则tile等可能以template配置为主
-      // title: 'marjovenprogram',
-      // template html 模版html
-      // 可以使用ejs jade 等template,需要配置对应loader
-      //  详情查看HtmlWebpackPlugin官方
-      // template: './index.html',
       template: path.resolve(__dirname, './index.ejs'),
-      // ejs template参数
-      // 参数可以在ejs文件中以es template字符 :${title}
-      // 或者其他查看lodash template相关配置
       templateParameters: {
         title: '系统',
       },
     }),
     new HtmlWebpackTagsPlugin({
-      // 生产环境开启这个选项 并且配置path 为 cdn地址
-      // usePublicPath: false,
-      // path: 'http://cdn.test/echarts.min.js',
       tags: [
-        {
-          path: 'echarts.min.js',
-        },
       ],
       append: false,
     }),
@@ -110,13 +77,6 @@ module.exports = {
           chunks: 'initial',
           reuseExistingChunk: true,
         },
-        // default: {
-        //   name: 'default',
-        //   minChunks: 2,
-        //   priority: -20,
-        //   chunks: 'all',
-        //   // reuseExistingChunk: true,
-        // },
       },
     }),
     new webpack.ProvidePlugin({
@@ -125,9 +85,7 @@ module.exports = {
 
   ],
   output: {
-    // filename: '[name].bundle.js',
     path: path.resolve(__dirname, '../dist'),
-    // publicPath: '/base/',
     publicPath: '/',
   },
   resolve: {
@@ -143,22 +101,17 @@ module.exports = {
       request: path.resolve(__dirname, '../src/request'),
       static: path.resolve(__dirname, '../src/static'),
     },
-    // 配置默认import index的文件扩展名
     extensions: ['.ts', '.js', '.vue', '.less', '.css', '.json'],
   },
   externals: {
     videojss: 'videojs'
   },
   module: {
-    // noParse: (content) => {
-    //   console.log(1111, content, /oparse/.test(content), content.includes('noparse'));
-    //   return /oparse/.test(content);
-    // },
+    
     rules: [
       {
         test: /\.ejs$/,
         loader: 'ejs-loader',
-        // query是 loader 也就是lodash.template对应的编译选项
         query: {
 
         },
@@ -171,7 +124,6 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        // exclude: /(node_modules|bower_components)/,
         include: /(node_modules\/vue-editor-mar|src)/,
         use: {
           loader: 'babel-loader',
@@ -184,16 +136,10 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
       },
-      // 处理资源路径
       {
         test: /\.(png|svg|jpg|gif|woff|ttf|eot)$/,
-        // use: ['file-loader']
-        // 可以用fileloader 和 urlloader
-        // urlloader 将limit大小的文件转为dataurl
-        // 超过则配置默认file-loader
         oneOf: [
           {
-            // resourceQuery: /external/, // foo.css?external
             include: [
               path.resolve(__dirname, '../src/static'),
             ],
@@ -224,7 +170,6 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         chunkFilter: (chunk) => {
-          // Exclude uglification for the `SYSOUTCONFIG` chunk
           if (chunk.name === 'SYSOUTCONFIG') {
             return false;
           }

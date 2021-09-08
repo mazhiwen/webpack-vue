@@ -24,16 +24,17 @@
 import request from 'request';
 
 
+var a = null;
 
 export default {
   mounted() {
-    console.log(1);
-    setTimeout(()=>{
-      console.log(2);
-    },40)
-    // request.login.loginpost().then(()=>{
-    //   console.log(3);
-    // })
+    // function AsyncTo(promise) {
+    //   return promise.then(data => [null, data]).catch(err => [err]);
+    // }
+    // const [err, res] = await AsyncTo(Func());
+
+
+
 
   }
 }
