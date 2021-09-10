@@ -16,16 +16,15 @@ export default [
           title: 'demoa'
         },
         component: () => import('views/demo/demoa'),
-        // component: () => import('views/demo/demoa').then(m => m.default)
       },
-      // {
-      //   path: 'table',
-      //   name: 'demo.table',
-      //   meta: {
-      //     title: 'table'
-      //   },
-      //   component: () => import('views/demo/table'),
-      // },
+      {
+        path: 'table',
+        name: 'demo.table',
+        meta: {
+          title: 'table'
+        },
+        component: () => import('views/demo/table'),
+      },
       {
         path: 'carousel',
         name: 'demo.carousel',
@@ -50,14 +49,14 @@ export default [
       //   },
       //   component: () => import('views/demo/svg'),
       // },
-      // {
-      //   path: 'virtuallist',
-      //   name: 'demo.virtuallist',
-      //   meta: {
-      //     title: 'svg'
-      //   },
-      //   component: () => import('views/demo/virtuallist'),
-      // },
+      {
+        path: 'virtuallist',
+        name: 'demo.virtuallist',
+        meta: {
+          title: 'svg'
+        },
+        component: () => import('views/demo/virtuallist'),
+      },
       // {
       //   path: 'virtualtable',
       //   name: 'demo.virtualtable',

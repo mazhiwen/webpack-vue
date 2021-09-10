@@ -109,16 +109,16 @@ export default class extends Vue{
         //   icon: 'el-icon-document',
         //   text: 'svg Map'
         // },
-        // {
-        //   name: 'demo.table',
-        //   icon: 'el-icon-menu',
-        //   text: '表单 列表'
-        // },
-        // {
-        //   name: 'demo.virtuallist',
-        //   icon: 'el-icon-menu',
-        //   text: '虚拟列表'
-        // },
+        {
+          name: 'demo.table',
+          icon: 'el-icon-menu',
+          text: '表单 列表'
+        },
+        {
+          name: 'demo.virtuallist',
+          icon: 'el-icon-menu',
+          text: '虚拟列表'
+        },
         // {
         //   name: 'demo.virtualtable',
         //   icon: 'el-icon-menu',
