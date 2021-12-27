@@ -1,10 +1,11 @@
 <template>
-  <div class="d_table"
-    @scroll="onScroll"
+  <div
+    class="d_table"
     :style="{
       width: width,
       height: height
     }"
+    @scroll="onScroll"
   >
     <!-- 生成滚动条 -->
     <div
@@ -13,8 +14,7 @@
         height: `${allHeight}px`,
         width: `${allWidth}px`
       }"
-    >
-    </div>
+    />
     <!-- 行头 -->
     <div
       v-if="isHadRowHead"
@@ -39,7 +39,7 @@
             width: `${rowHeadWidth}px`
           }"
         >
-          {{cell.value}}
+          {{ cell.value }}
         </div>
       </div>
       <div
@@ -58,7 +58,7 @@
             width: `${value.data.spanWidth}px`,
           }"
         >
-          {{value.data.value}}
+          {{ value.data.value }}
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
             width: `${getColumnWidth((startColumnIndex+cellIndex))}px`
           }"
         >
-          {{cell.value}}
+          {{ cell.value }}
         </div>
       </div>
       <div
@@ -99,7 +99,7 @@
             width: `${value.data.spanWidth}px`,
           }"
         >
-          {{value.data.value}}
+          {{ value.data.value }}
         </div>
       </div>
     </div>
@@ -126,7 +126,7 @@
             width: `${rowHeadWidth}px`
           }"
         >
-          {{cell.value}}
+          {{ cell.value }}
         </div>
       </div>
       <div
@@ -142,12 +142,13 @@
             width: `${value.data.spanWidth}px`,
           }"
         >
-          {{value.data.value}}
+          {{ value.data.value }}
         </div>
       </div>
     </div>
     <!-- 主数据 -->
-    <div class="d_table_content"
+    <div
+      class="d_table_content"
       :style="{
         transform: contentTransform
       }"
@@ -165,8 +166,8 @@
             height: `${getRowHeight(startRowIndex+rowIndex)}px`,
             width: `${getColumnWidth(startColumnIndex+columIndex)}px`,
           }"
-        >         
-          {{cell.value}}
+        >
+          {{ cell.value }}
         </div>
       </div>
       <div
@@ -182,36 +183,32 @@
             width: `${visibbleDataSpan.data.spanWidth}px`,
           }"
         >
-          {{visibbleDataSpan.data.value}}
+          {{ visibbleDataSpan.data.value }}
         </div>
-      </div>  
+      </div>
     </div>
-
   </div>
-  
-
 </template>
 
 <script>
 /**
  * virtuallist_allcontent ：
  * 一个空的模拟实际内容高度的块，用来使父组建生成滚动条。
- * 
- * 
+ *
+ *
  * virtuallist_visiblecontent: 实际生成的DOMlist容器
- * 
+ *
  * 行头：有多少条行数据 就有多少条 行头
- * 
+ *
  */
 
 
-
-// 
+//
 // 待添加功能：  冻结行 或者 列
-// crosshead 区域的单元格的宽度 和 高度 
+// crosshead 区域的单元格的宽度 和 高度
 // 问题 会污染原数据
-let now = Date.now();
-let nowrender = Date.now();
+const now = Date.now();
+const nowrender = Date.now();
 let countScrollEvet = 0;
 
 function throttle(fn) {
@@ -229,73 +226,73 @@ function throttle(fn) {
 
 
 export default {
-  props:{
+  props: {
     rowHead: {
       type: Array,
-      default: () => []
+      default: () => [],
       // 需要是一个二维数组
     },
     rowHeadFixed: {
       type: Boolean,
-      default: true
+      default: true,
       // 需要是一个二维数组
     },
     // 行头部宽度
     rowHeadWidth: {
       type: Number,
-      default: 150
+      default: 150,
     },
     rowHeight: {
-      type: [ Function, Number, Array ],
-      default: 40
+      type: [Function, Number, Array],
+      default: 40,
     },
     columnHead: {
       type: Array,
-      default: () => []
+      default: () => [],
       // 需要是一个二维数组
     },
     columnHeadFixed: {
       type: Boolean,
-      default: true
+      default: true,
       // 需要是一个二维数组
     },
     columnHeadHeight: {
       type: Number,
-      default: 50
+      default: 50,
     },
     columnWidth: {
-      type: [ String, Function, Number, Array ],
-      default: 100
-      // String :  fill  
+      type: [String, Function, Number, Array],
+      default: 100,
+      // String :  fill
       // Number: 固定
       // Function
-      // Array 
+      // Array
     },
     data: {
       type: Array,
-      default: () => []
+      default: () => [],
       // 需要是一个二维数组
     },
     width: {
       type: String,
-      default: '100%'
+      default: '100%',
       // 300px 100%
     },
     tableHeight: {
       type: String,
-      default: '300px'
-      // 300px 100% auto 
+      default: '300px',
+      // 300px 100% auto
       // auto 情况下视情况 数据少正好填充满每行数据 数据多滚动
     },
     maxHeight: {
       type: Number,
-      default: 400
-      // 300 
+      default: 400,
+      // 300
       // tableHeight auto 的情况下，maxHeight有效
     },
     fixedColumnIndex: {
       type: Number,
-      default: -1
+      default: -1,
     },
     // 固定列 无行头 无列头
     // 固定列 无行头 有列头
@@ -306,7 +303,7 @@ export default {
       visibleData: [],
       contentTransform: 'translate3d(0, 0, 0)',
       itemHeight: null,
-      itemPositionsCache:[],
+      itemPositionsCache: [],
       startIndex: 0,
       lastStartIndex: 0,
       allWidth: 0,
@@ -323,7 +320,7 @@ export default {
       visibleColumnHeadData: [],
       columnHeadTransform: 'translate3d(0, 0, 0)',
       rowLength: 0,
-      columnLength:0,
+      columnLength: 0,
       // 主数据合并行列 数据
       visibleDataSpanList: {},
       columnHeadAllHeight: 0,
@@ -354,7 +351,7 @@ export default {
       // 原scroll 距离偏大时，数据变少，总content高度变低，但是滚动距离scroll距离不会变小
       // 还需要添加 scrollLeft 的情况
       // 新数据长度变小时，把滚动高度置0 否则会计算错误视口高度。
-      if(newV.length < oldV.length) {
+      if (newV.length < oldV.length) {
         this.$el.scrollTop = 0;
       }
       this.init();
@@ -365,7 +362,7 @@ export default {
     columnHead() {
       this.init();
     },
-    width() {      
+    width() {
       this.init();
     },
     tableHeight(val) {
@@ -380,15 +377,15 @@ export default {
     fixedColumnIndex(newV, oldV) {
       // 变化时 需要清空 rowhead 里 合并单元格的spanWidth spanHeight
       //  此处有问题，实际只需要处理 设置过的
-      let clearLength = Math.max(newV, oldV);
+      const clearLength = Math.max(newV, oldV);
       this.data.forEach((row) => {
         let i = 0;
-        while(i <= clearLength) {
+        while (i <= clearLength) {
           row[i].spanWidth = null;
           row[i].spanHeight = null;
           i++;
         }
-      })
+      });
       this.init();
     },
     rowHeadFixed() {
@@ -398,7 +395,7 @@ export default {
       this.init();
     },
   },
-  beforeCreated(){
+  beforeCreated() {
     // console.log('beforeCreated结束耗时',Date.now() - now);
     // now = Date.now();
   },
@@ -412,34 +409,33 @@ export default {
     // now = Date.now();
     this.init();
     this.addGlobalEvent();
-    
   },
   updated() {
     // this.setItemPositionsCache();
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.throttleInit)
+    window.removeEventListener('resize', this.throttleInit);
   },
   methods: {
-    addGlobalEvent(){
+    addGlobalEvent() {
       window.addEventListener('resize', this.throttleInit);
     },
-    throttleInit: throttle(function(){
+    throttleInit: throttle(function () {
       this.init();
     }),
     onScroll() {
-      let { 
-        scrollTop,scrollLeft,
-        clientWidth,clientHeight
+      const {
+        scrollTop, scrollLeft,
+        clientWidth, clientHeight,
       } = this.$el;
       const {
-        allWidth, allHeight
+        allWidth, allHeight,
       } = this;
       // 此处功能有待优化，影响性能
       this.$emit(
-        "onScroll",
+        'onScroll',
         allWidth - scrollLeft - clientWidth, // 距离右侧边缘距离
-        allHeight - scrollTop - clientHeight // 距离底部边缘距离
+        allHeight - scrollTop - clientHeight, // 距离底部边缘距离
       );
       requestAnimationFrame(this.render);
     },
@@ -455,18 +451,18 @@ export default {
         this.setContainerSize();
         // console.log('setContainerSize结束耗时',Date.now() - now);
         // now = Date.now();
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.render();
           // console.log('init结束耗时',Date.now() - now);
           // now = Date.now();
-        })
+        });
       }
     },
     parseParams() {
       let mainDataInner = [];
       let rowHeadInner = [];
       let columnHeadInner = [];
-      let crossHead = [];
+      const crossHead = [];
       if (this.fixedColumnIndex > -1) {
         this.isHadRowHead = true;
         this.isRowHeadTransparent = true;
@@ -477,20 +473,16 @@ export default {
           this.columnHead.forEach((value) => {
             crossHead.push(value.slice(0, this.fixedColumnIndex + 1));
             columnHeadInner.push(value.slice(this.fixedColumnIndex + 1));
-          })
+          });
           // console.log('parseParams1结束耗时',Date.now() - now);
           // now = Date.now();
         }
         this.data.forEach((value) => {
           rowHeadInner.push(value.slice(0, this.fixedColumnIndex + 1));
           mainDataInner.push(value.slice(this.fixedColumnIndex + 1));
-        })
+        });
         // console.log('parseParams2结束耗时',Date.now() - now);
         // now = Date.now();
-        
-        
-
-        
       } else {
         // 此处合并列会 忽略 行头rowhead数据
         mainDataInner = this.data;
@@ -516,26 +508,26 @@ export default {
     // 设置合并单元格尺寸
     setCellSpanSize(
       cellData, getCellHeight, getCellWidth,
-      spanStartRow, spanStartColumn
+      spanStartRow, spanStartColumn,
     ) {
       if (!cellData.spanWidth) {
         let spanWidth = 0;
         let spanHeight = 0;
-        if(cellData.colSpan) {
+        if (cellData.colSpan) {
           let i = cellData.colSpan - 1;
-          while(i >= 0 ) {
+          while (i >= 0) {
             spanWidth += getCellWidth(spanStartColumn + i);
             i--;
           }
         } else {
           spanWidth += getCellWidth(spanStartColumn);
         }
-        if(cellData.rowSpan) {
-          let i = cellData.rowSpan - 1;            
-          while(i >= 0 ) {
+        if (cellData.rowSpan) {
+          let i = cellData.rowSpan - 1;
+          while (i >= 0) {
             spanHeight += getCellHeight(spanStartRow + i);
             i--;
-          }  
+          }
         } else {
           spanHeight = getCellHeight(spanStartRow);
         }
@@ -545,14 +537,14 @@ export default {
     },
     // 设置单元格尺寸高度 宽度 获取方法
     setCellSizeHandler() {
-      let { 
-        clientWidth, clientHeight
+      const {
+        clientWidth, clientHeight,
       } = this.$el;
       this.rowLength = this.mainDataInner.length;
       // 此处 'fill' 宽度逻辑 应该改为默认 小于 100%，则fill。 否则按照其他填充宽度list
       // 处理列宽数据
-      
-      if (typeof(this.columnWidth) === 'function') {
+
+      if (typeof (this.columnWidth) === 'function') {
         // ..
       } else if (Object.prototype.toString.call(this.columnWidth) === '[object Array]') {
         // ..
@@ -570,43 +562,42 @@ export default {
         this.rowHeightList = this.rowHeight;
         this.getRowHeight = this.getRowHeightFromList;
       }
-      
     },
     // 设置滚动条总尺寸
     setContainerSize() {
       let allHeight = 0;
       let allWidth = 0;
-      let { 
-        clientWidth, clientHeight, offsetWidth
+      let {
+        clientWidth, clientHeight, offsetWidth,
       } = this.$el;
       // 计算滚动总宽度
       this.columnLength = this.mainDataInner[0].length;
-      this.mainDataInner[0].forEach((value, index)=>{
+      this.mainDataInner[0].forEach((value, index) => {
         allWidth += this.getColumnWidth(index);
-      })
+      });
       if (this.isHadRowHead) {
         this.rowHeadAllWidth = this.rowHeadWidth * this.rowHeadInner[0].length;
         allWidth += this.rowHeadAllWidth;
       }
       // 计算滚动总高度
-      // 此处计算高度有问题，应该是动态的  
-      this.mainDataInner.forEach((value, index)=>{
+      // 此处计算高度有问题，应该是动态的
+      this.mainDataInner.forEach((value, index) => {
         allHeight += this.getRowHeight(index);
-      })
+      });
       if (this.isHadColumnHead) {
         this.columnHeadAllHeight = this.columnHeadHeight * this.columnHeadInner.length;
         allHeight += this.columnHeadAllHeight;
       }
       this.allHeight = allHeight;
 
-      let heightNumber  = 0;
+      let heightNumber = 0;
       let height;
       let heightSmallerThanMax = false;
       // 设置容器尺寸
       if (this.tableHeight === 'auto') {
-        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断      
+        // 此处影响性能，正常按照excel固定高宽处理 不需要这么多判断
         // 此处100%的情况判断有漏洞 后面补上
-        
+
         if (this.maxHeight && allHeight > this.maxHeight) {
           height = this.maxHeight;
         } else {
@@ -632,8 +623,8 @@ export default {
         if (this.isHadRowHead) {
           clientWidthContent = clientWidth - this.rowHeadWidth * this.rowHeadInner[0].length;
         }
-        let averageWidth = Math.floor(clientWidthContent/this.columnLength*100)/100;
-        let columnWidthList = [];
+        const averageWidth = Math.floor(clientWidthContent / this.columnLength * 100) / 100;
+        const columnWidthList = [];
         let i = 0;
         while (i < this.columnLength) {
           columnWidthList.push(averageWidth);
@@ -645,41 +636,40 @@ export default {
       } else {
         this.allWidth = allWidth;
         if (heightSmallerThanMax) {
-          height = `${Math.min(this.maxHeight, allHeight+12)}px`;
+          height = `${Math.min(this.maxHeight, allHeight + 12)}px`;
         }
       }
       this.height = height;
     },
-    setItemPositionsCache () {
-      let now = Date.now();      
-      this.$refs.virtuallist_item.forEach((value,index) => {
-        if(!this.itemPositionsCache[this.startIndex+index]) {
-          this.itemPositionsCache[this.startIndex+index] = {
-            height : value.getBoundingClientRect().height
-          }
+    setItemPositionsCache() {
+      const now = Date.now();
+      this.$refs.virtuallist_item.forEach((value, index) => {
+        if (!this.itemPositionsCache[this.startIndex + index]) {
+          this.itemPositionsCache[this.startIndex + index] = {
+            height: value.getBoundingClientRect().height,
+          };
         }
-      })
-
+      });
     },
-    render: function() {
+    render: function () {
       // console.log('距离上次render', Date.now() - now);
       // now = Date.now();
       // nowrender = now;
-      let curr = countScrollEvet++;
+      const curr = countScrollEvet++;
       const {
-        startRowIndex,offsetRow,endRowIndex,
-        startColumnIndex,offsetColumn,endColumnIndex,
-        rowHeadTranslateX,columnHeadTranslateY,
-        crossHeadTransformX,crossHeadTransformY
+        startRowIndex, offsetRow, endRowIndex,
+        startColumnIndex, offsetColumn, endColumnIndex,
+        rowHeadTranslateX, columnHeadTranslateY,
+        crossHeadTransformX, crossHeadTransformY,
       } = this.getStartIndexAndOffset();
-      const  {
-        getColumnWidth, getRowHeight
+      const {
+        getColumnWidth, getRowHeight,
       } = this;
-      let visibleData = [];
+      const visibleData = [];
 
       let i = 0;
       while (i < endRowIndex - startRowIndex) {
-        visibleData[i] = this.mainDataInner[startRowIndex+i].slice(startColumnIndex, endColumnIndex);
+        visibleData[i] = this.mainDataInner[startRowIndex + i].slice(startColumnIndex, endColumnIndex);
         i++;
       }
       let spanStartColumnOffset = 0;
@@ -694,7 +684,7 @@ export default {
         getColumnWidth,
         startRowIndex,
         startColumnIndex,
-        spanStartColumnOffset
+        spanStartColumnOffset,
       );
 
       // 设置主数据 以及 位置
@@ -705,7 +695,6 @@ export default {
 
       // 设置行头部数据 以及 位置
       if (this.isHadRowHead) {
-
         // let visibleRowHeadData = [];
         // this.rowHead.forEach((value, index)=>{
         //   visibleRowHeadData[index] = value.slice(startColumnIndex, endColumnIndex);
@@ -719,19 +708,19 @@ export default {
           this.getRowHeadWidth,
           startRowIndex,
           0,
-          0
+          0,
         );
 
-        offsetColumnContent = this.rowHeadAllWidth+offsetColumn;
+        offsetColumnContent = this.rowHeadAllWidth + offsetColumn;
       }
 
 
       // 设置列头部数据 以及 位置
       if (this.isHadColumnHead) {
-        let visibleColumnHeadData = [];
-        this.columnHeadInner.forEach((value, index)=>{
+        const visibleColumnHeadData = [];
+        this.columnHeadInner.forEach((value, index) => {
           visibleColumnHeadData[index] = value.slice(startColumnIndex, endColumnIndex);
-        })
+        });
         this.visibleColumnHeadData = visibleColumnHeadData;
 
         this.visibleColumnHeadSpanList = this.getVisibleSpanList(
@@ -741,10 +730,10 @@ export default {
           getColumnWidth,
           0,
           startColumnIndex,
-          spanStartColumnOffset
+          spanStartColumnOffset,
         );
 
-        offsetRowContent = this.columnHeadAllHeight+offsetRow;
+        offsetRowContent = this.columnHeadAllHeight + offsetRow;
       }
       // 设置交叉头部合并单元格数据
       if (this.isHadColumnHead && this.isHadRowHead) {
@@ -755,7 +744,7 @@ export default {
           this.getRowHeadWidth,
           0,
           0,
-          0
+          0,
         );
       }
 
@@ -767,7 +756,7 @@ export default {
         this.columnHeadTransform = `translate3d(${offsetColumnContent}px, ${columnHeadTranslateY}px, 0)`;
       }
 
-      this.contentTransform = `translate3d(${offsetColumnContent}px, ${offsetRowContent}px, 0)`;      
+      this.contentTransform = `translate3d(${offsetColumnContent}px, ${offsetRowContent}px, 0)`;
       this.crossHeadTransform = `translate3d(${crossHeadTransformX}px, ${crossHeadTransformY}px, 0)`;
       // console.log('耗时render', Date.now() - nowrender);
     },
@@ -779,26 +768,26 @@ export default {
       getCellWidth,
       startRowIndex,
       startColumnIndex,
-      spanStartColumnOffset
+      spanStartColumnOffset,
     ) {
       // 设置span 合并单元格数据
       // 此处可以做数据缓存优化， 或者把数据处理放在初始化
       // 需要遇到合并单元格的任一单元格位置时， 就把该合并单元格渲染出来
-      let visibleSpanList = {};
+      const visibleSpanList = {};
       visibleData.forEach((row, rowIndex) => {
         row.forEach((cellData, columnIndex) => {
-          if(cellData.spanStartRow > -1) {
-            let spanStartRow = cellData.spanStartRow;
-            let spanStartColumn = cellData.spanStartColumn;
+          if (cellData.spanStartRow > -1) {
+            const { spanStartRow } = cellData;
+            let { spanStartColumn } = cellData;
             spanStartColumn -= spanStartColumnOffset;
-            if(
+            if (
               !visibleSpanList[`${spanStartRow}-${spanStartColumn}`]
             ) {
               this.setCellSpanSize(
                 data[spanStartRow][spanStartColumn],
-                getCellHeight,getCellWidth,
+                getCellHeight, getCellWidth,
                 spanStartRow,
-                spanStartColumn
+                spanStartColumn,
               );
               // 计算合并单元格的 偏移transform
               // 起始span 距离content startrow的偏移row startcolumn的偏移column
@@ -828,20 +817,19 @@ export default {
               }
               visibleSpanList[`${spanStartRow}-${spanStartColumn}`] = {
                 data: data[spanStartRow][spanStartColumn],
-                transform: `translate3d(${transformX}px, ${transformY}px, 0)`
-              }  
+                transform: `translate3d(${transformX}px, ${transformY}px, 0)`,
+              };
             }
-              
           }
-        })
+        });
       });
       return visibleSpanList;
     },
     getStartIndexAndOffset() {
-      let now = Date.now();
-      let { 
-        scrollTop,scrollLeft,
-        clientWidth,clientHeight
+      const now = Date.now();
+      const {
+        scrollTop, scrollLeft,
+        clientWidth, clientHeight,
       } = this.$el;
       let clientWidthContent = clientWidth;
       let scrollLeftContent = scrollLeft;
@@ -850,7 +838,7 @@ export default {
       let allWidthContent = this.allWidth;
       let crossHeadTransformX = 0;
       let crossHeadTransformY = 0;
-      if (this.isHadRowHead) { 
+      if (this.isHadRowHead) {
         if (this.rowHeadFixed) {
           rowHeadTranslateX = scrollLeft;
           clientWidthContent -= this.rowHeadAllWidth;
@@ -866,7 +854,7 @@ export default {
       let scrollTopContent = scrollTop;
       let columnHeadTranslateY = 0;
       let allHeightContent = this.allHeight;
-      if (this.isHadColumnHead) { 
+      if (this.isHadColumnHead) {
         if (this.columnHeadFixed) {
           columnHeadTranslateY = scrollTop;
           clientHeightContent -= this.columnHeadAllHeight;
@@ -875,7 +863,7 @@ export default {
           scrollTopContent -= this.columnHeadAllHeight;
           crossHeadTransformY = 0;
         }
-        allHeightContent = this.allHeight - this.columnHeadAllHeight; 
+        allHeightContent = this.allHeight - this.columnHeadAllHeight;
       }
 
       // 计算行的 起始索引 最终索引 偏移量
@@ -889,7 +877,7 @@ export default {
       let endRowIndex = startRowIndex;
       let offsetEndRow = offsetRow;
       const minOffsetEndRow = Math.min(allHeightContent, offsetRow + clientHeightContent);
-      offsetRow = offsetRow - this.getRowHeight(startRowIndex);
+      offsetRow -= this.getRowHeight(startRowIndex);
       while (offsetEndRow < minOffsetEndRow) { // 520 810
         ++endRowIndex;
         offsetEndRow += this.getRowHeight(endRowIndex);
@@ -911,14 +899,20 @@ export default {
         offsetEndColumn += this.getColumnWidth(endColumnIndex);
       }
       ++endColumnIndex;
-      offsetColumn = offsetColumn - this.getColumnWidth(startColumnIndex);
+      offsetColumn -= this.getColumnWidth(startColumnIndex);
 
       return {
-        startRowIndex,offsetRow,endRowIndex,
-        startColumnIndex,endColumnIndex,offsetColumn,
-        rowHeadTranslateX,columnHeadTranslateY,
-        crossHeadTransformX,crossHeadTransformY
-      }
+        startRowIndex,
+        offsetRow,
+        endRowIndex,
+        startColumnIndex,
+        endColumnIndex,
+        offsetColumn,
+        rowHeadTranslateX,
+        columnHeadTranslateY,
+        crossHeadTransformX,
+        crossHeadTransformY,
+      };
     },
     getRowHeightFromList(rowIndex) {
       return this.rowHeightList[rowIndex];
@@ -929,25 +923,25 @@ export default {
     getRowHeight(rowIndex) {
       if (this.rowHeightList[rowIndex]) {
         return this.rowHeightList[rowIndex];
-      } 
+      }
       return this.rowHeight;
     },
     getColumnHeadHeight(columnIndex) {
       // if (this.rowHeightList[rowIndex]) {
       //   return this.rowHeightList[rowIndex];
-      // } 
+      // }
       return this.columnHeadHeight;
     },
     getRowHeadWidth(rowIndex) {
       // if (this.rowHeightList[rowIndex]) {
       //   return this.rowHeightList[rowIndex];
-      // } 
+      // }
       return this.rowHeadWidth;
     },
     getColumnWidth(columnIndex) {
       if (this.columnWidthList[columnIndex]) {
         return this.columnWidthList[columnIndex];
-      } 
+      }
       return this.columnWidth;
     },
     getColumnWidthFromNumer() {
@@ -985,11 +979,11 @@ export default {
         background: #f7f8fa;
       }
     }
-    
+
 
   }
   .d_table_cell,.head_cell{
-      
+
     display: inline-flex;
     white-space: nowrap;
     vertical-align: middle;
@@ -997,15 +991,15 @@ export default {
     position: relative;
   }
   .d_table_rowhead {
-    
+
     box-shadow: 2px 0 6px -2px rgba(0,0,0,0.2);
   }
-  .d_table_columnhead{    
+  .d_table_columnhead{
     text-align: left;
     white-space: nowrap;
     box-shadow: 0 2px 6px -2px rgba(0,0,0,0.2);
   }
-  
+
   .d_table_cell,.span_cell,
   .head_cell,.head_spancell{
     padding: 8px 10px;

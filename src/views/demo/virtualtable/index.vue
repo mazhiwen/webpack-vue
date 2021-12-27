@@ -1,5 +1,4 @@
 <template>
-  
   <div
     style="height:400px"
   >
@@ -13,58 +12,67 @@
       :rowHeadFixed="rowHeadFixed"
       @onScroll="onScroll"
     />
-    <el-button @click="changeData">data</el-button>
-    <el-button @click="changerowHead">rowHead</el-button>
-    <el-button @click="changecolumnHead">columnHead</el-button>
-    <el-button @click="changerowHeadfix">rowHeadfix</el-button>
-    <el-button @click="changecolumnHeadfix">columnHeadfix</el-button>
-    <el-button @click="changeWidth">changeWidth</el-button>
-    <el-button @click="changerowHeight">changerowHeight</el-button>
-    <el-button @click="changeData1">changeData1</el-button>
+    <el-button @click="changeData">
+      data
+    </el-button>
+    <el-button @click="changerowHead">
+      rowHead
+    </el-button>
+    <el-button @click="changecolumnHead">
+      columnHead
+    </el-button>
+    <el-button @click="changerowHeadfix">
+      rowHeadfix
+    </el-button>
+    <el-button @click="changecolumnHeadfix">
+      columnHeadfix
+    </el-button>
+    <el-button @click="changeWidth">
+      changeWidth
+    </el-button>
+    <el-button @click="changerowHeight">
+      changerowHeight
+    </el-button>
+    <el-button @click="changeData1">
+      changeData1
+    </el-button>
     <div
       :style="{width: `${testwidth}px`}"
       style="background:red;height:20px"
-
-    >test</div>
+    >
+      test
+    </div>
   </div>
-
-
-  
 </template>
 
 <script>
 
-let now = Date.now();
-let textList = [
+const now = Date.now();
+const textList = [
   '小小',
   '中大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大',
-  '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大'
+  '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大',
 ];
 
-let rowCount = 20;
-let columnCount = 200;
-
-
-
+const rowCount = 20;
+const columnCount = 200;
 
 
 function generateData(rowCount, columnCount) {
-
-  let data = [];
+  const data = [];
   let i = 0;
-  while (i<rowCount) {
+  while (i < rowCount) {
     data[i] = [];
     let j = 0;
-    while (j<columnCount) {
+    while (j < columnCount) {
       data[i].push({
-        value: `${i}-${j}:${textList[(i+j)%3]}`,
+        value: `${i}-${j}:${textList[(i + j) % 3]}`,
         row: i,
         column: j,
       });
       j++;
     }
     i++;
-    
   }
   // data[0][0].spanStartRow = 0;
   // data[0][0].spanStartColumn = 0;
@@ -97,16 +105,16 @@ function generateData(rowCount, columnCount) {
   return data;
 }
 
-const data = generateData(rowCount,columnCount);
+const data = generateData(rowCount, columnCount);
 
 
 // 列头数据
 const columnHeadData = [];
 let i = 0;
-while (i<3) {
+while (i < 3) {
   columnHeadData[i] = [];
   let j = 0;
-  while (j<columnCount) {
+  while (j < columnCount) {
     columnHeadData[i].push({
       value: `第${i}-${j}列`,
       row: i,
@@ -131,10 +139,10 @@ console.log(columnHeadData);
 // 行头数据
 i = 0;
 const rowHeadData = [];
-while (i<rowCount) {
+while (i < rowCount) {
   rowHeadData[i] = [];
   let j = 0;
-  while (j<2) {
+  while (j < 2) {
     rowHeadData[i].push({
       value: `第${i}-${j}行`,
       row: i,
@@ -150,22 +158,20 @@ while (i<rowCount) {
 // rowHeadData[0][0].colSpan = 2;
 
 
-
-
-console.log('data 生成耗时',Date.now() - now);
+console.log('data 生成耗时', Date.now() - now);
 // console.log(data);
 export default {
   data() {
     return {
       data: Object.freeze(data),
-      rowHead:Object.freeze(rowHeadData),
-      columnHead:Object.freeze(columnHeadData),
+      rowHead: Object.freeze(rowHeadData),
+      columnHead: Object.freeze(columnHeadData),
       rowHeadFixed: false,
       columnHeadFixed: true,
       width: 400,
       rowHeight: 30,
       isScroll: true,
-      testwidth: 0
+      testwidth: 0,
     };
   },
   computed: {
@@ -184,31 +190,30 @@ export default {
     // this.setItemPositionsCache();
   },
   methods: {
-    testsetwidth(){
+    testsetwidth() {
       console.log('testsetwidth');
-      if(this.testwidth<200){
+      if (this.testwidth < 200) {
         this.testwidth += 1;
         requestAnimationFrame(this.testsetwidth);
       }
-      
     },
     onScroll(toRight, toBottom) {
       // console.log('onScroll',toRight,toBottom);
-      // 
-      // 区块划分：每块的长度n*n 一般是固定写死的. 
-      // 区块的位置表示：起始坐标(x*n,y*n), 长度n 
+      //
+      // 区块划分：每块的长度n*n 一般是固定写死的.
+      // 区块的位置表示：起始坐标(x*n,y*n), 长度n
       // 初始化加载 n*n数据
       // 滑动时 判断，获取，填充 当前可视区域数据区块 周边8个格子的数据
-      // if (toBottom < 50 && this.isScroll) { 
+      // if (toBottom < 50 && this.isScroll) {
       //   let data = [];
 
       //   this.isScroll = false;
       //   setTimeout(()=>{
       //     this.data = Object.freeze(this.data.concat(this.data));
       //   }, 3*1000)
-        
-      // } 
-      
+
+      // }
+
     },
     changeData() {
       this.data = data;
@@ -232,9 +237,9 @@ export default {
       this.rowHeight += 10;
     },
     changeData1() {
-      this.data = generateData(10,10);
-    }
-    
+      this.data = generateData(10, 10);
+    },
+
   },
 };
 </script>

@@ -10,7 +10,17 @@
       <el-button @click="btnClick('b')">b</el-button>
     </Card>
 
-    <div class="test" data-title="状态悬浮球">
+    <div class="testa rect" data-title="状态悬浮球">
+      testa
+      <div class="testb1 rect">
+        testb1
+      </div>
+      <div class="testb2 rect">
+        testb2
+        <div class="testc rect">
+          testc
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,7 +29,6 @@
 
 
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-
 
 
 const throttle = function (fn, interval) {
@@ -136,10 +145,27 @@ export default class extends Vue{
 	}
 }
 
-.test{
+.rect{
   width: 200px;
-  height: 200px;
+  
   background: red;
-  clip: rect(40px, 200px, 150px, 30px);
+}
+.testa{
+  
+  .testb1{
+    height: 200px;
+  }
+  .testb2{
+      position: absolute;
+    top: 20px;
+    background: yellow;
+    width: 300px;
+  }
+  .testc{
+    height: 200px;
+    position: fixed;
+    top: 0;
+    background: green;
+  }
 }
 </style>

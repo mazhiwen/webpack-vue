@@ -5,7 +5,7 @@ export default [
     path: '/demo',
     name: 'demo',
     meta: {
-      title: 'demo'
+      title: 'demo',
     },
     component: () => import('views/demo'),
     children: [
@@ -13,7 +13,7 @@ export default [
         path: 'demoa',
         name: 'demo.demoa',
         meta: {
-          title: 'demoa'
+          title: 'demoa',
         },
         component: () => import('views/demo/demoa'),
       },
@@ -21,7 +21,7 @@ export default [
         path: 'table',
         name: 'demo.table',
         meta: {
-          title: 'table'
+          title: 'table',
         },
         component: () => import('views/demo/table'),
       },
@@ -29,7 +29,7 @@ export default [
         path: 'carousel',
         name: 'demo.carousel',
         meta: {
-          title: 'carousel'
+          title: 'carousel',
         },
         component: () => import('views/demo/carousel'),
       },
@@ -37,23 +37,23 @@ export default [
         path: 'carouselvertical',
         name: 'demo.carouselvertical',
         meta: {
-          title: 'carousel'
+          title: 'carousel',
         },
         component: () => import('views/demo/carouselvertical'),
       },
-      // {
-      //   path: 'svg',
-      //   name: 'demo.svg',
-      //   meta: {
-      //     title: 'svg'
-      //   },
-      //   component: () => import('views/demo/svg'),
-      // },
+      {
+        path: 'svg',
+        name: 'demo.svg',
+        meta: {
+          title: 'svg',
+        },
+        component: () => import('views/demo/svg'),
+      },
       {
         path: 'virtuallist',
         name: 'demo.virtuallist',
         meta: {
-          title: 'svg'
+          title: 'svg',
         },
         component: () => import('views/demo/virtuallist'),
       },
@@ -73,7 +73,7 @@ export default [
       //   },
       //   component: () => import('views/demo/canvas'),
       // }
-       
-    ]
+
+    ],
   },
-]
+];

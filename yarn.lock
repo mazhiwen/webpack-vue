@@ -2370,12 +2370,11 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-echarts@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/echarts/-/echarts-5.2.0.tgz#9f1fbfbf048c15ab630bf0a74525c4c534d6cebc"
+echarts@^4.8.0:
+  version "4.9.0"
+  resolved "https://registry.npmjs.org/echarts/-/echarts-4.9.0.tgz#a9b9baa03f03a2a731e6340c55befb57a9e1347d"
   dependencies:
-    tslib "2.3.0"
-    zrender "5.2.0"
+    zrender "4.3.2"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -6649,10 +6648,6 @@ ts-loader@^8.0.14:
     micromatch "^4.0.0"
     semver "^7.3.4"
 
-tslib@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
-
 tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
@@ -7390,8 +7385,6 @@ zlib-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/zlib-browserify/-/zlib-browserify-0.0.1.tgz#4fa6a45d00dbc15f318a4afa1d9afc0258e176cc"
 
-zrender@5.2.0:
-  version "5.2.0"
-  resolved "https://registry.npmjs.org/zrender/-/zrender-5.2.0.tgz#f8abc484ac4a8a51b04c3ccd37beabe1def342cd"
-  dependencies:
-    tslib "2.3.0"
+zrender@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.npmjs.org/zrender/-/zrender-4.3.2.tgz#ec7432f9415c82c73584b6b7b8c47e1b016209c6"

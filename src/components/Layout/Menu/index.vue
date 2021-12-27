@@ -104,11 +104,11 @@ export default class extends Vue{
           icon: 'el-icon-menu',
           text: '无缝轮播纵向'
         },
-        // {
-        //   name: 'demo.svg',
-        //   icon: 'el-icon-document',
-        //   text: 'svg Map'
-        // },
+        {
+          name: 'demo.svg',
+          icon: 'el-icon-document',
+          text: 'svg Map'
+        },
         {
           name: 'demo.table',
           icon: 'el-icon-menu',
