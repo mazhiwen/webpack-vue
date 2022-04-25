@@ -50,6 +50,14 @@ export default [
         component: () => import('views/demo/svg'),
       },
       {
+        path: 'webgl',
+        name: 'demo.webgl',
+        meta: {
+          title: 'webgl',
+        },
+        component: () => import('views/demo/webgl'),
+      },
+      {
         path: 'virtuallist',
         name: 'demo.virtuallist',
         meta: {

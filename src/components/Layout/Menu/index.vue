@@ -119,6 +119,11 @@ export default class extends Vue{
           icon: 'el-icon-menu',
           text: '虚拟列表'
         },
+        {
+          name: 'demo.webgl',
+          icon: 'el-icon-menu',
+          text: 'webgl'
+        },
         // {
         //   name: 'demo.virtualtable',
         //   icon: 'el-icon-menu',

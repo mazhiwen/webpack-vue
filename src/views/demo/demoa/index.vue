@@ -1,26 +1,23 @@
 <template>
   <div class="page_demoa">
-    <Card>
-      <transition name="fade">
-        <h1 v-if="show">
-          content
-        </h1>
-      </transition>
-      <el-button @click="btnClick('a')">a</el-button>
-      <el-button @click="btnClick('b')">b</el-button>
-    </Card>
 
-    <div class="testa rect" data-title="状态悬浮球">
-      testa
-      <div class="testb1 rect">
-        testb1
-      </div>
-      <div class="testb2 rect">
-        testb2
-        <div class="testc rect">
-          testc
-        </div>
-      </div>
+    <svg viewBox="-3 0 33 10" xmlns="http://www.w3.org/2000/svg">
+  <!-- No dash array -->
+  <line x1="0" y1="1" x2="30" y2="1" stroke="black" />
+
+  <!-- No dash offset -->
+  <line x1="0" y1="3" x2="30" y2="3" stroke="black"
+        stroke-dasharray="3 1" />
+
+        <line x1="0" y1="5" x2="30" y2="5" stroke="black"
+        stroke-dasharray="5"
+        stroke-dashoffset="2" />
+    </svg>
+    <div v-for="(item,index) in testlist"
+      class="blockitem"
+      :key="index"
+    >
+      {{item}}
     </div>
   </div>
 </template>
@@ -29,30 +26,11 @@
 
 
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import testClass from './test.js'
+
+import anime from 'animejs/lib/anime.es';
 
 
-const throttle = function (fn, interval) {
-  const handler = fn;
-  let timer;
-  let firstTime = true;
-  return function () {
-    const args = arguments;
-    const innerThis = this;
-    if (firstTime) {
-      handler.apply(innerThis, args);
-      firstTime = false;
-      return;
-    }
-    if (timer) {
-      return false;
-    }
-    timer = setTimeout(() => {
-      clearTimeout(timer);
-      timer = null;
-      handler.apply(innerThis, args);
-    }, interval || 500);
-  };
-};
 @Component({
   // components: { Button },
 })
@@ -64,108 +42,45 @@ export default class extends Vue{
   // props: {
 
   // },
+  // newtestClass = newtestClass
+  testlist = [1,2,3,4,5]
   show = false
-  // computed: {
-  // },
+  // get testlist() {
+  //   return this.newtestClass.list
+  // }
+  
   // watch: {
   // },
   // created() {
   // },
   mounted() {
+    anime({
+      targets: '.blockitem',
+      // opacity: 0,
+      duration: 6000,
+      translateX: anime.stagger(100),
+      // loop: true,
+      direction: 'alternate',
+      easing: 'easeInOutExpo',
+    });
+
+
   }
 
   btnClick(type) {
-    import(/* webpackChunkName: "type" */ `./${type}`).then((data) => {
-      console.log(data)
-    })
+    
   }
-  // btnmove: throttle((e) => {
-  //   console.log('执行函数', e);
-  // }, 100)
+
   
 };
 </script>
 
 <style lang="less">
-.state-ball {
-	overflow: hidden;
-	position: relative;
-	padding: 5px;
-	border: 3px solid #3c9;
-	border-radius: 100%;
-	width: 150px;
-	height: 150px;
-	background-color: #fff;
-	&::before,
-	&::after {
-		position: absolute;
-		left: 50%;
-		top: 0;
-		z-index: 20;
-		margin-left: -100px;
-		width: 200px;
-		height: 200px;
-		content: "";
-	}
-	&::before {
-		margin-top: -150px;
-		border-radius: 45%;
-		background-color: rgba(#fff, .5);
-		animation: rotate 10s linear -5s infinite;
-	}
-	&::after {
-		margin-top: -160px;
-		border-radius: 40%;
-		background-color: rgba(#fff, .8);
-		animation: rotate 15s infinite;
-	}
-	&.warning {
-		border-color: #f90;
-		.wave {
-			background-image: linear-gradient(-180deg, #f0c78a 13%, #f90 91%);
-		}
-	}
-	&.danger {
-		border-color: #f66;
-		.wave {
-			background-image: linear-gradient(-180deg, #f78989 13%, #f66 91%);
-		}
-	}
-	.wave {
-		position: relative;
-		border-radius: 100%;
-		width: 100%;
-		height: 100%;
-		background-image: linear-gradient(-180deg, #af8 13%, #3c9 91%);
-	}
-}
-@keyframes rotate {
-	to {
-		transform: rotate(1turn);
-	}
-}
 
-.rect{
-  width: 200px;
-  
+.blockitem{
+  width: 40px;
+  height: 40px;
   background: red;
-}
-.testa{
-  
-  .testb1{
-    height: 200px;
-  }
-  .testb2{
-      position: absolute;
-    top: 20px;
-    background: yellow;
-    width: 300px;
-  }
-  .testc{
-    height: 200px;
-    position: fixed;
-    top: 0;
-    background: green;
-  }
+  margin-top: 10px;
 }
 </style>

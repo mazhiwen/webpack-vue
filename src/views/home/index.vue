@@ -1,12 +1,11 @@
 <template>
   <div class="home">
+    <p class="test">
+      哒哒哒哒是的撒的撒哒哒哒哒是的撒的撒哒哒哒哒是的撒的撒哒哒哒哒是的撒的撒
+    </p>
 
-    <p class="test">哒哒哒哒是的撒的撒哒哒哒哒是的撒的撒哒哒哒哒是的撒的撒哒哒哒哒是的撒的撒</p>
-    
     <span class="a">的撒的撒大<span class="b">的撒大</span>
     </span>
-
-
   </div>
 </template>
 
@@ -16,7 +15,7 @@
 
 
 // export default class extends Vue{
-  
+
 
 // };
 
@@ -24,7 +23,7 @@
 import request from 'request';
 
 
-var a = null;
+const a = null;
 
 export default {
   mounted() {
@@ -34,10 +33,8 @@ export default {
     // const [err, res] = await AsyncTo(Func());
 
 
-
-
-  }
-}
+  },
+};
 
 </script>
 
