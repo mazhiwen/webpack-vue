@@ -86,6 +86,8 @@
     "core-js": "^3.8.1",
     "echarts": "^4.8.0",
     "element-ui": "^2.13.0",
+    "imagemin": "^8.0.1",
+    "imagemin-gifsicle": "^7.0.0",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
     "nprogress": "^0.2.0",
