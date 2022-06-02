@@ -32,6 +32,7 @@ import jpg9 from './jpg9.png';
 import jpg10 from './jpg10.png';
 import jpg11 from './jpg11.png';
 import uv_grid_opengl from './uv_grid_opengl.jpg';
+import hardwood2_diffuse from './hardwood2_diffuse.jpg';
 
 export default {
   data() {
@@ -47,6 +48,9 @@ export default {
     let camera; let scene; let renderer; let
       labelRenderer;
     let earth;
+    let bulbLight;
+    let ballMat;
+    let floorMat;
     const layers = {
 
       'Toggle Name': function () {
@@ -82,33 +86,6 @@ export default {
       labelRenderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    const earthAnimateStatus = 'toNear';
-    function animate() {
-      requestAnimationFrame(animate);
-
-      // const elapsed = clock.getElapsedTime();
-
-      // moon.position.set(Math.sin(elapsed) * 5, 0, Math.cos(elapsed) * 5);
-      // camera.position.set(0, 5.5, 15);
-
-      // 远近效果
-      // if (earth.position.z >= 2) {
-      //   earthAnimateStatus = 'toFar';
-      // } else if (earth.position.z <= 0) {
-      //   earthAnimateStatus = 'toNear';
-      // }
-      // earth.rotation.y -= 0.01;
-      // if (earthAnimateStatus === 'toNear') {
-      //   earth.position.y += 0.01;
-      //   earth.position.z += 0.01;
-      // } else {
-      //   earth.position.y -= 0.01;
-      //   earth.position.z -= 0.01;
-      // }
-
-      renderer.render(scene, camera);
-      // labelRenderer.render(scene, camera);
-    }
 
     //
 
@@ -136,8 +113,28 @@ export default {
       scene = new THREE.Scene();
 
       // 环境光
-      const ambient = new THREE.AmbientLight(0xffffff);
-      scene.add(ambient);
+      // const ambient = new THREE.AmbientLight(0xffffff);
+      // scene.add(ambient);
+
+      // 球光
+      const bulbGeometry = new THREE.SphereGeometry(1, 16, 8);
+      bulbLight = new THREE.PointLight(0xffee88, 100, 100, 2);
+      const bulbMat = new THREE.MeshStandardMaterial({
+        emissive: 0xffffee,
+        emissiveIntensity: 1,
+        color: 0x000000,
+      });
+      bulbLight.add(new THREE.Mesh(bulbGeometry, bulbMat));
+      bulbLight.castShadow = true;
+      bulbLight.power = 10000;
+      bulbLight.position.set(0, 5.5, 15);
+      scene.add(bulbLight);
+
+
+      const hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 0.02);
+      hemiLight.hemiLight = 1000;
+      scene.add(hemiLight);
+
       // 摄像光
       // const dirLight = new THREE.DirectionalLight(0xffffff, 1);
       // dirLight.position.set(0, 0, 1);
@@ -163,7 +160,6 @@ export default {
       });
       earth = new THREE.Mesh(earthGeometry, earthMaterial);
       earth.position.set(0, -8.7, 0);
-      // earth.rotateX(0.5);
       scene.add(earth);
 
       // const moonGeometry = new THREE.SphereGeometry(MOON_RADIUS, 16, 16);
@@ -177,22 +173,76 @@ export default {
       // 盘子面
 
       const geometry = new THREE.CircleGeometry(7.5, 32);
-      const circleMap = new THREE.TextureLoader().load(jpg11);
-      // THREE.RepeatWrapping
-      // THREE.ClampToEdgeWrapping
-      // THREE.MirroredRepeatWrapping
 
-      circleMap.wrapS = THREE.RepeatWrapping;
-      circleMap.wrapT = THREE.RepeatWrapping;
-      circleMap.anisotropy = 16;
-      const material = new THREE.MeshBasicMaterial({
-        // color: 0xffff00,
-        map: circleMap,
+      floorMat = new THREE.MeshStandardMaterial({
+        roughness: 0.8,
+        color: 0xffffff,
+        metalness: 0.2,
+        bumpScale: 0.0005,
       });
-      const circle = new THREE.Mesh(geometry, material);
+      new THREE.TextureLoader().load(hardwood2_diffuse, (map) => {
+        map.wrapS = THREE.RepeatWrapping;
+        map.wrapT = THREE.RepeatWrapping;
+        map.anisotropy = 2;
+        map.repeat.set(4, 4);
+        map.encoding = THREE.sRGBEncoding;
+        floorMat.map = map;
+        floorMat.needsUpdate = true;
+      });
+
+
+      // const circleMap = new THREE.TextureLoader().load(jpg11);
+      // circleMap.wrapS = THREE.RepeatWrapping;
+      // circleMap.wrapT = THREE.RepeatWrapping;
+      // circleMap.anisotropy = 16;
+      // const circleMaterial = new THREE.MeshBasicMaterial({
+      //   // color: 0xffff00,
+      //   map: circleMap,
+      // });
+
+
+      const circle = new THREE.Mesh(geometry, floorMat);
+      circle.receiveShadow = true;
       circle.position.set(0, 9.2, 0);
       circle.rotateX(-3.14 / 2);
       earth.add(circle);
+
+
+      // 测试阴影代码
+      const floorGeometry = new THREE.PlaneGeometry(5, 5);
+      const floorMesh = new THREE.Mesh(floorGeometry, floorMat);
+      floorMesh.receiveShadow = true;
+      floorMesh.rotation.x = -Math.PI / 2.0;
+      floorMesh.position.set(0, 9.2, 0);
+      // earth.add(floorMesh);
+      // scene.add(floorMesh);
+      // 球阴影
+      ballMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        roughness: 0.5,
+        metalness: 1.0,
+      });
+      // textureLoader.load(earthatmos2048, (map) => {
+      //   map.anisotropy = 4;
+      //   map.encoding = THREE.sRGBEncoding;
+      //   ballMat.map = map;
+      //   ballMat.needsUpdate = true;
+      // });
+      // textureLoader.load(earthspecular2048, (map) => {
+      //   map.anisotropy = 4;
+      //   map.encoding = THREE.sRGBEncoding;
+      //   ballMat.metalnessMap = map;
+      //   ballMat.needsUpdate = true;
+      // });
+      const ballGeometry = new THREE.SphereGeometry(1, 32, 32);
+      const ballMesh = new THREE.Mesh(ballGeometry, ballMat);
+      ballMesh.position.set(1, 0.25, 1);
+      ballMesh.rotation.y = Math.PI;
+      ballMesh.castShadow = true;
+      // scene.add(ballMesh);
+      // floorMesh.add(ballMesh);
+      circle.add(ballMesh);
+
 
       // 盘子上的物体
       // const map = new THREE.TextureLoader().load(jpg1);
@@ -200,11 +250,14 @@ export default {
       const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.TextureLoader().load(jpg1) }));
       sprite.scale.set(spriteSize, spriteSize, 0);
       sprite.position.set(0, 5, spriteSize / 2);
+      sprite.castShadow = true;
       circle.add(sprite);
+
 
       const sprite2 = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.TextureLoader().load(jpg2) }));
       sprite2.scale.set(spriteSize, spriteSize, 0);
       sprite2.position.set(5, 0, spriteSize / 2);
+      sprite2.castShadow = true;
       circle.add(sprite2);
 
       const sprite3 = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.TextureLoader().load(jpg7) }));
@@ -218,47 +271,11 @@ export default {
       circle.add(sprite4);
 
 
-      // /
+      // -----------
       earth.layers.enableAll();
-      // moon.layers.enableAll();
 
-      // const earthDiv = document.createElement('div');
-      // earthDiv.className = 'label';
-      // earthDiv.textContent = 'Earth';
-      // earthDiv.style.marginTop = '-1em';
-      // const earthLabel = new CSS2DObject(earthDiv);
-      // earthLabel.position.set(0, EARTH_RADIUS, 0);
-      // earth.add(earthLabel);
-      // earthLabel.layers.set(0);
 
-      // const earthMassDiv = document.createElement('div');
-      // earthMassDiv.className = 'label';
-      // earthMassDiv.textContent = '5.97237e24 kg';
-      // earthMassDiv.style.marginTop = '-1em';
-      // const earthMassLabel = new CSS2DObject(earthMassDiv);
-      // earthMassLabel.position.set(0, -2 * EARTH_RADIUS, 0);
-      // earth.add(earthMassLabel);
-      // earthMassLabel.layers.set(1);
-
-      // const moonDiv = document.createElement('div');
-      // moonDiv.className = 'label';
-      // moonDiv.textContent = 'Moon';
-      // moonDiv.style.marginTop = '-1em';
-      // const moonLabel = new CSS2DObject(moonDiv);
-      // moonLabel.position.set(0, MOON_RADIUS, 0);
-      // moon.add(moonLabel);
-      // moonLabel.layers.set(0);
-
-      // const moonMassDiv = document.createElement('div');
-      // moonMassDiv.className = 'label';
-      // moonMassDiv.textContent = '7.342e22 kg';
-      // moonMassDiv.style.marginTop = '-1em';
-      // const moonMassLabel = new CSS2DObject(moonMassDiv);
-      // moonMassLabel.position.set(0, -2 * MOON_RADIUS, 0);
-      // moon.add(moonMassLabel);
-      // moonMassLabel.layers.set(1);
-
-      //
+      // ---------------
       const width = 1100;
       const height = 700;
 
@@ -267,11 +284,18 @@ export default {
       });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(width, height);
-      renderer.setClearColor(0x000000, 1);
+      // renderer.setClearColor(0x000000, 1);
+      // renderer.physicallyCorrectLights = true;
+
+      renderer.physicallyCorrectLights = true;
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      // 加上这些配置后有阴影了
+      renderer.shadowMap.enabled = true;
+      renderer.toneMapping = THREE.ReinhardToneMapping;
       // tone mapping 色调映射
-      renderer.toneMapping = THREE.NoToneMapping;
+      // renderer.toneMapping = THREE.NoToneMapping;
       // 纹理编码
-      renderer.outputEncoding = THREE.BasicDepthPacking;
+      // renderer.outputEncoding = THREE.BasicDepthPacking;
       document.getElementById('testbox').appendChild(renderer.domElement);
 
       labelRenderer = new CSS2DRenderer();
@@ -290,6 +314,60 @@ export default {
       // initGui();
     }
     init();
+    function renderShadow() {
+      // renderer.toneMappingExposure = Math.pow(params.exposure, 5.0); // to allow for very bright scenes.
+      // renderer.shadowMap.enabled = params.shadows;
+      // bulbLight.castShadow = params.shadows;
+
+      // if (params.shadows !== previousShadowMap) {
+      //   ballMat.needsUpdate = true;
+      //   cubeMat.needsUpdate = true;
+      //   floorMat.needsUpdate = true;
+      //   previousShadowMap = params.shadows;
+      // }
+
+      // bulbLight.power = bulbLuminousPowers[params.bulbPower];
+      // bulbMat.emissiveIntensity = bulbLight.intensity / Math.pow(0.02, 2.0); // convert from intensity to irradiance at bulb surface
+
+      // hemiLight.intensity = hemiLuminousIrradiances[params.hemiIrradiance];
+      // const time = Date.now() * 0.0005;
+
+      // bulbLight.position.y = Math.cos(time) * 0.75 + 1.25;
+
+      renderer.render(scene, camera);
+
+      // stats.update();
+    }
+
+    let earthAnimateStatus = 'toNear';
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // const elapsed = clock.getElapsedTime();
+
+      // moon.position.set(Math.sin(elapsed) * 5, 0, Math.cos(elapsed) * 5);
+      // camera.position.set(0, 5.5, 15);
+
+      // 远近效果;
+      if (earth.position.z >= 2) {
+        earthAnimateStatus = 'toFar';
+      } else if (earth.position.z <= 0) {
+        earthAnimateStatus = 'toNear';
+      }
+      earth.rotation.y -= 0.01;
+      if (earthAnimateStatus === 'toNear') {
+        earth.position.y += 0.01;
+        earth.position.z += 0.01;
+      } else {
+        earth.position.y -= 0.01;
+        earth.position.z -= 0.01;
+      }
+      // ballMat.needsUpdate = true;
+      //   cubeMat.needsUpdate = true;
+      // floorMat.needsUpdate = true;
+      // renderer.render(scene, camera);
+      renderShadow();
+    }
     animate();
   },
 };

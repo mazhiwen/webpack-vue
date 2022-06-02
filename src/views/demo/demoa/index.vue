@@ -1,6 +1,6 @@
 <template>
   <div class="page_demoa">
-
+    <button @click="btnClick">aaa</button>
   </div>
 </template>
 
@@ -37,6 +37,7 @@ export default class extends Vue{
   // created() {
   // },
   mounted() {
+    
     anime({
       targets: '.blockitem',
       // opacity: 0,
@@ -47,11 +48,16 @@ export default class extends Vue{
       easing: 'easeInOutExpo',
     });
 
-
+    
   }
 
   btnClick(type) {
-    
+    this.$router.push({
+      name: 'home',
+      params:{
+        a: '2'
+      }
+    })
   }
 
   
