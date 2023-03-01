@@ -124,11 +124,11 @@ export default class extends Vue{
           icon: 'el-icon-menu',
           text: 'webgl'
         },
-        // {
-        //   name: 'demo.virtualtable',
-        //   icon: 'el-icon-menu',
-        //   text: 'excel'
-        // },
+        {
+          name: 'demo.virtualtable',
+          icon: 'el-icon-menu',
+          text: 'excel'
+        },
         // {
         //   name: 'demo.canvas',
         //   icon: 'el-icon-menu',

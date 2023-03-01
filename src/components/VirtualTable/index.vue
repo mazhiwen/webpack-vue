@@ -207,7 +207,7 @@
 // 待添加功能：  冻结行 或者 列
 // crosshead 区域的单元格的宽度 和 高度
 // 问题 会污染原数据
-const now = Date.now();
+let now = Date.now();
 const nowrender = Date.now();
 let countScrollEvet = 0;
 
@@ -424,6 +424,7 @@ export default {
       this.init();
     }),
     onScroll() {
+      console.dir('onscroll-');
       const {
         scrollTop, scrollLeft,
         clientWidth, clientHeight,
@@ -438,6 +439,7 @@ export default {
         allHeight - scrollTop - clientHeight, // 距离底部边缘距离
       );
       requestAnimationFrame(this.render);
+      // this.render();
     },
     init() {
       console.log(22);
@@ -652,8 +654,8 @@ export default {
       });
     },
     render: function () {
-      // console.log('距离上次render', Date.now() - now);
-      // now = Date.now();
+      console.log('距离上次render', Date.now() - now);
+      now = Date.now();
       // nowrender = now;
       const curr = countScrollEvet++;
       const {

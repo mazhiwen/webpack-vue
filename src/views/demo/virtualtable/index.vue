@@ -7,9 +7,10 @@
       :rowHead="null"
       :columnHead="columnHead"
       :columnWidth="150"
-      :tableHeight="'350px'"
+      :tableHeight="'550px'"
       :fixedColumnIndex="1"
       :rowHeadFixed="rowHeadFixed"
+      :columnHeadFixed="columnHeadFixed"
       @onScroll="onScroll"
     />
     <el-button @click="changeData">
@@ -54,8 +55,8 @@ const textList = [
   '大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大大',
 ];
 
-const rowCount = 20;
-const columnCount = 200;
+const rowCount = 10000;
+const columnCount = 1000;
 
 
 function generateData(rowCount, columnCount) {
@@ -78,6 +79,8 @@ function generateData(rowCount, columnCount) {
   // data[0][0].spanStartColumn = 0;
   // data[0][0].rowSpan = 3;
   // data[0][0].colSpan = 1;
+
+
   // data[1][0].spanStartRow = 0;
   // data[1][0].spanStartColumn = 0;
   // data[1][0].rowSpan = 3;

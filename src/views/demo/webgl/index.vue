@@ -33,6 +33,7 @@ import jpg10 from './jpg10.png';
 import jpg11 from './jpg11.png';
 import uv_grid_opengl from './uv_grid_opengl.jpg';
 import hardwood2_diffuse from './hardwood2_diffuse.jpg';
+import jpgbg2 from './2.jpg';
 
 export default {
   data() {
@@ -115,7 +116,9 @@ export default {
       // 环境光
       // const ambient = new THREE.AmbientLight(0xffffff);
       // scene.add(ambient);
-
+      const sceneTexture = textureLoader.load(jpgbg2);
+      sceneTexture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.background = sceneTexture;
       // 球光
       const bulbGeometry = new THREE.SphereGeometry(1, 16, 8);
       bulbLight = new THREE.PointLight(0xffee88, 100, 100, 2);
