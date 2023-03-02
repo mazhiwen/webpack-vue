@@ -1,6 +1,6 @@
 <template>
   <div class="page_demoa">
-    <button @click="btnClick">aaa</button>
+    <div id="testbox" />
   </div>
 </template>
 
@@ -9,8 +9,7 @@
 
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import testClass from './test.js'
-
-import anime from 'animejs/lib/anime.es';
+import * as THREE from 'three';
 
 
 @Component({
@@ -37,27 +36,11 @@ export default class extends Vue{
   // created() {
   // },
   mounted() {
-    
-    anime({
-      targets: '.blockitem',
-      // opacity: 0,
-      duration: 6000,
-      translateX: anime.stagger(100),
-      // loop: true,
-      direction: 'alternate',
-      easing: 'easeInOutExpo',
-    });
+   
 
-    
   }
 
   btnClick(type) {
-    this.$router.push({
-      name: 'home',
-      params:{
-        a: '2'
-      }
-    })
   }
 
   
