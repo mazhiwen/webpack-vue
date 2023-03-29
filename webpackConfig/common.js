@@ -19,7 +19,6 @@ if (APIENVIndex > 0) {
 console.log(colors.rainbow(`> API_ENV为:${API_ENV}`));
 
 
-
 console.log(22);
 
 module.exports = {
@@ -66,7 +65,7 @@ module.exports = {
         },
         element: {
           chunks: 'all',
-          name: `element-ui`,
+          name: 'element-ui',
           test: /[\\/]element-ui[\\/]/,
           priority: 0,
         },
@@ -104,10 +103,10 @@ module.exports = {
     extensions: ['.ts', '.js', '.vue', '.less', '.css', '.json'],
   },
   externals: {
-    videojss: 'videojs'
+    videojss: 'videojs',
   },
   module: {
-    
+
     rules: [
       {
         test: /\.ejs$/,
@@ -116,15 +115,20 @@ module.exports = {
 
         },
       },
-      { test: /\.tsx?$/,
-        loader: "ts-loader",
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
         options: {
           appendTsSuffixTo: [/\.vue$/],
-        }
+        },
       },
       {
         test: /\.js$/,
-        include: /(node_modules\/vue-editor-mar|src)/,
+        // include: /(node_modules\/vue-editor-mar|src)/,
+        include: [path.resolve('src'),
+          path.resolve('node_modules/three'),
+        ],
+
         use: {
           loader: 'babel-loader',
           options: {

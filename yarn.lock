@@ -7442,9 +7442,9 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-three@^0.140.2:
-  version "0.140.2"
-  resolved "https://registry.npmjs.org/three/-/three-0.140.2.tgz#ca0b7390d1ce4f7f2850e80afd00ef48fc244491"
+three@0.145.0:
+  version "0.145.0"
+  resolved "https://registry.npmmirror.com/three/-/three-0.145.0.tgz#a613d71e75effc2aed88be630027ca01e2b6502e"
 
 throttle-debounce@^1.0.1:
   version "1.1.0"
