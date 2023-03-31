@@ -56,6 +56,7 @@ class Tetrahedra extends LineSegments2 {
       this.items.push(child);
     }
     const g = new LineSegmentsGeometry();
+    // edgesTotal 每3个值 代表1个点 xyz
     g.setPositions(edgesTotal);
     g.setColors(colorTotal);
     g.setAttribute(

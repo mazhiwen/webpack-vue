@@ -70,13 +70,14 @@ export default {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.enablePan = false;
-    controls.autoRotate = true;
+    // controls.autoRotate = true;
 
     const gu = {
       globalBloom: { value: 0 },
     };
 
-    const tetraCount = 200;
+    // const tetraCount = 200;
+    const tetraCount = 2;
     const tetrahedra = new Tetrahedra(tetraCount, gu);
     tetrahedra.material.linewidth = 0.25;
     tetrahedra.items.forEach((t, i) => {
@@ -121,11 +122,11 @@ export default {
         const ri = ud.rotInit;
         const rs = ud.rotSpeed;
         const dir = idx % 2 === 0 ? -1 : 1;
-        ti.rotation.set(
-          ri.x + rs.x * t * dir,
-          ri.y + rs.y * t * dir,
-          ri.z + rs.z * t * dir,
-        );
+        // ti.rotation.set(
+        //   ri.x + rs.x * t * dir,
+        //   ri.y + rs.y * t * dir,
+        //   ri.z + rs.z * t * dir,
+        // );
       });
       tetrahedra.update();
 
