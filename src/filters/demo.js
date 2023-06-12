@@ -1,3 +1,1 @@
-export default (input/*[,input2]*/) => {
-  return 'de1mo'
-}
+export default input => 'de1mo';

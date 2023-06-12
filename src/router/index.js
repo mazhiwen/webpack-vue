@@ -1,4 +1,3 @@
-import echart from './echart';
 import demo from './demo';
 import extra from './extra';
 
@@ -13,7 +12,6 @@ const routes = [
     name: 'login',
     component: () => import('views/login'),
   },
-  ...echart,
   ...demo,
   ...extra,
 ];

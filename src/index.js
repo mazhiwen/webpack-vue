@@ -11,23 +11,16 @@ import components from 'components';
 import filters from 'filters';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-// import MARUI from 'vue-ui-mar';
-// import VueEditorMar from 'vue-editor-mar';
 
 import store from './store';
 import App from './App.vue';
 import 'vue-editor-mar/lib/theme-chalk/index.css';
-import { test, testfn } from 'static/SYSOUTCONFIG';
 
-console.log(test);
 Vue.use(VueRouter);
 Vue.use(components);
 Vue.use(filters);
 Vue.use(ElementUI);
-// console.log(MARUI);
 
-// Vue.use(MARUI);
-// Vue.use(VueEditorMar);
 const router = new VueRouter({
   mode: 'history',
   // base: '/base/',
@@ -43,13 +36,12 @@ new Vue({
 }).$mount('#app');
 
 
-/************************  treeshaking ************/
+/** **********************  treeshaking *********** */
 // import { cube } from 'utils/treeshaking'
 // cube(123322)
 
 
-
-/****** 测试class */
+/** **** 测试class */
 // class classFoo{
 //   constructor(x) {
 //       this.x = x;
