@@ -3,6 +3,10 @@
     <div>
       <div>11111</div>
       <div>222222222222222</div>
+      <!-- <button @click="init()"> 步骤 1: 初始化 </button> -->
+      <button @click="call()">
+        步骤 2: 发起视频通话
+      </button>
       <div style="width: 50rem; height: 35rem; border: 1px solid salmon;">
         <TUICallKit /> <!-- 组件默认显示空内容，进入通话后自动显示 -->
       </div>
@@ -52,9 +56,25 @@ export default {
 
       try {
         await TUICallKitServer.init({ SDKAppID, userID, userSig }); // 关于初始化所需参数，请查看下方基础示例代码
-        alert('初始化完成');
+        // alert('初始化完成');
       } catch (error) {
         alert(`初始化失败，原因：${error}`);
+      }
+    },
+    async call(data) {
+      this.showTUICallKit = true;
+      const userID = 'zhengdaclient';
+      // const userSig = 'eJw1zMsKwjAQBdB-yVpKEtMnuCgWLfaBoOC6NNM4qCXUVkzFfzfWurlwzwz3RY75wXlARyLCHUoWU0cJbY8NTjyeoVWyqq9ocX64y0ulNUoSMUFpwITN3wWeGjuw7roup3-t8fY1L-CoYH7ozyuo7H68GyEz2Z6zdd4kooS0EGCWQ56kQxibUQUl3fJTtZHFirw-M4wz*g__';
+
+      try {
+        // 1v1 通话
+        await TUICallKitServer.call({
+          userID, type: TUICallType.VIDEO_CALL,
+        });
+        // 群组通话
+        // TUICallKitServer.groupCall({ userIDList: ["xxx"], groupID: "xxx", type: TUICallType.VIDEO_CALL });
+      } catch (error) {
+        // alert(`拨打失败，原因：${error}`);
       }
     },
     testfn() {
