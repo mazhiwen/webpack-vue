@@ -1,10 +1,27 @@
 <template>
   <div>
-    <div id="main" />
+    <div id="testprint">
+      <div id="main" />
+
+
+      <div
+        v-for="(item,index) in [1,1,1,1,1,1,1,1,1]"
+        :key="index"
+        style="height:30px"
+      >
+        {{ index }}
+      </div>
+    </div>
+    <button @click="print">
+      aaaa
+    </button>
   </div>
 </template>
 
 <script>
+
+import html2canvas from 'html2canvas';
+import printJS from 'print-js';
 
 export default {
   data() {
@@ -166,6 +183,21 @@ export default {
 
     myChart.setOption(option);
   },
+  methods: {
+    print() {
+      // const element = document.getElementById('testprint');
+      // console.log(element.scrollHeight);
+      // html2canvas(element, {
+      //   // windowWidth: element.scrollWidth,
+      //   windowHeight: element.scrollHeight,
+      //   windowWidth: 1700,
+      //   // windowHeight: 800,
+      // }).then((canvas) => {
+      //   document.body.appendChild(canvas);
+      // });
+      printJS('testprint', 'html');
+    },
+  },
 
 };
 </script>
@@ -174,6 +206,15 @@ export default {
 #main{
   width: 100%;
   height: 600px;
+}
+#testprint{
+  position: absolute;
+  left: 0;
+  top: -1000px;
+  width: 100%;
+  // opacity: 0;
+  // display: none;
+  // visibility: hidden;
 }
 
 </style>
